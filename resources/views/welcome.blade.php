@@ -107,7 +107,7 @@
 @endsection
 
 @section('content')
-    <div class="text-white justify-content-center text-center" style="margin-top: 70px; min-height: 500px; background-color: #d03737;">
+    <div class="text-white justify-content-center text-center" style="margin-top: 70px; min-height: 350px; background-color: #d03737;">
         <div class="p-0 align-content-center" style="font-size: 16px; vertical-align: center;">
             <h1 class="animate__animated animate__tada">Lawyer Finder</h1>
 
@@ -119,15 +119,45 @@
                 Another innovative drive for Digital Bangladesh
             </p>
 
-            <div class="trap-container">
+            <!-- <div class="trap-container">
               <svg width="100%" height="100%" viewBox="0 50 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                 <polygon points="0,50 100,0 100,100 0,100">
                 </polygon>
               </svg>
               <div class="trap-content">Lorem ipsum dollar si amet, Lorem ipsum dollar si amet, Lorem ipsum dollar si amet, 
               </div>
-            </div>
+            </div> -->
             {{-- <h1 class="animate__animated animate__bounce">An animated element</h1> --}}
+        </div>
+    </div>
+    <div class="text-black justify-content-center text-left p-5 m-4" style="min-height: 500px; background-color: #f1d1d2;">
+        <h1 class="text-center">How To Register</h1>
+        <div class="p-0" style="font-size: 16px;">
+            <h3 class="">1 Enter Name</h3>
+            <p class="">
+                Enter your original name according to your NID card provided by your government.
+            </p>
+        </div>
+        <div class="p-0" style="font-size: 16px;">
+            <h3 class="">2 Enter Email Address</h3>
+            <p class="">
+                Enter your Email Address through which the administration may communicate with you or inform you of important notices.
+            </p>
+        </div>
+        <div class="p-0" style="font-size: 16px;">
+            <h3 class="">3 Enter A Secure Password</h3>
+            <p class="">
+                Enter a secure and difficult password and remember it for further login process. Then enter it again to confirm that you are typing it correctly.
+            </p>
+        </div>
+        <div class="p-0" style="font-size: 16px;">
+            <h3 class="">4 Enter Personal Details</h3>
+            <p class="">
+                Enter your contact number, location, birthdate, gender and type and submit as a client or a lawyer
+            </p>
+        </div>
+        <div class="p-0" style="font-size: 16px;">
+            <button class="btn btn-success"><a href="{{ url('/register-details') }}">Show In Details</a></button>
         </div>
     </div>
 @endsection

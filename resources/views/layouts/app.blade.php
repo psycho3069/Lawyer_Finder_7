@@ -46,9 +46,9 @@
             <div class="container" @yield('div-container-tag')>
                 <a class="navbar-brand" href="{{ url('/') }}">
                     @auth
-                        <h7 style="color:green; -webkit-text-stroke: medium;">{{ Str::upper(auth()->user()->type) }}{{ ' HOME' }}</h7>
+                        <h7 style="color:black; -webkit-text-stroke: medium;">{{ Str::upper(auth()->user()->type) }}{{ ' HOME' }}</h7>
                     @else
-                        <h4 style="color:green">{{ __('welcome.title') }}</h4>
+                        <h4 style="color:black">{{ __('welcome.title') }}</h4>
                     @endauth
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -65,21 +65,21 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ url('/home') }}">{{ __('Home') }}</a>
+                            <a class="nav-link text-black" href="{{ url('/home') }}">{{ __('welcome.home') }}</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="#">{{ __('How To Apply') }}</a>
+                            <a class="nav-link text-black" href="#">{{ __('welcome.how_to_apply') }}</a>
                         </li>
 
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link text-black" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link text-black" href="{{ route('login') }}">{{ __('welcome.login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-black" href="{{ route('register') }}">{{ __('welcome.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -109,7 +109,7 @@
 
                         <!-- Switch Locale -->
                         <li class="nav-item">
-                            @if (App::isLocale('en'))
+                            @if(App::isLocale('en'))
                                 <a class="nav-link text-black" href="locale/bn">{{ __('বাংলা') }}</a>
                             @else
                                 <a class="nav-link text-black" href="locale/en">{{ __('English') }}</a>

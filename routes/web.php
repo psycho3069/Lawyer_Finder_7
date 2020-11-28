@@ -41,3 +41,5 @@ Route::resource('/lawyer', 'LawyerController');
 Route::resource('/client', 'ClientController');
 Route::resource('/court', 'CourtController');
 Route::resource('/casefile', 'CaseFileController');
+
+Route::get('/register-details', 'WelcomeController@registerDetails')->name('register-details');
