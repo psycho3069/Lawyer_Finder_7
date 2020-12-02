@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-    @include('layouts.style')
-@endsection
-
 @section('content')
 
 <div class="container-x" style="margin-top: 56px;">
@@ -30,9 +26,8 @@
                 <div>cases: 		{{ $lawyer->cases }}</div>
                 <div>success_rate: 	{{ $lawyer->success_rate }}</div>
                 <div>court name: 	{{ $lawyer->court->name }}</div>
-
             </div>
-                
+            
         </div>
     </div>
 </div>

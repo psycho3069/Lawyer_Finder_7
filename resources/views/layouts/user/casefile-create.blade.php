@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-.radio-pad{
-	padding-top: 8px;
-}
-@endsection
-
 @section('content')
 <div class="container" style="margin-top: 56px;">
     <div class="row justify-content-center">

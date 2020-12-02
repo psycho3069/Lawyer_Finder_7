@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-    @include('layouts.style')
-@endsection
-
 @section('content')
     <div class="container-x" style="margin-top: 55px;">
     	

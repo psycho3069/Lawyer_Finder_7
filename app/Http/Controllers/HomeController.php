@@ -241,4 +241,5 @@ class HomeController extends Controller
         return $result;
         // $requests = CaseFile::where('lawyer_id',auth()->user()->id)->get();
     }
+
 }

@@ -4500,7 +4500,6 @@ input[type=button].btn-block {
     justify-content: space-between;
     padding: 0.5rem 1rem;
     background-color: white;
-    border-bottom: 2px solid green;
 }
 
 .navbar .container,
@@ -10813,7 +10812,7 @@ a.text-dark:focus {
 }
 
 .login{
-    color: cyan;
+    color: maroon;
     font-size: 30px;
     display: flex;
     align-items: center;
@@ -10822,7 +10821,7 @@ a.text-dark:focus {
 }
 
 .register-icon{
-    color: blue;
+    color: darkred;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -10830,7 +10829,7 @@ a.text-dark:focus {
 }
 
 .register{
-    color: cyan;
+    color: maroon;
     font-size: 30px;
     display: flex;
     align-items: center;

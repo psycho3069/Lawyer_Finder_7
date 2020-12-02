@@ -1,30 +1,22 @@
 @extends('layouts.app')
 
-@section('body-tag')
-    style="background-color:black"
-@endsection
-
-{{-- @section('div-navbar-tag')
-    style="background-color:black"
-@endsection --}}
-
 @section('content')
-<div class="container" style="margin-top: 45px; background-color:black;">
+<div class="container" style="margin-top: 95px; border: solid lightgray 1px; background-color: white;">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="">
                 <div class="login-icon"><i class="fas fa-user-lock fa-3x"></i></div>
                 <div class="login">{{ __('Login') }}</div>
 
-                <div class="">
-                    <form method="POST" class="text-white" action="{{ route('login') }}">
+                <div style="padding-bottom: 30px;">
+                    <form method="POST" class="" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-3 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                        <div class="form-group">
+                            <label for="email" class="row col-form-label text-md-left">{{ __('E-Mail Address') }}<span style="color: red;">*</span></label>
 
-                            <div class="col-md-7">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                            <div class="row">
+                                <input style="border-radius: 0; height: 40px;" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -34,11 +26,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-3 col-form-label text-md-left">{{ __('Password') }}</label>
+                        <div class="form-group">
+                            <label for="password" class="row col-form-label text-md-left">{{ __('Password') }}<span style="color: red;">*</span></label>
 
-                            <div class="col-md-7">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                            <div class="row">
+                                <input style="border-radius: 0; height: 40px;" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -61,21 +53,26 @@
                         </div> --}}
 
                         <div class="form-group row">
-                            
-                            <label for="password" class="col-form-label text-white text-md-left">
+
+                            <div class="">
+                                
+                                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 8px; border-radius: 0; min-width: 100px; min-height: 40px;">
+                                    {{ __('Login') }}
+                                </button>
+
+                            </div>
+
+                            <label for="password" class="col-md-7 col-form-label text-white text-md-left">
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <a class="btn btn-link" href="{{ route('register') }}">
+                                    {{ __('Register') }}
+                                </a>
                             </label>
-                            <div class="col-md-5 offset-md-1 row">
-                                
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    {{ __('Login') }}
-                                </button>
-
-                            </div>
+                            
                         </div>
                     </form>
                 </div>

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ __('welcome.title') }}</title>
+    <title>@lang('app.title')</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -36,19 +36,19 @@
 
 
     <style type="text/css">
-        @yield('style')
+        @include('layouts.style')
     </style>
-
 </head>
-<body @yield('body-tag')>
-    <div id="app" @yield('div-app-tag')>
+
+<body @yield('body-tag') style="background-color: #f1d1d2;">
+    <div id="app">
         <nav id="navbar" class="navbar fixed-top navbar-expand-md navbar-light shadow-sm" @yield('div-navbar-tag')>
             <div class="container" @yield('div-container-tag')>
                 <a class="navbar-brand" href="{{ url('/') }}">
                     @auth
                         <h7 style="color:black; -webkit-text-stroke: medium;">{{ Str::upper(auth()->user()->type) }}{{ ' HOME' }}</h7>
                     @else
-                        <h4 style="color:black">{{ __('welcome.title') }}</h4>
+                        <h4 style="color:black">@lang('app.title')</h4>
                     @endauth
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -65,21 +65,26 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ url('/home') }}">{{ __('welcome.home') }}</a>
+                            <a class="nav-link text-black" href="{{ url('/home') }}">@lang('app.home')</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="#">{{ __('welcome.how_to_apply') }}</a>
+                            <a class="nav-link text-black" href="{{ route('register-details') }}">@lang('app.how_to_apply')</a>
+                        </li>
+
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-black" href="{{ route('notice.index') }}">@lang('app.notice_board')</a>
                         </li>
 
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link text-black" href="{{ route('login') }}">{{ __('welcome.login') }}</a>
+                                <a class="nav-link text-black" href="{{ route('login') }}">@lang('app.login')</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" href="{{ route('register') }}">{{ __('welcome.register') }}</a>
+                                    <a class="nav-link text-black" href="{{ route('register') }}">@lang('app.register')</a>
                                 </li>
                             @endif
                         @else
@@ -103,16 +108,12 @@
                         @endguest
 
 
-                        <li class="nav-item">
-                            <a class="nav-link text-black" href="#">{{ __('Notice Board') }}</a>
-                        </li>
-
                         <!-- Switch Locale -->
                         <li class="nav-item">
                             @if(App::isLocale('en'))
-                                <a class="nav-link text-black" href="locale/bn">{{ __('বাংলা') }}</a>
+                                <a class="nav-link text-black" href="{{ route('locale','bn') }}">{{ __('বাংলা') }}</a>
                             @else
-                                <a class="nav-link text-black" href="locale/en">{{ __('English') }}</a>
+                                <a class="nav-link text-black" href="{{ route('locale','en') }}">{{ __('English') }}</a>
                             @endif
                         </li>
                     </ul>
@@ -120,10 +121,12 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4" style="margin-bottom: 160px;">
             @yield('content')
         </main>
     </div>
+
+    @include('layouts.footer')
 
     <script type="text/javascript">
         $(document).ready( function () {

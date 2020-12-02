@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-    @include('layouts.style')
-@endsection
-
 @section('body-tag')
     {{-- style="background-color:black" --}}
 @endsection

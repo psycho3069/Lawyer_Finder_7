@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-    @include('layouts.style')
-@endsection
-
 @section('content')
     @if(auth()->user()->type == 'admin')
         @include('layouts.admin.content')

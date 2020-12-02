@@ -2,7 +2,7 @@
     background-color: #a5eeff !important;
 }
 body {
-    background-color: white;
+    {{-- background-color: white; --}}
 
     {{-- font-family: Arial;
     margin: 0 auto; /* Center website */
@@ -120,6 +120,10 @@ body {
     padding-left: 3px;
 }
 
+.radio-pad{
+    padding-top: 8px;
+}
+
 .button {
 
     display: inline-block;
@@ -222,4 +226,62 @@ body {
   width: 100%;
   bottom: 10%;
   color: white;
+}
+
+.numbers{
+  color: gray;
+}
+
+.footer {
+    background-color: #000000;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.0em;
+    font-size: 12px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+@keyframes animatedBackground {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 0;
+    }
+}
+#animate-area {
+    width: 100%;
+    height: 300px;
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    animation: animatedBackground 10s linear infinite alternate;
+}
+
+.contact-item {
+    background-color: #f5f5f5;
+    height: 135px;
+    padding: 30px 20px;
+    text-align: center;
+    line-height: 22px;
+}
+
+.faq_list_items .item {
+    display: flex;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.item_index {
+    color: gray;
+    font-size: 32px;
+    line-height: 1.2em;
+    padding-right: 15px;
+    margin-top: 5px;
+}
+
+.item_data {
+    font-size: 14px;
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 40px;
 }

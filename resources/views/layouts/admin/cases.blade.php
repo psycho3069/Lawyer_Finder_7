@@ -32,13 +32,12 @@
 					            <th>Result</th>
 					            <th>Created On</th>
 					            <th>Updated On</th>
-
 					        </tr>
 				        </thead>
 
 				        <tbody>
-				          @foreach($casefiles as $key => $value)
-				            <tr>
+						@foreach($casefiles as $key => $value)
+							<tr>
 								<td>{{ ++$key }}</td>
 								<td>{{ $value->case_identity }}</td>
 								<td>{{ $value->description }}</td>
@@ -50,8 +49,8 @@
 								<td>{{ $value->result	 }}</td>
 								<td>{{ $value->created_at }}</td>
 								<td>{{ $value->updated_at }}</td>
-				            </tr>
-				          @endforeach
+							</tr>
+				        @endforeach
 				        </tbody>
 		            </table>
 		    	</div>
