@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
