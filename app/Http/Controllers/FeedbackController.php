@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class FeedbackController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,8 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        return view('layouts.contact-us');
+        $feedbacks = Feedback::all();
+        return view('layouts.feedback.feedback',compact('feedbacks'));
     }
 
     /**
@@ -25,7 +30,7 @@ class FeedbackController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -72,7 +77,7 @@ class FeedbackController extends Controller
      */
     public function show(Feedback $feedback)
     {
-        //
+        return view('layouts.feedback.show',compact('feedback'));
     }
 
     /**

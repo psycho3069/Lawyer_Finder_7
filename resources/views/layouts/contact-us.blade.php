@@ -20,7 +20,7 @@
                 <hr>
 
                 <div class="contact-widget">
-                    <form id="contactform" class="validator" action="{{ route('contact-us-store') }}" method="POST" novalidate="novalidate">
+                    <form id="contactform" class="validator" action="{{ route('feedback.store') }}" method="POST" novalidate="novalidate">
                         @csrf
 
                         <div class="row">

@@ -88,4 +88,8 @@ class WelcomeController extends Controller
         return view('layouts.register-details');
     }
 
+    public function contactUs()
+    {
+        return view('layouts.contact-us');
+    }
 }

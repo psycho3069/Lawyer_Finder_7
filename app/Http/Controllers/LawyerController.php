@@ -22,7 +22,8 @@ class LawyerController extends Controller
      */
     public function index()
     {
-        //
+        $lawyers = Lawyer::all();
+        return view('layouts.admin.lawyers',compact('lawyers'));
     }
 
     /**

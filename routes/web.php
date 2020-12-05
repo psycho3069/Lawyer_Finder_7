@@ -38,18 +38,15 @@ Route::resource('/client', 'ClientController');
 Route::resource('/court', 'CourtController');
 Route::resource('/casefile', 'CaseFileController');
 Route::resource('/notice', 'NoticeController');
+Route::resource('/feedback', 'FeedbackController');
 
 
 Route::get('/register-details', 'WelcomeController@registerDetails')->name('register-details');
+Route::get('/contact-us', 'WelcomeController@contactUs')->name('contact-us');
 
-
-Route::get('/contact-us', 'FeedbackController@index')->name('contact-us');
-Route::post('/contact-us-store', 'FeedbackController@store')->name('contact-us-store');
 
 
 Route::get('/faq', 'FaqController@index')->name('faq');
-
-
 
 
 
