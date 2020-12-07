@@ -125,26 +125,21 @@ body {
 }
 
 .button {
-
-    display: inline-block;
     border-radius: 1px;
-    background-color: #25b9ff;
+    background-color: maroon;
     border: none;
     color: #FFFFFF;
     text-align: center;
     font-size: 16px;
-    padding: 5px;
-    width: 100%;
+    width: 20%;
     transition: all 0.5s;
     cursor: pointer;
-    margin: 10px 0px 10px 1px;
-    min-height: 50px;
-    max-height: 100px;
+    min-height: 45px;
+    line-height: 1.6em;
 }
 
 .button span {
   cursor: pointer;
-  display: inline-block;
   position: relative;
   transition: 0.5s;
 }
@@ -153,7 +148,6 @@ body {
     content: '\002b';
     position: absolute;
     opacity: 0;
-    top: 0;
     right: -20px;
     transition: 0.5s;
 }
@@ -174,15 +168,17 @@ body {
 } --}}
 
 .menu-button {
-    color: white;
-    background-color: #343a40!important;
+    color: black;
+    background-color: white!important;
 }
 .menu-button-current {
+    color: white;
     border-right: 5px solid green !important;
-    background-color: green !important;
+    background-color: maroon !important;
 }
 .menu-button:hover {
-    background-color: #6c757d!important;
+    color: black;
+    background-color: #f1d1d2!important;
     border-right: 5px solid blue !important;
     {{-- border-left: 5px solid blue !important; --}}
 }
@@ -201,11 +197,6 @@ body {
 .body-margin{
     margin-left:180px;
     margin-top: 52px;
-}
-
-.w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
-    color: #000!important;
-    background-color: #343a40!important;
 }
 
 .trap-container {

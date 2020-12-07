@@ -40,7 +40,7 @@
     </style>
 </head>
 
-<body @yield('body-tag') style="background-color: #f1d1d2;">
+<body @yield('body-tag') style="background-color: white;">
     <div id="app">
         <nav id="navbar" class="navbar fixed-top navbar-expand-md navbar-light shadow-sm" @yield('div-navbar-tag')>
             <div class="container" @yield('div-container-tag')>

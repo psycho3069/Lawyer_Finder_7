@@ -20,43 +20,101 @@
             <div class="row justify-content-center m-0 p-0 clearfix">
                 <div class="col-md-12 m-0 p-0">
                     <div class="card m-0 p-0">
+                        @if(Session::has('success'))
+                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+                                {{ Session::get('success') }}
+                            </div>
+                        @elseif(Session::has('failed'))
+                            <div style="min-height: 30px;" class="alert-danger alert-dismissible text-md-center">
+                                {{ Session::get('failed') }}
+                            </div>
+                        @endif
                         <div class="card-header">{{ __('Search Lawyers') }}</div>
 
                         <div class="card-body">
-                            <form method="GET" action="{{ route('search') }}">
+                            <form method="POST" action="{{ route('search') }}">
                                 @csrf
 
                                 <div class="form-group row" style="padding: 15px 0px;">
-                                    <label for="location" class="col-pad-2 col-md-1 col-form-label text-md-right">{{ __('Location') }}</label>
+                                    <label for="division" class="col-md-3 col-form-label text-md-right">{{ __('Division') }}</label>
 
                                     <div class="col-pad-2 col-md-3">
-                                        <select name="location" id="location" class="custom-select form-control @error('location') is-invalid @enderror">
-                                            <option value="">---Select Location---</option>
-                                            <option value="Dhaka">Dhaka</option>
-                                            <option value="Barisal">Barisal</option>
-                                            <option value="Khulna">Khulna</option>
-                                            <option value="Rangpur">Rangpur</option>
-                                            <option value="Sylhet">Sylhet</option>
-                                            <option value="Chittagong">Chittagong</option>
-                                            <option value="Mymensigh">Mymensigh</option>
+                                        <select name="division" id="division" class="custom-select form-control @error('division') is-invalid @enderror">
+                                            <option value="">---Select Division---</option>
+                                            @foreach($divisions as $key => $division)
+                                                <option value="{{ $division->id }}"
+                                                    @if($data != null)
+                                                        @if($division->id == $data['division'])
+                                                            {{ 'selected' }}
+                                                        @endif
+                                                    @endif
+                                                    >{{ $division->name }}</option>
+                                            @endforeach
                                         </select>
 
-                                        @error('location')
+                                        @error('division')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
-                                    <label for="type" class="col-pad-2 col-md-1 col-form-label text-md-right">{{ __('Type') }}</label>
+                                    <label for="district" class="col-md-3 col-form-label text-md-right">{{ __('District') }}</label>
+
+                                    <div class="col-pad-2 col-md-3">
+                                        <select name="district" id="district" class="custom-select form-control @error('district') is-invalid @enderror">
+                                            <option value="">---Select District---</option>
+                                            @foreach($districts as $key => $district)
+                                                <option value="{{ $district->id }}"
+                                                    @if($data != null)
+                                                        @if($district->id == $data['district'])
+                                                            {{ 'selected' }}
+                                                        @endif
+                                                    @endif
+                                                    >{{ $district->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('district')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <label for="type" class="col-md-3 col-form-label text-md-right">{{ __('Type') }}</label>
 
                                     <div class="col-pad-2 col-md-3">
                                         <select name="type" id="type" class="custom-select form-control @error('type') is-invalid @enderror">
                                             <option value="">---Select Type---</option>
-                                            <option value="advocate">Advocate</option>
-                                            <option value="judge">Judge</option>
-                                            <option value="magistrate">Magistrate</option>
-                                            <option value="barrister">Barrister</option>
+                                            <option value="advocate"
+                                                        @if($data != null)
+                                                            @if($data['type'] == 'advocate')
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                        @endif
+                                            >Advocate</option>
+                                            <option value="judge"
+                                                        @if($data != null)
+                                                            @if($data['type'] == 'judge')
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                        @endif
+                                            >Judge</option>
+                                            <option value="magistrate"
+                                                        @if($data != null)
+                                                            @if($data['type'] == 'magistrate')
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                        @endif
+                                            >Magistrate</option>
+                                            <option value="barrister"
+                                                        @if($data != null)
+                                                            @if($data['type'] == 'barrister')
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                        @endif
+                                            >Barrister</option>
                                         </select>
 
                                         @error('type')
@@ -66,7 +124,7 @@
                                         @enderror
                                     </div>
 
-                                    <label for="specialty" class="col-pad-2 col-md-1 col-form-label text-md-right">{{ __('Specialty') }}</label>
+                                    <label for="specialty" class="col-md-3 col-form-label text-md-right">{{ __('Specialty') }}</label>
 
                                     <div class="col-pad-2 col-md-3">
                                         <select name="specialty" id="specialty" class="custom-select form-control @error('specialty') is-invalid @enderror">
@@ -131,10 +189,7 @@
                         </div>
 
                     </div>
-
                     
-                    <div class="alert-primary text-md-center">{{ $feedback }}</div>
-
                     @foreach($users as $key => $user)
                         <div class="card m-0 p-0">
                             <div class="card-body">
@@ -157,7 +212,11 @@
                                         {{ $user->name }}
                                     </div>
                                     <div class="col-md-3">
-                                        {{ $user->location }}
+                                        @foreach($districts as $key => $district)
+                                            @if($district->id == $user->district_id)
+                                                {{ $district->name }}
+                                            @endif
+                                        @endforeach
                                     </div>
                                     <div class="col-md-3">
                                         {{ $user->type }}

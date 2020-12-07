@@ -1,4 +1,4 @@
-<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:180px">
+<div class="w3-sidebar w3-bar-block w3-card" style="width:180px; background-color: white;">
     @if(auth()->user()->type == 'lawyer')
         <a href="{{ route('client-request') }}">
             <button class="w3-bar-item menu-button tablink @if($active['requests']) {{ 'menu-button-current' }} @endif">Client Requests</button>

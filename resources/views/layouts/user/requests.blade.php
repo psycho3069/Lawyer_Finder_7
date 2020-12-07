@@ -7,19 +7,12 @@
 
     	<div class="body-margin">
 	        <div class="container p-0" style="margin-top: 56px;">
-	            <div class="row justify-content-center m-0 p-0 clearfix">
+	            <div class="row justify-content-center clearfix">
 	                <div class="col-md-12 m-0 p-0">
 	                    <div class="card m-0 p-0">
-	                        <div class="card-header">{{ __('Client Requests') }}</div>
+	                        <div class="text-lg-center card-header bg-primary">{{ __('Client Requests') }}</div>
 
-	                        {{-- <div class="card-body">
-	                            
-	                        </div> --}}
-
-	                    </div>
-
-	                    @foreach($requests as $key => $request)
-	                        <div class="card m-0 p-0">
+		                    @foreach($requests as $key => $request)
 	                            <div class="card-body">
 	                                <div class="row">
 	                                    <div class="col-md-3">
@@ -32,9 +25,9 @@
 	                                        {{ '' }}
 	                                    </div>
 	                                    @if($request->result == 'waiting')
-                                            <div class="col-md-3">
+	                                        <div class="col-md-3">
 
-                                            	<button type="button" id="approved" class="btn btn-success response">
+	                                        	<button type="button" id="approved" class="btn btn-success response">
 												   <i class="fa fa-check"></i>Accept
 												</button>
 
@@ -48,7 +41,7 @@
 
 		                                        <a href="#" class="btn btn-danger">Reject<i class="fa fa-times fa-xs"></i></a> --}}
 		                                    </div>
-                                        @endif
+	                                    @endif
 	                                    {{-- <div class="col-md-3">
 	                                        <a href="{{ route('lawyer.show',$lawyers[--$user->id]) }}" class="btn btn-secondary">Profile</a>
 	                                    </div> 
@@ -78,7 +71,7 @@
 	                                        {{ $request->client_id }}
 	                                    </div>
 	                                    
-                                        <div class="col-md-3">
+	                                    <div class="col-md-3">
 	                                        {{ '' }}
 	                                    </div>
 
@@ -94,9 +87,9 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-	                        </div>
-	                    @endforeach
-	                    
+		                    @endforeach
+
+	                    </div>
 	                </div>
 	            </div>
 	        </div>

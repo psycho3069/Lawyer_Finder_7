@@ -9,18 +9,31 @@
 	<div class="body-margin">
 		<div class="container p-0" style="margin-top: 56px;">
 			@if(auth()->user()->type == 'client')
-                <div class="col-md-12">
-					<a href="{{ route('casefile.create') }}" type="button" class="button btn-block" style="vertical-align:middle"><span>Add Case</span></a>
+                <div class="col-md-12 justify-content-center text-md-center">
+					<a href="{{ route('casefile.create') }}" type="button" class="button btn-primary m-2 p-2" style=""><span>Add Case</span></a>
 				</div>
 			@endif
 
 			@foreach($user_cases as $key => $value)
-				<div class="col-md-12 card text-white bg-info mb-3" style="min-width: 18rem;">
-					<div class="row card-header">
-						<div class="col-md-2">{{ $value->case_identity }}</div>
-						<div class="col-md-4" style="width: 80%; "></div>
-						<div class="col-md-4">{{ $value->result }}</div>
-						<div class="col-md-2">Case {{ ++$key }}</div>
+				<div class="card m-2">
+					<div class="card-header" style="background-color: #cff7e9;">
+						<div class="col-md-4 float-left">{{ $value->case_identity }}</div>
+						<div class="col-md-2 float-left"></div>
+						<div class="col-md-2 float-left">Case {{ ++$key }}</div>
+						<div class="col-md-4 float-right btn 
+						@if($value->result == 'waiting')
+							btn-info disabled
+						@elseif($value->result == 'pending')
+							btn-warning disabled
+						@elseif($value->result == 'running')
+							btn-primary disabled
+						@elseif($value->result == 'won')
+							btn-success disabled
+						@elseif($value->result == 'lost')
+							btn-danger disabled
+						@else
+							btn-danger
+						@endif" >Status: {{ $value->result }}</div>
 					</div>
 					<div class="card-body">
 						<h5 class="card-title">{{ $value->type }}</h5>
@@ -36,5 +49,5 @@
 @endsection
 
 @section('footer-script')
-
+	
 @endsection

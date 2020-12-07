@@ -27,7 +27,7 @@ Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::get('/cases', 'HomeController@cases')->name('cases');
 Route::get('/ratings', 'HomeController@ratings')->name('ratings');
 Route::get('/reviews', 'HomeController@reviews')->name('reviews');
-Route::get('/search', 'HomeController@search')->name('search');
+Route::post('/search', 'HomeController@search')->name('search');
 Route::get('/client-request', 'HomeController@requests')->name('client-request');
 Route::get('/lawyer-request-decide', 'HomeController@lawyerRequestDecide')->name('lawyer-request-decide');
 Route::get('/lawyer-request-case', 'HomeController@lawyerRequestCase')->name('lawyer.request-case');
@@ -47,6 +47,7 @@ Route::get('/contact-us', 'WelcomeController@contactUs')->name('contact-us');
 
 
 Route::get('/faq', 'FaqController@index')->name('faq');
+Route::post('/get-districts', 'WelcomeController@getDistricts')->name('get-districts');
 
 
 

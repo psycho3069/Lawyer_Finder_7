@@ -169,7 +169,7 @@
         </div>
 
     </div>
-    <div class="row text-black justify-content-center text-left p-5 m-4" style="min-height: 500px; background-color: #f1d1d2;">
+    <div class="row text-black justify-content-center text-left p-5 m-4" style="min-height: 500px;">
         <div class="col-md-6">
             <img src="{{url('/svg/question-mark.svg')}}" alt="" height="400" width="400" style="opacity: 75%;">
         </div>

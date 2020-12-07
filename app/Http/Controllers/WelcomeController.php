@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\District;
 
 class WelcomeController extends Controller
 {
@@ -91,5 +92,11 @@ class WelcomeController extends Controller
     public function contactUs()
     {
         return view('layouts.contact-us');
+    }
+
+    public function getDistricts(Request $request)
+    {
+        $districts = District::where('division_id',$request->division_id)->get();
+        return $districts;
     }
 }

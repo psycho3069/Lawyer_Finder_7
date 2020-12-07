@@ -8,7 +8,10 @@ use App\CaseFile;
 use App\Court;
 use App\Lawyer;
 use App\User;
+use App\Division;
+use App\District;
 use Exception;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -49,32 +52,6 @@ class HomeController extends Controller
         }
     }
 
-    public function dashboard()
-    {
-        $feedback = '';
-        $active = [];
-        $active['dashboard'] = 1;
-        $active['profile'] = 0;
-        $active['cases'] = 0;
-        $active['search'] = 0;
-        $active['requests'] = 0;
-
-        $users = [];
-        $courts = [];
-        $lawyers = Lawyer::get();
-        if(auth()->user()->type == 'client'){
-            $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback'));
-        } elseif(auth()->user()->type == 'lawyer'){
-            $user_cases = CaseFile::where('lawyer_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback'));
-        } else {
-            $casefiles = CaseFile::all();
-            $courts = Court::all();
-            return view('dash', compact('casefiles','courts','users','lawyers','active','feedback'));
-        }
-    }
-
     public function profile(){
         $active = [];
         $active['dashboard'] = 0;
@@ -107,66 +84,105 @@ class HomeController extends Controller
         }
     }
 
+    public function dashboard()
+    {
+        $feedback = '';
+        $active = [];
+        $active['dashboard'] = 1;
+        $active['profile'] = 0;
+        $active['cases'] = 0;
+        $active['search'] = 0;
+        $active['requests'] = 0;
+
+        $users = [];
+        $data = [];
+        $courts = Court::all();
+        $lawyers = Lawyer::all();
+        $divisions = Division::all();
+        $districts = District::all();
+
+        if(auth()->user()->type == 'client'){
+            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
+                            ->get();
+            $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
+            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data'));
+        } elseif(auth()->user()->type == 'lawyer'){
+            $user_cases = CaseFile::where('lawyer_id', auth()->user()->id)->get();
+            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data'));
+        } else {
+            $casefiles = CaseFile::all();
+            return view('dash', compact('casefiles','courts','users','lawyers','active','feedback','divisions','districts','data'));
+        }
+    }
+
     public function search(Request $request){
         // return $request->all();
         $feedback = '';
         $active = [];
-        $active['dashboard'] = 0;
+        $active['dashboard'] = 1;
         $active['profile'] = 0;
         $active['cases'] = 0;
-        $active['search'] = 1;
+        $active['search'] = 0;
         $active['requests'] = 0;
 
-        $location = $request->location;
+        // $division = $request->division;
+        $district = $request->district;
         $type = $request->type;
         $specialty = $request->specialty;
         // $rating = $request->rating;
         // $success_rate = $request->success_rate;
-        $data['location'] = $location;
-        $data['type'] = $type;
-        $data['location'] = $location;
+        
+        $divisions = Division::all();
+        $districts = District::all();
 
-        if ($location == null && $type == null && $specialty == null) {
+        $data['division']   = $request->division;
+        $data['district']   = $request->district;
+        $data['type']       = $request->type;
+        $data['specialty']  = $request->specialty;
+        // return $data;
+
+        if ($district == null && $type == null && $specialty == null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->get();
-        } elseif ($location != null && $type == null && $specialty == null) {
+        } elseif ($district != null && $type == null && $specialty == null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
-                            ->where('a1_users.location', $location)
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
+                            ->where('a1_users.district_id', $district)
                             ->get();
-        } elseif ($location == null && $type != null && $specialty == null) {
+        } elseif ($district == null && $type != null && $specialty == null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->where('b6_lawyers.type', $type)
                             ->get();
-        } elseif ($location == null && $type == null && $specialty != null) {
+        } elseif ($district == null && $type == null && $specialty != null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->where('specialty', $specialty)
                             ->get();
-        } elseif ($location != null && $type != null && $specialty == null) {
+        } elseif ($district != null && $type != null && $specialty == null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
-                            ->where('a1_users.location', $location)
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
+                            ->where('a1_users.district_id', $district)
                             ->where('b6_lawyers.type', $type)
                             ->get();
-        } elseif ($location == null && $type != null && $specialty != null) {
+        } elseif ($district == null && $type != null && $specialty != null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->where('b6_lawyers.type', $type)
                             ->where('specialty', $specialty)
                             ->get();
-        } elseif ($location != null && $type == null && $specialty != null) {
+        } elseif ($district != null && $type == null && $specialty != null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
-                            ->where('a1_users.location', $location)
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
+                            ->where('a1_users.district_id', $district)
                             ->where('specialty', $specialty)
                             ->get();
         } else {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.location as location', 'a1_users.name as name')
-                            ->where('a1_users.location', $location)
+                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
+                            ->where('a1_users.district_id', $district)
                             ->where('b6_lawyers.type', $type)
                             ->where('specialty', $specialty)
                             ->get();
@@ -177,7 +193,7 @@ class HomeController extends Controller
         $lawyers = Lawyer::get();
         // return $users;
 
-        return view('dash', compact('users','user_cases','courts','lawyers','active','feedback'));
+        return view('dash', compact('users','user_cases','courts','lawyers','active','feedback','divisions','districts','data'));
     }
 
     public function requests(){
@@ -194,6 +210,8 @@ class HomeController extends Controller
     }
 
     public function lawyerRequestCase(Request $request){
+
+        // return $request;
 
         $active = [];
         $active['dashboard'] = 1;
@@ -221,12 +239,15 @@ class HomeController extends Controller
                 'updated_at' => now()
             ]);
 
-            $feedback = 'Request submitted successfully';
-            return Redirect::back()->with('feedback',$feedback);
+            // $feedback = 'Request submitted successfully';
+            $request->session()->flash('success', 'Request submitted successfully');
+            // Session::put('feedback', $feedback);
+            return back();
             // return view('dash', compact('users','user_cases','courts','lawyers','active','feedback'));
         } else {
-            $feedback = 'Sorry, Request can\'t be submitted! You must have only one \'waiting\' case';
-            return Redirect::back()->with('feedback',$feedback);
+            $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have only one \'waiting\' case');
+            // Session::put('feedback', $feedback);
+            return back();
             // return view('dash', compact('users','user_cases','courts','lawyers','active','feedback'));
         }
     }

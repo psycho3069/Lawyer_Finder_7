@@ -11,7 +11,7 @@
 	                </div>
 	            @endif
 
-                <div class="card-header text-center"><a href="{{ route('home') }}" type="button" class="btn float-left btn-primary button">Back</a>{{ __('Edit Profile') }}</div>
+                <div class="card-header text-center"><a href="{{ route('home') }}" type="button" class="btn float-left btn-primary button">Back</a>@lang('client-edit.title')</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('client.update',auth()->user()->id) }}">
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="contact" class="col-md-4 col-form-label text-md-left">{{ __('Contact') }}</label>
+                            <label for="contact" class="col-md-4 col-form-label text-md-left">@lang('client-edit.contact')</label>
 
                             <div class="col-md-6">
                                 <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ $user->contact }}" autocomplete="contact" autofocus>

@@ -11,7 +11,7 @@
     
 
     <div class="body-margin">
-    	<div class="container p-0" style="margin-top: 56px;">
+    	<div class="container p-0" style="margin-top: 50px;">
       		HOME
       	</div>
     </div>

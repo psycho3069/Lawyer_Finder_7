@@ -100,10 +100,10 @@
 
                             <div class="row">
                                 <select style="border-radius: 0; height: 40px;" name="district" id="district" class="custom-select form-control @error('district') is-invalid @enderror">
-                                    <option value="">---Select District---</option>
+                                    {{-- <option value="">---Select District---</option>
                                     @foreach($districts as $key => $district)
                                         <option value="{{ $district->id }}">{{ $district->name }}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
 
                                 @error('district')
@@ -209,3 +209,40 @@
     </div>
 </div>
 @endsection
+
+@section('footer-script')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#division').on('change',function() {
+            var division_id = $(this).val();
+            // alert(division_id);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url:'/get-districts',
+                data: {division_id: division_id},
+                success: function (data) {
+                    // alert(data);
+                    // console.log(data);
+                    var x=0,txt='',y=0,txt='';
+                    txt = "";
+
+                    for (x in data) {
+                        txt += "<option value="+data[x].id+">" + data[x].name + "</option>";
+                    }
+                    // console.log(txt)
+                    $( "#district").html(txt);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    });
+</script>
+@endsection
+        
