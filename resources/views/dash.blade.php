@@ -3,7 +3,7 @@
 @section('content')
     @if(auth()->user()->type == 'admin')
         @include('layouts.admin.content')
-    @else
+    @elseif(auth()->user()->type == 'client')
         @include('layouts.user.content')
     @endif
 @endsection

@@ -129,8 +129,18 @@
                                     <div class="col-pad-2 col-md-3">
                                         <select name="specialty" id="specialty" class="custom-select form-control @error('specialty') is-invalid @enderror">
                                             <option value="">---Select Specialty---</option>
-                                            <option value="defendant">Defence</option>
-                                            <option value="prosecutor">Prosecution</option>
+                                            <option value="defendant"
+                                                        @if($data != null)
+                                                            @if($data['specialty'] == 'defendant')
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                        @endif>Defence</option>
+                                            <option value="prosecutor"
+                                                        @if($data != null)
+                                                            @if($data['specialty'] == 'prosecutor')
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                        @endif>Prosecution</option>
                                         </select>
 
                                         @error('specialty')
@@ -198,10 +208,21 @@
                                         {{ '#'.++$key }}
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('lawyer.show',$key-2) }}" class="btn btn-secondary">Profile</a>
+                                        <a href="{{ route('lawyer.show',$user->id) }}" class="btn btn-secondary">Profile</a>
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('lawyer.request-case',['lawyer_id' => $user->user_id]) }}" class="btn btn-success">Request</a>
+                                        @if($requests->find($user->id))
+                                            @if($requests->find($user->id)->state == 'waiting')
+                                                <button style="cursor: no-drop;" class="btn btn-info" disabled>Requested</button>
+                                            @elseif($requests->find($user->id)->state == 'rejected')
+                                                <button style="cursor: no-drop;" class="btn btn-danger" disabled>Rejected</button>
+                                            @else
+                                                <button style="cursor: no-drop;" class="btn btn-success" disabled>Accepted</button>
+                                            @endif
+                                        @else
+                                            <a href="{{ route('lawyer.request-case',['lawyer_id' => $user->id]) }}" class="btn btn-success">Request</a>
+                                        @endif
+
                                     </div>
                                     <div class="col-md-3">
                                         <a href="{{ route('lawyer-messenger') }}" class="btn btn-info">message</a>

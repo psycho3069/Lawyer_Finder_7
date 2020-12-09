@@ -55,8 +55,13 @@ class LawyerController extends Controller
      */
     public function show(Lawyer $lawyer)
     {
-        // return $lawyer;
-        return view('layouts.user.lawyer.show',compact('lawyer'));
+        $active = [];
+        $active['dashboard'] = 1;
+        $active['profile'] = 0;
+        $active['cases'] = 0;
+        $active['search'] = 0;
+        $active['requests'] = 0;
+        return view('layouts.user.lawyer.show',compact('lawyer','active'));
     }
 
     /**

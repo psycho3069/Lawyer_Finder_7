@@ -13,4 +13,9 @@ class Client extends Model
     {
         return $this->belongsTo('App\User');
     }
+    
+    public function req()
+    {
+        return $this->hasMany('App\Request');
+    }
 }

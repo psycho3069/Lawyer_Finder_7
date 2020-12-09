@@ -12,6 +12,16 @@
 	                    <div class="card m-0 p-0">
 	                        <div class="text-lg-center card-header bg-primary">{{ __('Client Requests') }}</div>
 
+	                    @if(Session::has('approve'))
+                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+                                {{ Session::get('approve') }}
+                            </div>
+                        @elseif(Session::has('decline'))
+                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+                                {{ Session::get('decline') }}
+                            </div>
+                        @endif
+
 		                    @foreach($requests as $key => $request)
 	                            <div class="card-body">
 	                                <div class="row">
@@ -24,33 +34,21 @@
 	                                    <div class="col-md-3">
 	                                        {{ '' }}
 	                                    </div>
-	                                    @if($request->result == 'waiting')
-	                                        <div class="col-md-3">
-
-	                                        	<button type="button" id="approved" class="btn btn-success response">
+	                                    <div class="col-md-3">
+	                                    	@if($request->state == 'waiting')
+	                                        	<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-request-decide',['approve' => 1, 'req_id'=> $request->id]) }}">
 												   <i class="fa fa-check"></i>Accept
-												</button>
+												</a>
 
-												<button type="button" id="declined" class="btn btn-danger response">
+												<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-request-decide',['approve' => 0, 'req_id'=> $request->id]) }}">
 												   <i class="fa fa-times"></i>Decline
-												</button>
-		                                        
-												{{-- <button type="submit" class="btn btn-success">
-												   <i class="fa fa-check"></i>Accept
-												</button>
-
-		                                        <a href="#" class="btn btn-danger">Reject<i class="fa fa-times fa-xs"></i></a> --}}
-		                                    </div>
-	                                    @endif
-	                                    {{-- <div class="col-md-3">
-	                                        <a href="{{ route('lawyer.show',$lawyers[--$user->id]) }}" class="btn btn-secondary">Profile</a>
-	                                    </div> 
-	                                    <div class="col-md-3">
-	                                        <a href="#" class="btn btn-success">Request</a>
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        <a href="{{ route('lawyer-messenger') }}" class="btn btn-info">message</a>
-	                                    </div> --}}
+												</a>
+		                                	@elseif($request->state == 'rejected')
+		                                		<button style="cursor: no-drop;" class="btn btn-danger" disabled>Declined</button>
+		                                	@elseif($request->state == 'accepted')
+		                                		<button style="cursor: no-drop;" class="btn btn-danger" disabled>Accepted</button>
+		                                	@endif
+		                                </div>
 	                                </div>
 	                                <div class="row">
 	                                    <div class="col-md-3">

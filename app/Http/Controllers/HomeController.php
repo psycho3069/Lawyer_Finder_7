@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\CaseFile;
 use App\Court;
+use App\Client;
 use App\Lawyer;
 use App\User;
 use App\Division;
@@ -100,19 +101,20 @@ class HomeController extends Controller
         $lawyers = Lawyer::all();
         $divisions = Division::all();
         $districts = District::all();
+        $requests = \App\Request::all();
 
         if(auth()->user()->type == 'client'){
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->get();
             $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data'));
+            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests'));
         } elseif(auth()->user()->type == 'lawyer'){
             $user_cases = CaseFile::where('lawyer_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data'));
+            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests'));
         } else {
             $casefiles = CaseFile::all();
-            return view('dash', compact('casefiles','courts','users','lawyers','active','feedback','divisions','districts','data'));
+            return view('dash', compact('casefiles','courts','users','lawyers','active','feedback','divisions','districts','data','requests'));
         }
     }
 
@@ -135,6 +137,7 @@ class HomeController extends Controller
         
         $divisions = Division::all();
         $districts = District::all();
+        $requests = \App\Request::all();
 
         $data['division']   = $request->division;
         $data['district']   = $request->district;
@@ -193,7 +196,7 @@ class HomeController extends Controller
         $lawyers = Lawyer::get();
         // return $users;
 
-        return view('dash', compact('users','user_cases','courts','lawyers','active','feedback','divisions','districts','data'));
+        return view('dash', compact('users','user_cases','courts','lawyers','active','feedback','divisions','districts','data','requests'));
     }
 
     public function requests(){
@@ -204,7 +207,13 @@ class HomeController extends Controller
         $active['search'] = 0;
         $active['requests'] = 1;
 
-        $requests = CaseFile::where('lawyer_id',auth()->user()->id)->get();
+        if (auth()->user()->type == 'lawyer') {
+            $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->first()->id;
+            $requests = \App\Request::where('lawyer_id',$lawyer_id)->get();
+        } elseif(auth()->user()->type == 'client') {
+            $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
+            $requests = \App\Request::where('client_id',$client_id)->get();
+        }
         $courts = Court::get();
         return view('layouts.user.requests',compact('requests','courts','active'));
     }
@@ -224,43 +233,76 @@ class HomeController extends Controller
         $user_cases = [];
         $courts = Court::get();
         $lawyers = Lawyer::get();
+        $requests = \App\Request::get();
         $feedback = '';
 
-        $query = CaseFile::where('client_id',auth()->user()->id)
-                                    ->where('result','waiting');
-
+        $query = CaseFile::where('client_id',auth()->user()->id)->where('result','waiting');
         $client_cases = $query->count();
 
-        if ($client_cases == 1) {
+        $lawyer_id = $request->lawyer_id;
+        $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
 
-            $client_case = $query->get()[0]->update([
-                'lawyer_id' => $request->lawyer_id,
-                'result' => 'pending',
-                'updated_at' => now()
-            ]);
+        $req = \App\Request::where('client_id',$client_id)->where('lawyer_id',$lawyer_id);
+        $count_waiting = $req->where('state','waiting')->count();
+        $count_rejected = $req->where('state','rejected')->count();
+        $count_accepted = $req->where('state','accepted')->count();
 
-            // $feedback = 'Request submitted successfully';
-            $request->session()->flash('success', 'Request submitted successfully');
-            // Session::put('feedback', $feedback);
+        if ($count_waiting == 0 && $count_rejected == 0) {
+            if ($client_cases == 1) {
+                $case_id = $query->get()->first()->id;
+                \App\Request::create([
+                    'state'         => 'waiting',
+                    'client_id'     => $client_id,
+                    'casefile_id'   => $case_id,
+                    'lawyer_id'     => $lawyer_id,
+                ]);
+
+                // $client_case = $query->get()[0]->update([
+                //     'lawyer_id' => $request->lawyer_id,
+                //     'result' => 'pending',
+                //     'updated_at' => now()
+                // ]);
+
+                $request->session()->flash('success', 'Request submitted successfully');
+                return back();
+            } else if ($client_cases < 1) {
+                $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have at least one \'waiting\' case. Please create/open a Case first!');
+                return back();
+            } else if ($client_cases > 1) {
+                $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have one and only one \'waiting\' case');
+                return back();
+            }
+        } else if($count_waiting == 1 && $count_rejected == 0) {
+            $request->session()->flash('failed', 'Sorry, You already requested this Lawyer! Wait for the response!');
             return back();
-            // return view('dash', compact('users','user_cases','courts','lawyers','active','feedback'));
-        } else {
-            $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have only one \'waiting\' case');
-            // Session::put('feedback', $feedback);
+        } else if($count_waiting == 0 && $count_rejected == 1) {
+            $request->session()->flash('failed', 'Sorry, You already requested this Lawyer! The Lawyer rejected your case!');
             return back();
-            // return view('dash', compact('users','user_cases','courts','lawyers','active','feedback'));
         }
     }
 
     public function lawyerRequestDecide(Request $request){
-        $result = '';
-        if ($request->case == 'approved') {
-            $result = 'yes';
-        } else{
-            $result = 'no';
+        
+        $req = \App\Request::find($request->req_id);
+
+        if ($request->approve) {
+            $result = CaseFile::where('lawyer_id',auth()->user()->id)->where('result','waiting')->first()->update([
+                'lawyer_id' => $req->lawyer_id,
+                'result' => 'running',
+                'updated_at' => now()
+            ]);
+
+            $request->session()->flash('approve', 'Request approved successfully');
+        } else if($request->decline){
+            $result = \App\Request::find($req->id)->update([
+                'state' => 'rejected',
+                'updated_at' => now()
+            ]);
+
+            $request->session()->flash('decline', 'Request declined successfully');
         }
-        return $result;
-        // $requests = CaseFile::where('lawyer_id',auth()->user()->id)->get();
+
+        return back();
     }
 
 }

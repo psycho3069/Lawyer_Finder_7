@@ -18,4 +18,9 @@ class Lawyer extends Model
     {
         return $this->belongsTo('App\Court');
     }
+
+    public function req()
+    {
+        return $this->hasMany('App\Request');
+    }
 }
