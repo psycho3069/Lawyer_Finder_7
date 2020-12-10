@@ -36,11 +36,11 @@
 	                                    </div>
 	                                    <div class="col-md-3">
 	                                    	@if($request->state == 'waiting')
-	                                        	<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-request-decide',['approve' => 1, 'req_id'=> $request->id]) }}">
+	                                        	<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-request-decide',['approve' => 1, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
 												   <i class="fa fa-check"></i>Accept
 												</a>
 
-												<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-request-decide',['approve' => 0, 'req_id'=> $request->id]) }}">
+												<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-request-decide',['approve' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
 												   <i class="fa fa-times"></i>Decline
 												</a>
 		                                	@elseif($request->state == 'rejected')

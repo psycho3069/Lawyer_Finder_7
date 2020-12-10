@@ -129,7 +129,16 @@
                                     <div class="col-pad-2 col-md-3">
                                         <select name="specialty" id="specialty" class="custom-select form-control @error('specialty') is-invalid @enderror">
                                             <option value="">---Select Specialty---</option>
-                                            <option value="defendant"
+                                            @foreach($specialties as $key => $specialty)
+                                                <option value="{{ $specialty->id }}"
+                                                    @if($data != null)
+                                                        @if($specialty->id == $data['specialty'])
+                                                            {{ 'selected' }}
+                                                        @endif
+                                                    @endif
+                                                    >{{ $specialty->name }}</option>
+                                            @endforeach
+                                            {{-- <option value="defendant"
                                                         @if($data != null)
                                                             @if($data['specialty'] == 'defendant')
                                                                 {{ 'selected' }}
@@ -140,7 +149,7 @@
                                                             @if($data['specialty'] == 'prosecutor')
                                                                 {{ 'selected' }}
                                                             @endif
-                                                        @endif>Prosecution</option>
+                                                        @endif>Prosecution</option> --}}
                                         </select>
 
                                         @error('specialty')

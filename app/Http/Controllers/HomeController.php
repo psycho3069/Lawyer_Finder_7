@@ -11,6 +11,7 @@ use App\Lawyer;
 use App\User;
 use App\Division;
 use App\District;
+use App\Specialty;
 use Exception;
 use Illuminate\Support\Facades\Session;
 
@@ -101,6 +102,7 @@ class HomeController extends Controller
         $lawyers = Lawyer::all();
         $divisions = Division::all();
         $districts = District::all();
+        $specialties = Specialty::all();
         $requests = \App\Request::all();
 
         if(auth()->user()->type == 'client'){
@@ -108,13 +110,13 @@ class HomeController extends Controller
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->get();
             $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests'));
+            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
         } elseif(auth()->user()->type == 'lawyer'){
             $user_cases = CaseFile::where('lawyer_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests'));
+            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
         } else {
             $casefiles = CaseFile::all();
-            return view('dash', compact('casefiles','courts','users','lawyers','active','feedback','divisions','districts','data','requests'));
+            return view('dash', compact('casefiles','courts','users','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
         }
     }
 
@@ -137,6 +139,7 @@ class HomeController extends Controller
         
         $divisions = Division::all();
         $districts = District::all();
+        $specialties = Specialty::all();
         $requests = \App\Request::all();
 
         $data['division']   = $request->division;
@@ -196,7 +199,7 @@ class HomeController extends Controller
         $lawyers = Lawyer::get();
         // return $users;
 
-        return view('dash', compact('users','user_cases','courts','lawyers','active','feedback','divisions','districts','data','requests'));
+        return view('dash', compact('users','user_cases','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
     }
 
     public function requests(){
@@ -282,13 +285,23 @@ class HomeController extends Controller
     }
 
     public function lawyerRequestDecide(Request $request){
-        
+        // return $request->all();
         $req = \App\Request::find($request->req_id);
 
         if ($request->approve) {
-            $result = CaseFile::where('lawyer_id',auth()->user()->id)->where('result','waiting')->first()->update([
-                'lawyer_id' => $req->lawyer_id,
-                'result' => 'running',
+
+            return $result1 = CaseFile::where('id',$req->casefile_id)
+                            ->where('client_id',$req->client_id)
+                            ->where('result','waiting')
+                            ->get();
+            //                 ->update([
+            //     'lawyer_id' => $req->lawyer_id,
+            //     'result' => 'running',
+            //     'updated_at' => now()
+            // ]);
+
+            $result2 = \App\Request::find($req->id)->update([
+                'state' => 'accepted',
                 'updated_at' => now()
             ]);
 

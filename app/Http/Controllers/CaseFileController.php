@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\CaseFile;
 use App\Court;
 use Illuminate\Http\Request;
@@ -53,12 +54,14 @@ class CaseFileController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator->errors());
         } else {
+            $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
+
             CaseFile::create([
                 'case_identity' => $request['case_identity'],
                 'description' => $request['description'],
                 'type' => $request['type'],
                 'client_type' => $request['client_type'],
-                'client_id' => auth()->user()->id,
+                'client_id' => $client_id,
                 'court_id' => $request['court_id'],
                 'result' => 'waiting',
             ]);

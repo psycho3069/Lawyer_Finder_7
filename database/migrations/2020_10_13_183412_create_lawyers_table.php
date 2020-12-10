@@ -19,7 +19,9 @@ class CreateLawyersTable extends Migration
             $table->foreignId('user_id')->constrained('a1_users');
             $table->foreignId('court_id')->constrained('b1_courts')->nullable();
             $table->enum('type', ['advocate','judge','magistrate','barrister'])->nullable();
-            $table->enum('specialty', ['prosecutor','defendant'])->nullable();
+            // $table->enum('specialty', ['prosecutor','defendant'])->nullable();
+            $table->unsignedBigInteger('specialties_id');
+            $table->foreign('specialties_id')->references('id')->on('a04_specialties');
             $table->float('rating',2,2)->default('0.0');
             $table->integer('reviews')->default(0);
             $table->integer('cases')->default(0);
