@@ -6,17 +6,17 @@
         <div class="col-md-12">
             <div class="">
                 <div class="register-icon"><i class="fas fa-user-plus fa-3x"></i></div>
-                <div class="register">{{ __('Register') }}</div>
+                <div class="register">@lang('register.title')</div>
 
                 <div class="" style="padding-bottom: 30px;">
                     <form method="POST" class="" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group ">
-                            <label for="name" class="row col-form-label text-md-left">{{ __('Name') }}<span style="color: red;">*</span></label>
+                            <label for="name" class="row col-form-label text-md-left">@lang('register.name')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
+                                <input style="border-radius: 0; height: 40px;" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus placeholder="@lang('register.hint_name')">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -27,10 +27,10 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="email" class="row col-form-label text-md-left">{{ __('E-Mail Address') }}<span style="color: red;">*</span></label>
+                            <label for="email" class="row col-form-label text-md-left">@lang('register.email')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="example@email.com">
+                                <input style="border-radius: 0; height: 40px;" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="@lang('register.hint_email')">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -41,10 +41,10 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="password" class="row col-form-label text-md-left">{{ __('Password') }}<span style="color: red;">*</span></label>
+                            <label for="password" class="row col-form-label text-md-left">@lang('register.password')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="at least 8 digits">
+                                <input style="border-radius: 0; height: 40px;" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="@lang('register.hint_pcc')">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -55,18 +55,18 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="password-confirm" class="row col-form-label text-md-left">{{ __('Confirm Password') }}<span style="color: red;">*</span></label>
+                            <label for="password-confirm" class="row col-form-label text-md-left">@lang('register.confirm')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password" placeholder="at least 8 digits">
+                                <input style="border-radius: 0; height: 40px;" id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password" placeholder="@lang('register.hint_pcc')">
                             </div>
                         </div>
 
                         <div class="form-group ">
-                            <label for="contact" class="row col-form-label text-md-left">{{ 'Contact' }}<span style="color: red;">*</span></label>
+                            <label for="contact" class="row col-form-label text-md-left">@lang('register.contact')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" autocomplete="new-password" placeholder="at least 8 digits">
+                                <input style="border-radius: 0; height: 40px;" id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" autocomplete="new-password" placeholder="@lang('register.hint_pcc')">
 
                                 @error('contact')
                                     <span class="invalid-feedback" role="alert">
@@ -77,11 +77,11 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="division" class="row col-form-label text-md-left">{{ __('Division') }}<span style="color: red;">*</span></label>
+                            <label for="division" class="row col-form-label text-md-left">@lang('register.division')<span style="color: red;">*</span></label>
 
                             <div class="row">
                                 <select style="border-radius: 0; height: 40px;" name="division" id="division" class="custom-select form-control @error('division') is-invalid @enderror">
-                                    <option value="">---Select Division---</option>
+                                    <option value="">@lang('register.select_division')</option>
                                     @foreach($divisions as $key => $division)
                                         <option value="{{ $division->id }}">{{ $division->name }}</option>
                                     @endforeach
@@ -96,17 +96,14 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="district" class="row col-form-label text-md-left">{{ __('District') }}<span style="color: red;">*</span></label>
+                            <label for="district_id" class="row col-form-label text-md-left">@lang('register.district')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <select style="border-radius: 0; height: 40px;" name="district" id="district" class="custom-select form-control @error('district') is-invalid @enderror">
-                                    {{-- <option value="">---Select District---</option>
-                                    @foreach($districts as $key => $district)
-                                        <option value="{{ $district->id }}">{{ $district->name }}</option>
-                                    @endforeach --}}
+                                <select style="border-radius: 0; height: 40px;" name="district_id" id="district_id" class="custom-select form-control @error('district_id') is-invalid @enderror">
+                                    <option value="">@lang('register.select_district')</option>
                                 </select>
 
-                                @error('district')
+                                @error('district_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -115,10 +112,10 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="location" class="row col-form-label text-md-left">{{ __('Location') }}<span style="color: red;">*</span></label>
+                            <label for="location" class="row col-form-label text-md-left">@lang('register.location')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="location" type="location" class="form-control @error('location') is-invalid @enderror" name="location" autocomplete="new-location" placeholder="Street Address">
+                                <input style="border-radius: 0; height: 40px;" id="location" type="location" class="form-control @error('location') is-invalid @enderror" name="location" autocomplete="new-location" placeholder="@lang('register.location')">
 
                                 @error('location')
                                     <span class="invalid-feedback" role="alert">
@@ -129,10 +126,10 @@
                         </div>
 
                         <div class="form-group ">
-                            <label for="birthdate" class="row col-form-label text-md-left">{{ __('Birthdate') }}<span style="color: red;">*</span></label>
+                            <label for="birthdate" class="row col-form-label text-md-left">@lang('register.birthdate')<span style="color: red;">*</span></label>
 
                             <div class="row">
-                                <input style="border-radius: 0; height: 40px;" id="birthdate" type="text" placeholder="yyyy-mm-dd" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ old('birthdate') }}" autocomplete="birthdate" autofocus>
+                                <input style="border-radius: 0; height: 40px;" id="birthdate" type="text" placeholder="@lang('register.hint_birthdate')" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ old('birthdate') }}" autocomplete="birthdate" autofocus>
 
                                 @error('birthdate')
                                     <span class="invalid-feedback" role="alert">
@@ -145,15 +142,15 @@
 
 
                         <div class="form-group">
-                            <label for="type" class="row col-form-label text-md-left">{{ __('User Type') }}<span style="color: red;">*</span></label>
+                            <label for="type" class="row col-form-label text-md-left">@lang('register.usertype')<span style="color: red;">*</span></label>
 
                             <div class="row">
                                 <input style="margin-top: 5px;" type="radio" id="lawyer" class="@error('type') is-invalid @enderror" name="type" value="lawyer"
                                 @if(old('type') == 'lawyer') echo checked @endif>
-                                <label for="lawyer">Lawyer</label>&nbsp&nbsp&nbsp
+                                <label for="lawyer">@lang('register.lawyer')</label>&nbsp&nbsp&nbsp
                                 <input style="margin-top: 5px;" type="radio" id="client" name="type" value="client"
                                 @if(old('type') == 'client') echo checked @endif>
-                                <label for="client">Client</label>
+                                <label for="client">@lang('register.client')</label>
 
                                 @error('type')
                                     <span class="invalid-feedback" role="alert">
@@ -164,18 +161,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="gender" class="row col-form-label text-md-left">{{ __('Genger') }}<span style="color: red;">*</span></label>
+                            <label for="gender" class="row col-form-label text-md-left">@lang('register.gender')<span style="color: red;">*</span></label>
 
                             <div class="row">
                                 <input style="margin-top: 5px;" type="radio" id="male" class="@error('gender') is-invalid @enderror" name="gender" value="male"
                                 @if(old('gender') == 'male') echo checked @endif>
-                                <label for="male">Male</label>&nbsp&nbsp&nbsp
+                                <label for="male">@lang('register.male')</label>&nbsp&nbsp&nbsp
                                 <input style="margin-top: 5px;" type="radio" id="female" name="gender" value="female"
                                 @if(old('gender') == 'female') echo checked @endif>
-                                <label for="female">Female</label>&nbsp&nbsp&nbsp
+                                <label for="female">@lang('register.female')</label>&nbsp&nbsp&nbsp
                                 <input style="margin-top: 5px;" type="radio" id="other" name="gender" value="other"
                                 @if(old('gender') == 'other') echo checked @endif>
-                                <label for="other">Other</label>
+                                <label for="other">@lang('register.other')</label>
 
 
                                 @error('gender')
@@ -191,13 +188,13 @@
 
                             <div class="">
                                 <button style="margin-top: 8px; border-radius: 0; min-width: 100px; min-height: 40px;" type="submit" class="btn btn-primary btn-block">
-                                    {{ __('Register') }}
+                                    @lang('register.register')
                                 </button>
                             </div>
 
                             <label class="col-form-label text-white text-md-left">
                                 <a class="btn btn-link" href="{{ route('login') }}">
-                                    {{ __('Login') }}
+                                    @lang('register.login')
                                 </a>
                             </label>
                             
@@ -235,7 +232,7 @@
                         txt += "<option value="+data[x].id+">" + data[x].name + "</option>";
                     }
                     // console.log(txt)
-                    $( "#district").html(txt);
+                    $( "#district_id").html(txt);
                 },
                 error: function (data) {
                     console.log('Error:', data);

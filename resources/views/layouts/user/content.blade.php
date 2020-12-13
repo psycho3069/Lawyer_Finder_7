@@ -16,12 +16,12 @@
     @include('layouts.user.menu')
 
     <div class="body-margin">
-        <div class="container p-0" style="margin-top: 56px;">
+        <div id="content" class="container p-0" style="margin-top: 56px;">
             <div class="row justify-content-center m-0 p-0 clearfix">
                 <div class="col-md-12 m-0 p-0">
                     <div class="card m-0 p-0">
                         @if(Session::has('success'))
-                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+                            <div id="success-status" style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
                                 {{ Session::get('success') }}
                             </div>
                         @elseif(Session::has('failed'))
@@ -29,18 +29,18 @@
                                 {{ Session::get('failed') }}
                             </div>
                         @endif
-                        <div class="card-header">{{ __('Search Lawyers') }}</div>
+                        <div class="card-header">@lang('dash.title')</div>
 
                         <div class="card-body">
                             <form method="POST" action="{{ route('search') }}">
                                 @csrf
 
                                 <div class="form-group row" style="padding: 15px 0px;">
-                                    <label for="division" class="col-md-3 col-form-label text-md-right">{{ __('Division') }}</label>
+                                    <label for="division" class="col-md-3 col-form-label text-md-right">@lang('dash.division')</label>
 
                                     <div class="col-pad-2 col-md-3">
                                         <select name="division" id="division" class="custom-select form-control @error('division') is-invalid @enderror">
-                                            <option value="">---Select Division---</option>
+                                            <option value="">---@lang('dash.s_division')---</option>
                                             @foreach($divisions as $key => $division)
                                                 <option value="{{ $division->id }}"
                                                     @if($data != null)
@@ -59,11 +59,11 @@
                                         @enderror
                                     </div>
 
-                                    <label for="district" class="col-md-3 col-form-label text-md-right">{{ __('District') }}</label>
+                                    <label for="district" class="col-md-3 col-form-label text-md-right">@lang('dash.district')</label>
 
                                     <div class="col-pad-2 col-md-3">
                                         <select name="district" id="district" class="custom-select form-control @error('district') is-invalid @enderror">
-                                            <option value="">---Select District---</option>
+                                            <option value="">---@lang('dash.s_district')---</option>
                                             @foreach($districts as $key => $district)
                                                 <option value="{{ $district->id }}"
                                                     @if($data != null)
@@ -82,11 +82,11 @@
                                         @enderror
                                     </div>
 
-                                    <label for="type" class="col-md-3 col-form-label text-md-right">{{ __('Type') }}</label>
+                                    <label for="type" class="col-md-3 col-form-label text-md-right">@lang('dash.type')</label>
 
                                     <div class="col-pad-2 col-md-3">
                                         <select name="type" id="type" class="custom-select form-control @error('type') is-invalid @enderror">
-                                            <option value="">---Select Type---</option>
+                                            <option value="">---@lang('dash.s_type')---</option>
                                             <option value="advocate"
                                                         @if($data != null)
                                                             @if($data['type'] == 'advocate')
@@ -124,11 +124,11 @@
                                         @enderror
                                     </div>
 
-                                    <label for="specialty" class="col-md-3 col-form-label text-md-right">{{ __('Specialty') }}</label>
+                                    <label for="specialty" class="col-md-3 col-form-label text-md-right">@lang('dash.specialty')</label>
 
                                     <div class="col-pad-2 col-md-3">
                                         <select name="specialty" id="specialty" class="custom-select form-control @error('specialty') is-invalid @enderror">
-                                            <option value="">---Select Specialty---</option>
+                                            <option value="">---@lang('dash.s_specialty')---</option>
                                             @foreach($specialties as $key => $specialty)
                                                 <option value="{{ $specialty->id }}"
                                                     @if($data != null)
@@ -200,7 +200,7 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-3">
                                         <button type="submit" class="btn btn-primary btn-block">
-                                            {{ __('Search') }}
+                                            @lang('dash.search')
                                         </button>
                                     </div>
                                 </div>
@@ -217,24 +217,25 @@
                                         {{ '#'.++$key }}
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('lawyer.show',$user->id) }}" class="btn btn-secondary">Profile</a>
+                                        <a href="{{ route('lawyer.show',$user->id) }}" class="btn btn-secondary">@lang('dash.profile')</a>
                                     </div>
+                                    {{-- {{ $requests->where('lawyer_id',$user->id)->first()->state }} --}}
                                     <div class="col-md-3">
-                                        @if($requests->find($user->id))
-                                            @if($requests->find($user->id)->state == 'waiting')
-                                                <button style="cursor: no-drop;" class="btn btn-info" disabled>Requested</button>
-                                            @elseif($requests->find($user->id)->state == 'rejected')
-                                                <button style="cursor: no-drop;" class="btn btn-danger" disabled>Rejected</button>
+                                        @if($requests->where('lawyer_id',$user->id)->where('state','!=','closed')->first())
+                                            @if($requests->where('lawyer_id',$user->id)->first()->state == 'pending')
+                                                <button style="cursor: no-drop;" class="btn btn-info" disabled>@lang('dash.requested')</button>
+                                            @elseif($requests->where('lawyer_id',$user->id)->first()->state == 'rejected')
+                                                <button style="cursor: no-drop;" class="btn btn-danger" disabled>@lang('dash.rejected')</button>
                                             @else
-                                                <button style="cursor: no-drop;" class="btn btn-success" disabled>Accepted</button>
+                                                <button style="cursor: no-drop;" class="btn btn-success" disabled>@lang('dash.accepted')</button>
                                             @endif
                                         @else
-                                            <a href="{{ route('lawyer.request-case',['lawyer_id' => $user->id]) }}" class="btn btn-success">Request</a>
+                                            <a href="{{ route('lawyer.request-case',['lawyer_id' => $user->id]) }}" class="btn btn-outline-success">@lang('dash.request')</a>
                                         @endif
 
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('lawyer-messenger') }}" class="btn btn-info">message</a>
+                                        <a href="{{ route('lawyer-messenger') }}" class="btn btn-info">@lang('dash.message')</a>
                                     </div>
                                 </div>
                                 <div class="row">

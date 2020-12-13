@@ -27,7 +27,7 @@
                             <div class="col-md-6">
                                 <div class="form-group with-icon">
                                     <i class="fa-user-o fa"></i>
-                                    <input placeholder="{{  __('contact.name') }}" type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" autocomplete="name">
+                                    <input placeholder="@lang('contact.name')" type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" autocomplete="name">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@
                             <div class="col-md-6">
                                 <div class="form-group with-icon">
                                     <i class="fa-envelope-o fa"></i>
-                                    <input type="email" placeholder="{{  __('contact.email_adress') }}" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" autocomplete="email">
+                                    <input type="email" placeholder="@lang('contact.email_adress')" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" autocomplete="email">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
                             <div class="col-md-6">
                                 <div class="form-group with-icon">
                                     <i class="fa-phone fa"></i>
-                                    <input type="text" placeholder="{{  __('contact.phone_number') }}" id="contact" name="contact" class="form-control @error('contact') is-invalid @enderror" value="{{ old('contact') }}" autocomplete="contact">
+                                    <input type="text" placeholder="@lang('contact.phone_number')" id="contact" name="contact" class="form-control @error('contact') is-invalid @enderror" value="{{ old('contact') }}" autocomplete="contact">
                                     @error('contact')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -67,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="form-group with-icon">
                                     <i class="fa-file-text-o fa"></i>
-                                    <input type="text" placeholder="{{  __('contact.subject') }}" id="subject" name="subject" class="form-control @error('subject') is-invalid @enderror" value="{{ old('subject') }}" autocomplete="subject">
+                                    <input type="text" placeholder="@lang('contact.subject')" id="subject" name="subject" class="form-control @error('subject') is-invalid @enderror" value="{{ old('subject') }}" autocomplete="subject">
                                     @error('subject')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -79,7 +79,7 @@
 
                         <div style="padding: 0px 15px 0px 15px;" class="form-group with-icon">
                             <i class="fa-comments-o fa"></i>
-                            <textarea class="form-control @error('feedback') is-invalid @enderror" value="{{ old('feedback') }}" id="feedback" name="feedback" placeholder="{{  __('contact.message') }}" rows="6" cols="30"></textarea>
+                            <textarea class="form-control @error('feedback') is-invalid @enderror" value="{{ old('feedback') }}" id="feedback" name="feedback" placeholder="@lang('contact.message')" rows="6" cols="30"></textarea>
                             @error('feedback')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -87,7 +87,7 @@
                             @enderror
                         </div>
 
-                        <button style="height: 50px; width: 150px; border-radius: 0; margin-left: 15px;" name="submit" type="submit" id="submit-button" value="Submit" class="btn btn-primary">{{  __('contact.send') }}</button>
+                        <button style="height: 50px; width: 150px; border-radius: 0; margin-left: 15px;" name="submit" type="submit" id="submit-button" value="Submit" class="btn btn-primary">@lang('contact.send')</button>
                     </form>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="contact-item">
-                                <h4><i class="fa fa-map-o"></i> {{  __('contact.address') }}</h4>
+                                <h4><i class="fa fa-map-o"></i> @lang('contact.address')</h4>
                                 <div>
                                     Building, City,<br>
 Dhaka, Bangladesh                                    </div>
@@ -110,7 +110,7 @@ Dhaka, Bangladesh                                    </div>
 
                         <div class="col-md-4">
                             <div class="contact-item">
-                                <h4><i class="fa fa-envelope-o"></i> {{  __('contact.email') }}</h4>
+                                <h4><i class="fa fa-envelope-o"></i> @lang('contact.email')</h4>
                                 <div>
                                     farha100669@gmail.com                                    </div>
                             </div>
@@ -118,7 +118,7 @@ Dhaka, Bangladesh                                    </div>
 
                         <div class="col-md-4">
                             <div class="contact-item">
-                                <h4><i class="fa fa-phone-volume"></i> {{  __('contact.contact') }}</h4>
+                                <h4><i class="fa fa-phone-volume"></i> @lang('contact.contact')</h4>
                                 <div>
                                     +880-xxxxxxxxxx                                    </div>
                             </div>

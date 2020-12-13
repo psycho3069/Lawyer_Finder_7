@@ -78,9 +78,11 @@ class HomeController extends Controller
             return view('layouts.admin.cases', compact('casefiles'));
         } else {
             if (auth()->user()->type == 'lawyer') {
-                $user_cases = CaseFile::where('lawyer_id', auth()->user()->id)->get();
+                $lawyer_id = Lawyer::where('user_id', auth()->user()->id)->get()->first()->id;
+                $user_cases = CaseFile::where('lawyer_id', $lawyer_id)->get();
             } elseif (auth()->user()->type == 'client') {
-                $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
+                $client_id = Client::where('user_id', auth()->user()->id)->get()->first()->id;
+                $user_cases = CaseFile::where('client_id', $client_id)->get();
             }
             return view('layouts.user.cases', compact('user_cases','active'));
         }
@@ -165,7 +167,7 @@ class HomeController extends Controller
         } elseif ($district == null && $type == null && $specialty != null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('specialty', $specialty)
+                            ->where('specialties_id', $specialty)
                             ->get();
         } elseif ($district != null && $type != null && $specialty == null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
@@ -177,20 +179,20 @@ class HomeController extends Controller
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->where('b6_lawyers.type', $type)
-                            ->where('specialty', $specialty)
+                            ->where('specialties_id', $specialty)
                             ->get();
         } elseif ($district != null && $type == null && $specialty != null) {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->where('a1_users.district_id', $district)
-                            ->where('specialty', $specialty)
+                            ->where('specialties_id', $specialty)
                             ->get();
         } else {
             $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->where('a1_users.district_id', $district)
                             ->where('b6_lawyers.type', $type)
-                            ->where('specialty', $specialty)
+                            ->where('specialties_id', $specialty)
                             ->get();
         } 
 
@@ -212,7 +214,8 @@ class HomeController extends Controller
 
         if (auth()->user()->type == 'lawyer') {
             $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->first()->id;
-            $requests = \App\Request::where('lawyer_id',$lawyer_id)->get();
+            $requests = \App\Request::where('lawyer_id',$lawyer_id)
+                                        ->get();
         } elseif(auth()->user()->type == 'client') {
             $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
             $requests = \App\Request::where('client_id',$client_id)->get();
@@ -239,11 +242,11 @@ class HomeController extends Controller
         $requests = \App\Request::get();
         $feedback = '';
 
-        $query = CaseFile::where('client_id',auth()->user()->id)->where('result','waiting');
-        $client_cases = $query->count();
-
         $lawyer_id = $request->lawyer_id;
         $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
+
+        $query = CaseFile::where('client_id', $client_id)->where('result','waiting');
+        $client_cases = $query->count();
 
         $req = \App\Request::where('client_id',$client_id)->where('lawyer_id',$lawyer_id);
         $count_waiting = $req->where('state','waiting')->count();
@@ -254,7 +257,7 @@ class HomeController extends Controller
             if ($client_cases == 1) {
                 $case_id = $query->get()->first()->id;
                 \App\Request::create([
-                    'state'         => 'waiting',
+                    'state'         => 'pending',
                     'client_id'     => $client_id,
                     'casefile_id'   => $case_id,
                     'lawyer_id'     => $lawyer_id,
@@ -285,34 +288,70 @@ class HomeController extends Controller
     }
 
     public function lawyerRequestDecide(Request $request){
-        // return $request->all();
+        $request->all();
         $req = \App\Request::find($request->req_id);
 
         if ($request->approve) {
 
-            return $result1 = CaseFile::where('id',$req->casefile_id)
-                            ->where('client_id',$req->client_id)
-                            ->where('result','waiting')
-                            ->get();
-            //                 ->update([
-            //     'lawyer_id' => $req->lawyer_id,
-            //     'result' => 'running',
-            //     'updated_at' => now()
-            // ]);
+            $result1 = CaseFile::find($req->casefile_id)->update([
+                'lawyer_id' => $req->lawyer_id,
+                'result' => 'running',
+                'updated_at' => now()
+            ]);
 
             $result2 = \App\Request::find($req->id)->update([
                 'state' => 'accepted',
                 'updated_at' => now()
             ]);
 
+            $result3 = \App\Request::where('casefile_id',$req->casefile_id)
+                                        ->where('state','pending')
+                                        ->delete();
+
             $request->session()->flash('approve', 'Request approved successfully');
-        } else if($request->decline){
+        } else if(!$request->approve){
+
             $result = \App\Request::find($req->id)->update([
                 'state' => 'rejected',
                 'updated_at' => now()
             ]);
 
             $request->session()->flash('decline', 'Request declined successfully');
+        }
+
+        return back();
+    }
+
+    public function lawyerResultDecide(Request $request){
+        // return $request->all();
+        $req = \App\Request::find($request->req_id);
+
+        if ($request->result) {
+
+            $result1 = CaseFile::find($req->casefile_id)->update([
+                'result' => 'won',
+                'updated_at' => now()
+            ]);
+
+            $result2 = \App\Request::find($req->id)->update([
+                'state' => 'closed',
+                'updated_at' => now()
+            ]);
+
+            $request->session()->flash('won', 'Case result set as WON');
+        } else if(!$request->result){
+
+            $result1 = CaseFile::find($req->casefile_id)->update([
+                'result' => 'lost',
+                'updated_at' => now()
+            ]);
+
+            $result2 = \App\Request::find($req->id)->update([
+                'state' => 'closed',
+                'updated_at' => now()
+            ]);
+
+            $request->session()->flash('lost', 'Case result set as LOST');
         }
 
         return back();

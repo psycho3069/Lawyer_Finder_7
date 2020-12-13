@@ -6,85 +6,88 @@
     	@include('layouts.user.menu')
 
     	<div class="body-margin">
-	        <div class="container p-0" style="margin-top: 56px;">
+	        <div id="content" class="container p-0" style="margin-top: 56px;">
 	            <div class="row justify-content-center clearfix">
 	                <div class="col-md-12 m-0 p-0">
 	                    <div class="card m-0 p-0">
-	                        <div class="text-lg-center card-header bg-primary">{{ __('Client Requests') }}</div>
+	                        <div style="background-color: #f1d1d2;" class="text-lg-center card-header">{{ __('Client Requests') }}</div>
 
-	                    @if(Session::has('approve'))
-                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
-                                {{ Session::get('approve') }}
-                            </div>
-                        @elseif(Session::has('decline'))
-                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
-                                {{ Session::get('decline') }}
-                            </div>
-                        @endif
+		                    @if(Session::has('approve'))
+	                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+	                                {{ Session::get('approve') }}
+	                            </div>
+	                        @elseif(Session::has('decline'))
+	                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+	                                {{ Session::get('decline') }}
+	                            </div>
+	                        @elseif(Session::has('won'))
+	                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+	                                {{ Session::get('won') }}
+	                            </div>
+	                        @elseif(Session::has('lost'))
+	                            <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+	                                {{ Session::get('lost') }}
+	                            </div>
+	                        @endif
 
 		                    @foreach($requests as $key => $request)
-	                            <div class="card-body">
-	                                <div class="row">
-	                                    <div class="col-md-3">
-	                                        {{ '#'.++$key }}
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        {{ '' }}
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        {{ '' }}
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                    	@if($request->state == 'waiting')
-	                                        	<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-request-decide',['approve' => 1, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
-												   <i class="fa fa-check"></i>Accept
-												</a>
+		                    	{{-- @if($request->casefile->result != 'running') --}}
+		                            <div class="card-body" style="border: solid gray 1px; margin: 5px 0px 5px 0px;">
+		                                <div class="row">
+		                                	<div class="col-md-3">
+		                                        {{ 'Case Identity:' }}
+		                                    </div>
+		                                    <div class="col-md-3">
+		                                        {{ '#'.++$key.'	' }}{{ $request->casefile->case_identity }}{{ ' ('.$request->casefile->type.' Case)' }}
+		                                    </div>
+		                                    <div class="col-md-6">
+		                                    	@if($request->state == 'pending')
+		                                        	<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-request-decide',['approve' => 1, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
+													   <i class="fa fa-check"></i>Accept
+													</a>
 
-												<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-request-decide',['approve' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
-												   <i class="fa fa-times"></i>Decline
-												</a>
-		                                	@elseif($request->state == 'rejected')
-		                                		<button style="cursor: no-drop;" class="btn btn-danger" disabled>Declined</button>
-		                                	@elseif($request->state == 'accepted')
-		                                		<button style="cursor: no-drop;" class="btn btn-danger" disabled>Accepted</button>
-		                                	@endif
+													<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-request-decide',['approve' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
+													   <i class="fa fa-times"></i>Decline
+													</a>
+			                                	@elseif($request->state == 'rejected')
+			                                		<button style="cursor: no-drop;" class="btn btn-danger" disabled>Declined</button>
+			                                	@elseif($request->state == 'accepted')
+			                                		<button style="cursor: no-drop;" class="btn btn-primary rounded-0" disabled>Accepted</button>
+
+			                                		<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-result-decide',['result' => 1, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
+													   <i class="fa fa-check"></i>Won
+													</a>
+
+													<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-result-decide',['result' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
+													   <i class="fa fa-times"></i>Lost
+													</a>
+			                                	@elseif($request->state == 'closed')
+			                                		<button style="cursor: no-drop;" class="btn btn-warning" disabled>Closed</button>
+			                                	@endif
+			                                </div>
 		                                </div>
-	                                </div>
-	                                <div class="row">
-	                                    <div class="col-md-3">
-	                                        {{ $request->case_identity }}
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        {{ $request->description }}
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        {{ $request->type }}
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        {{ $request->client_type }}
-	                                    </div>
-	                                </div>
-	                                <div class="row">
-	                                    <div class="col-md-3">
-	                                        {{ $request->client_id }}
-	                                    </div>
-	                                    
-	                                    <div class="col-md-3">
-	                                        {{ '' }}
-	                                    </div>
-
-	                                    <div class="col-md-3">
-	                                        @foreach($courts as $key => $court)
-	                                            @if($court->id == $request->court_id)
-	                                                {{ $court->name }}
-	                                            @endif
-	                                        @endforeach
-	                                    </div>
-	                                    <div class="col-md-3">
-	                                        {{ $request->created_at }}
-	                                    </div>
-	                                </div>
-	                            </div>
+		                                <div class="row">
+		                                	<div class="col-md-3">
+		                                        {{ 'Court Name:' }}
+		                                    </div>
+		                                    <div class="col-md-3">
+		                                        {{ $request->casefile->court->name }}
+		                                    </div>
+		                                    <div class="col-md-3">
+		                                    	{{ 'Client Name:' }}
+		                                    </div>
+		                                    <div class="col-md-3">
+		                                    	{{ $request->client->user->name }}
+		                                    </div>
+		                                </div>
+		                                <div class="row pt-3">
+		                                    <div class="col-md-10">
+		                                    	<h4 style="color: Maroon;">Case Details:</h4>
+		                                    	 {{ $request->casefile->description }}
+		                                    </div>
+		                                </div>
+		                            </div>
+	                            {{-- @endif --}}
 		                    @endforeach
 
 	                    </div>

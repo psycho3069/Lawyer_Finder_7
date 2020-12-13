@@ -7,6 +7,11 @@ use App\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Specialty;
+use App\Division;
+use App\District;
+use Chatify\Facades\ChatifyMessenger as Chatify;
+use Illuminate\Support\Str;
 
 
 class ClientController extends Controller
@@ -66,7 +71,10 @@ class ClientController extends Controller
     public function edit($id)
     {
         $user = User::find(auth()->user()->id);
-        return view('layouts.user.client-edit',compact('user'));
+        $specialties = Specialty::all();
+        $divisions = Division::all();
+        $districts = District::all();
+        return view('layouts.user.client-edit',compact('user','specialties','divisions','districts'));
     }
 
     /**
@@ -88,6 +96,39 @@ class ClientController extends Controller
             'type' => ['required'],
             'gender' => ['required'],
         ]);
+
+        // if there is a [file]
+        if ($request->hasFile('profile_picture')) {
+            // allowed extensions
+            $allowed_images = Chatify::getAllowedImages();
+
+            $file = $request->file('profile_picture');
+            // if size less than 50MB
+            // return $file->getSize();
+            if ($file->getSize() < 50000000) {
+                if (in_array($file->getClientOriginalExtension(), $allowed_images)) {
+                    // ----------delete the older one----------
+                    if (auth()->user()->avatar != config('chatify.user_avatar.default')) {
+                        $path = storage_path('app/public/' . config('chatify.user_avatar.folder') . '/' . auth()->user()->avatar);
+                        if (file_exists($path)) {
+                            @unlink($path);
+                        }
+                    }
+                    
+                    // ----------upload----------
+                    $avatar = Str::uuid() . "." . $file->getClientOriginalExtension();
+                    $update = User::where('id', auth()->user()->id)->update(['avatar' => $avatar]);
+                    $file->storeAs("public/" . config('chatify.user_avatar.folder'), $avatar);
+                    $success = $update ? 1 : 0;
+                } else {
+                    $msg = "File extension not allowed!";
+                    return back()->withErrors($msg);
+                }
+            } else {
+                $msg = "File is too large!";
+                return back()->withErrors($msg);
+            }
+        }
 
         if ($validator->fails()) {
             return back()->withErrors($validator->errors());

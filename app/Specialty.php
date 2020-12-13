@@ -8,4 +8,9 @@ class Specialty extends Model
 {
     protected $table = 'a04_specialties';
     protected $guarded = [];
+
+    public function lawyer()
+    {
+        return $this->hasMany('App\Lawyer','specialties_id');
+    }
 }

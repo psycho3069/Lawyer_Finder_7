@@ -15,96 +15,83 @@
 
             @if(auth()->user()->type == 'lawyer')
 
-                {{-- <div class="col-md-6">
-                    <a href="{{ route('lawyer.edit',auth()->user()->id) }}" type="button" class="button btn-block" style="vertical-align:middle"><span>Edit Profile</span></a>
-                </div>
-                <div class="user-basic col-md-6 row">
-                    <div>Name: {{ auth()->user()->name }}</div>
-                    <div>Contact: {{ auth()->user()->contact }}</div>
-                    <div>Location: {{ auth()->user()->location }}</div>
-                    <div>Birthdate: {{ auth()->user()->birthdate }}</div>
-                    <div>Email: {{ auth()->user()->email }}</div>
-                    <div>Gender: {{ auth()->user()->gender }}</div>
-                    <div>Member Since: {{ auth()->user()->created_at }}</div>
-                    <div>Specialty: {{ auth()->user()->specialty }}</div>
-                </div> --}}
                 <div class="user-basic col-md-6 row">
                     <div class="col-md-12">
                         <span>
-                            <h3 style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">Personal Details</h3>
+                            <h3 style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">@lang('profile.title_p')</h3>
                         </span>
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-address-book fa-lg text-primary" style="height: 20px; width: 20px;"></i>&nbsp
-                        Contact: 
+                        @lang('profile.contact'): 
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->contact }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-map-marker-alt fa-lg text-warning"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Location:  
+                        @lang('profile.location'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->location }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-birthday-cake fa-lg text-danger"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Birthdate:   
+                        @lang('profile.birthdate'):   
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->birthdate }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-at fa-lg text-success"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Email:  
+                        @lang('profile.email'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->email }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-restroom fa-lg text-secondary"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Gender:  
+                        @lang('profile.gender'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->gender }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-file-signature fa-lg text-info"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Registered:  
+                        @lang('profile.register'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->created_at }}
                     </div>
                     <div class="col-md-12">
                         <span>
-                            <h3 class="text-capitalize" style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">{{ auth()->user()->type }} Details</h3>
+                            <h3 class="text-capitalize" style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">@lang('profile.title_u')</h3>
                         </span>
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-file-invoice fa-lg text-primary"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Total Cases: 
+                        @lang('profile.cases'): 
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->lawyer->cases }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star fa-lg text-warning"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Avg Rating: 
+                        @lang('profile.rating'): 
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->lawyer->rating }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star-half-alt fa-lg text-danger"  style="height: 20px; width: 20px;"></i>&nbsp
-                        All Ratings: 
+                        @lang('profile.all'): 
                     </div>
                     <div class="col-md-5">
                         {{-- {{ auth()->user()->lawyer->rating }} --}}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-comment-alt fa-lg text-success"  style="height: 20px; width: 20px;"></i>&nbsp
-                        All Reviews: 
+                        @lang('profile.review'): 
                     </div>
                     <div class="col-md-5">
                         {{-- {{ auth()->user()->lawyer->review }} --}}
@@ -115,19 +102,13 @@
                 <div class="row col-md-6 justify-content-center text-md-center">
                     <div class="col-md-12 justify-content-center text-md-center row" style="padding-top: 15px;">
                         <img src="{{ URL::asset('/storage/'.config('chatify.user_avatar.folder').'/'.Auth::user()->avatar) }}" style="width:250px; height:250px; border-radius:50%;">
-                        {{-- <h2>{{ $user->name }}'s Profile</h2>
-                        <form enctype="multipart/form-data" action="/profile" method="POST">
-                            <label>Update Profile Image</label>
-                            <input type="file" name="avatar">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="pull-right btn btn-sm btn-primary">
-                        </form> --}}
+                        
 
                         <div class="col-md-12 text-md-center" style="color: maroon;"><h3>{{ auth()->user()->name }}</h3></div>
                         
                         <div class="col-md-12 text-md-center">
                             <center>
-                                <a href="{{ route('lawyer.edit',auth()->user()->id) }}" type="button" class="btn btn-outline-primary w-95" style="vertical-align:middle; "><h4><i class="fas fa-edit fa-lg"  style="height: 20px; width: 20px; color: maroon;"></i>&nbsp&nbspEdit Profile</h4></a>
+                                <a href="{{ route('lawyer.edit',auth()->user()->id) }}" type="button" class="btn btn-outline-primary w-95" style="vertical-align:middle; "><h4><i class="fas fa-edit fa-lg"  style="height: 20px; width: 20px; color: maroon;"></i>&nbsp&nbsp @lang('profile.edit')</h4></a>
                             </center>
                         </div>
                     </div>
@@ -140,80 +121,80 @@
                 <div class="user-basic col-md-6 row">
                     <div class="col-md-12">
                         <span>
-                            <h3 style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">Personal Details</h3>
+                            <h3 style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">@lang('profile.title_p')</h3>
                         </span>
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-address-book fa-lg text-primary" style="height: 20px; width: 20px;"></i>&nbsp
-                        Contact: 
+                        @lang('profile.contact'): 
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->contact }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-map-marker-alt fa-lg text-warning"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Location:  
+                        @lang('profile.location'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->location }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-birthday-cake fa-lg text-danger"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Birthdate:   
+                        @lang('profile.birthdate'):   
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->birthdate }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-at fa-lg text-success"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Email:  
+                        @lang('profile.email'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->email }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-restroom fa-lg text-secondary"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Gender:  
+                        @lang('profile.gender'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->gender }}
                     </div>
                     <div class="col-md-5">
-                        <i class="fas fa-file-signature fa-lg text-white"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Registered:  
+                        <i class="fas fa-file-signature fa-lg text-info"  style="height: 20px; width: 20px;"></i>&nbsp
+                        @lang('profile.register'):  
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->created_at }}
                     </div>
                     <div class="col-md-12">
                         <span>
-                            <h3 class="text-capitalize" style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">{{ auth()->user()->type }} Details</h3>
+                            <h3 class="text-capitalize" style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">@lang('profile.title_u')</h3>
                         </span>
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-file-invoice fa-lg text-primary"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Total Cases: 
+                        @lang('profile.cases'): 
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->client->cases }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star fa-lg text-warning"  style="height: 20px; width: 20px;"></i>&nbsp
-                        Avg Rating: 
+                        @lang('profile.rating'): 
                     </div>
                     <div class="col-md-5">
                         {{ auth()->user()->client->rating }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star-half-alt fa-lg text-danger"  style="height: 20px; width: 20px;"></i>&nbsp
-                        All Ratings: 
+                        @lang('profile.all'): 
                     </div>
                     <div class="col-md-5">
                         {{-- {{ auth()->user()->client->rating }} --}}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-comment-alt fa-lg text-success"  style="height: 20px; width: 20px;"></i>&nbsp
-                        All Reviews: 
+                        @lang('profile.review'): 
                     </div>
                     <div class="col-md-5">
                         {{-- {{ auth()->user()->client->review }} --}}
@@ -236,7 +217,7 @@
                         
                         <div class="col-md-12 text-md-center">
                             <center>
-                                <a href="{{ route('client.edit',auth()->user()->id) }}" type="button" class="btn btn-secondary w-95" style="vertical-align:middle; "><h4><i class="fas fa-edit fa-lg"  style="height: 20px; width: 20px; color: maroon;"></i>&nbsp&nbspEdit Profile</h4></a>
+                                <a href="{{ route('client.edit',auth()->user()->id) }}" type="button" class="btn btn-secondary w-95" style="vertical-align:middle; "><h4><i class="fas fa-edit fa-lg"  style="height: 20px; width: 20px; color: maroon;"></i>&nbsp&nbsp @lang('profile.edit')</h4></a>
                             </center>
                         </div>
                     </div>

@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Lawyer');
     }
+
+    public function district()
+    {
+        return $this->belongsTo('App\District');
+    }
 }

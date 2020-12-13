@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+
 Auth::routes();
 
 
@@ -27,10 +28,11 @@ Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::get('/cases', 'HomeController@cases')->name('cases');
 Route::get('/ratings', 'HomeController@ratings')->name('ratings');
 Route::get('/reviews', 'HomeController@reviews')->name('reviews');
-Route::post('/search', 'HomeController@search')->name('search');
+Route::any('/search', 'HomeController@search')->name('search');
 Route::get('/client-request', 'HomeController@requests')->name('client-request');
 Route::get('/lawyer-request-decide', 'HomeController@lawyerRequestDecide')->name('lawyer-request-decide');
 Route::get('/lawyer-request-case', 'HomeController@lawyerRequestCase')->name('lawyer.request-case');
+Route::get('/lawyer-result-decide', 'HomeController@lawyerResultDecide')->name('lawyer-result-decide');
 
 
 Route::resource('/lawyer', 'LawyerController');
@@ -39,6 +41,7 @@ Route::resource('/court', 'CourtController');
 Route::resource('/casefile', 'CaseFileController');
 Route::resource('/notice', 'NoticeController');
 Route::resource('/feedback', 'FeedbackController');
+Route::resource('/rating', 'RatingController');
 
 
 Route::get('/register-details', 'WelcomeController@registerDetails')->name('register-details');

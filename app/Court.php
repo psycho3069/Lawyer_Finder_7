@@ -13,4 +13,9 @@ class Court extends Model
     {
         return $this->hasOne('App\Lawyer');
     }
+
+    public function casefile()
+    {
+        return $this->hasOne('App\CaseFile');
+    }
 }

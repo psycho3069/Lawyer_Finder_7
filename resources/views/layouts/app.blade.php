@@ -17,6 +17,9 @@
     <script src="{{ asset('js/colorlib-search-9/custom-materialize.js') }}" defer></script>
     <script src="{{ asset('js/colorlib-search-9/flatpickr.js') }}" defer></script>
 
+    <!-- Icon -->
+    <link rel="icon" type="image/png" href="{{url('/storage/logo/logo.png')}}" />
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -44,9 +47,11 @@
     <div id="app">
         <nav id="navbar" class="navbar fixed-top navbar-expand-md navbar-light shadow-sm" @yield('div-navbar-tag')>
             <div class="container" @yield('div-container-tag')>
+                <img style="width: 35px; color:maroon;" src="{{url('/storage/logo/logo.png')}}" alt="" class="img-fluid color-maroon">
+                
                 <a class="navbar-brand" href="{{ url('/') }}">
                     @auth
-                        <h7 style="color:black; -webkit-text-stroke: medium;">{{ Str::upper(auth()->user()->type) }}{{ ' HOME' }}</h7>
+                        <h7 style="color:black; -webkit-text-stroke: medium;">&nbsp&nbsp{{ Str::upper(auth()->user()->type) }}{{ ' DASHBOARD' }}</h7>
                     @else
                         <h4 style="color:black">@lang('app.title')</h4>
                     @endauth
@@ -65,32 +70,32 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ url('/home') }}">@lang('app.home')</a>
+                            <a class="nav-link text-black" href="{{ url('/home') }}"><i class="fas fa-home fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.home')</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ route('register-details') }}">@lang('app.how_to_apply')</a>
+                            <a class="nav-link text-black" href="{{ route('register-details') }}"><i class="fas fa-registered fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.how_to_apply')</a>
                         </li>
 
                         
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ route('notice.index') }}">@lang('app.notice_board')</a>
+                            <a class="nav-link text-black" href="{{ route('notice.index') }}"><i class="fas fa-flag fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.notice_board')</a>
                         </li>
 
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link text-black" href="{{ route('login') }}">@lang('app.login')</a>
+                                <a class="nav-link text-black" href="{{ route('login') }}"><i class="fas fa-user-lock fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.login')</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" href="{{ route('register') }}">@lang('app.register')</a>
+                                    <a class="nav-link text-black" href="{{ route('register') }}"><i class="fas fa-user-plus fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.register')</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <a style="background-color: #f1d1d2;" id="navbarDropdown" class="nav-link dropdown-toggle text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-user-shield fa-sm text-primary"  style="height: 20px; width: 20px;"></i>{{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -138,6 +143,25 @@
           // When the event DOMContentLoaded occurs, it is safe to access the DOM
 
         })
+    </script>
+    <script>
+        $("[lang='bang']").text(function(i, val) {
+            return val.replace(/\d/g, function(v) {
+                return String.fromCharCode(v.charCodeAt(0) + 0x09B6);
+            });
+        });
+        // const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        // const number = 44653420;
+
+        // $(document).ready( function () {
+        //     var v = $('#num').val()
+        
+        //     convertedNumber = String(number).replace(/\d/g, function(digit) {
+        //         return persianDigits[digit]
+        //     })
+        //     console.log(v) // ۴۴۶۵۳۴۲۰
+        // });
+        
     </script>
         @yield('footer-script')
 </body>

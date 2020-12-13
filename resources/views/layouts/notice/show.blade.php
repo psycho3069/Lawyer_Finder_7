@@ -2,7 +2,7 @@
 
 @section('content')
     
-<div class="container" style="margin-top: 95px; border: solid lightgray 1px; background-color: white;">
+<div id="content" class="container" style="margin-top: 95px; border: solid lightgray 1px; background-color: white;">
     <div class="row justify-content-center p-2 m-1">
         <div class="col-md-12">
         	<div class="row">

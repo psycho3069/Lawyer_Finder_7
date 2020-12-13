@@ -23,4 +23,9 @@ class Lawyer extends Model
     {
         return $this->hasMany('App\Request');
     }
+
+    public function specialty()
+    {
+        return $this->belongsTo('App\Specialty','id');
+    }
 }

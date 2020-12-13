@@ -6,14 +6,14 @@
         <div class="col-md-12">
             <div class="">
                 <div class="login-icon"><i class="fas fa-user-lock fa-3x"></i></div>
-                <div class="login">{{ __('Login') }}</div>
+                <div class="login">@lang('login.title')</div>
 
                 <div style="padding-bottom: 30px;">
                     <form method="POST" class="" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group">
-                            <label for="email" class="row col-form-label text-md-left">{{ __('E-Mail Address') }}<span style="color: red;">*</span></label>
+                            <label for="email" class="row col-form-label text-md-left">@lang('login.email')<span style="color: red;">*</span></label>
 
                             <div class="row">
                                 <input style="border-radius: 0; height: 40px;" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password" class="row col-form-label text-md-left">{{ __('Password') }}<span style="color: red;">*</span></label>
+                            <label for="password" class="row col-form-label text-md-left">@lang('login.password')<span style="color: red;">*</span></label>
 
                             <div class="row">
                                 <input style="border-radius: 0; height: 40px;" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
@@ -57,7 +57,7 @@
                             <div class="">
                                 
                                 <button type="submit" class="btn btn-primary btn-block" style="margin-top: 8px; border-radius: 0; min-width: 100px; min-height: 40px;">
-                                    {{ __('Login') }}
+                                    @lang('login.login')
                                 </button>
 
                             </div>
@@ -65,11 +65,11 @@
                             <label for="password" class="col-md-7 col-form-label text-white text-md-left">
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        @lang('login.forgot')
                                     </a>
                                 @endif
                                 <a class="btn btn-link" href="{{ route('register') }}">
-                                    {{ __('Register') }}
+                                    @lang('login.register')
                                 </a>
                             </label>
                             

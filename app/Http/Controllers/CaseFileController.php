@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\CaseFile;
 use App\Court;
+use App\CourtDivision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,8 +32,9 @@ class CaseFileController extends Controller
      */
     public function create()
     {
+        $court_divisions = CourtDivision::all();
         $courts = Court::all();
-        return view('layouts.user.casefile-create',compact('courts'));
+        return view('layouts.user.casefile-create',compact('courts','court_divisions'));
     }
 
     /**
@@ -43,7 +45,7 @@ class CaseFileController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        // return $request->all();
         $validator = Validator::make($request->all(), [
             'case_identity' => ['required', 'string', 'max:100'],
             'description' => [ 'max:191'],
@@ -63,7 +65,6 @@ class CaseFileController extends Controller
                 'client_type' => $request['client_type'],
                 'client_id' => $client_id,
                 'court_id' => $request['court_id'],
-                'result' => 'waiting',
             ]);
             return back()->with('status','Case has been added successfully!');
         }

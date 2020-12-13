@@ -1,9 +1,12 @@
 <?php
 
 return [
-	'title' => 'Users Feedback',
-	'subject' => 'Subject',
-	'name' => 'Name',
-	'email' => 'Email',
-	'contact' => 'Contact',
+	'title' => 'ব্যবহারকারীদের প্রতিক্রিয়া',
+	'subject' => 'বিষয়',
+	'name' => 'নাম',
+	'email' => 'ইমেইল',
+	'contact' => 'যোগাযোগ',
+	'date' => 'তারিখ',
+	'action' => 'কর্ম',
+	'details' => 'ব্যবহারকারীদের প্রতিক্রিয়া (বিশদ)'
 ];

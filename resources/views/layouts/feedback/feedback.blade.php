@@ -22,7 +22,7 @@
 	                    <th style="width: 270px;" class="text-center">@lang('feedback.date')</th>
                         @auth
                             @if(auth()->user()->type == 'admin')
-                                <th style="width: 15%">Action</th>
+                                <th style="width: 25%">@lang('feedback.action')</th>
                             @endif
                         @endauth
 	                </tr>
@@ -41,8 +41,9 @@
                             @auth
                                 @if(auth()->user()->type == 'admin')
                                     <td>
-                                        <a class="btn btn-primary" href="{{ route('feedback.destroy',$feedback) }}">Delete</a>
-                                        <a class="btn btn-primary" href="{{ route('feedback.update',$feedback) }}">Done</a>
+                                        <a class="btn btn-sm btn-primary" href="{{ route('feedback.show',$feedback) }}">Show</a>
+                                        <a class="btn btn-sm btn-primary" href="{{ route('feedback.update',$feedback) }}">Done</a>
+                                        <a class="btn btn-sm btn-primary" href="{{ route('feedback.destroy',$feedback) }}">Delete</a>
                                     </td>
                                 @endif
                             @endauth

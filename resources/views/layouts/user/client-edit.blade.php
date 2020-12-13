@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container" style="margin-top: 56px;">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center pt-3 pb-5">
+        <div class="col-md-12">
             <div class="card">
             	@if (session('status'))
 	                <div id="success-status" class="alert alert-success" role="alert">
@@ -11,19 +11,47 @@
 	                </div>
 	            @endif
 
-                <div class="card-header text-center"><a href="{{ route('home') }}" type="button" class="btn float-left btn-primary button">Back</a>@lang('client-edit.title')</div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div class="card-header text-center"><a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">Back</a>@lang('client-edit.title')</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('client.update',auth()->user()->id) }}">
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('client.update',auth()->user()->id) }}">
                         @csrf
 
                         @method('PUT')
+
+                        <div class="row align-content-center justify-content-center pb-3">
+                            <img id="image_preview_container" alt="Image Preview" src="{{ URL::asset('/storage/'.config('chatify.user_avatar.folder').'/'.Auth::user()->avatar) }}" style="width:250px; height:250px; border-radius:50%;">
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="profile_picture" class="col-md-4 col-form-label text-md-left">Profile Picture</label>
+                            <div class="col-md-6">
+                                <input type="file" id="profile_picture" class="edit-profile form-control" name="profile_picture">
+
+                                @error('profile_picture')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            
+                        </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" autocomplete="name" autofocus>
+                                <input id="name" type="text" class="edit-profile form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -37,7 +65,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" autocomplete="email" placeholder="example@email.com">
+                                <input id="email" type="email" class="edit-profile form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" autocomplete="email" placeholder="example@email.com">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -51,7 +79,7 @@
                             <label for="contact" class="col-md-4 col-form-label text-md-left">@lang('client-edit.contact')</label>
 
                             <div class="col-md-6">
-                                <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ $user->contact }}" autocomplete="contact" autofocus>
+                                <input id="contact" type="text" class="edit-profile form-control @error('contact') is-invalid @enderror" name="contact" value="{{ $user->contact }}" autocomplete="contact" autofocus>
 
                                 @error('contact')
                                     <span class="invalid-feedback" role="alert">
@@ -62,19 +90,60 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="division_id" class="col-md-4 col-form-label text-md-left">{{ __('Division') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="division_id" id="division_id" class="edit-profile custom-select form-control @error('division_id') is-invalid @enderror">
+                                    <option value="">--------Select Division-------</option>
+
+                                    @foreach($divisions as $key => $division)
+                                        <option value="{{ $division->id }}"
+                                            @if($user->district->division->id == $division->id) echo selected @endif
+                                            >{{ $division->name }}</option>
+                                    @endforeach
+                                    
+                                </select>
+
+                                @error('division_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="district_id" class="col-md-4 col-form-label text-md-left">{{ __('District') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="district_id" id="district_id" class="edit-profile custom-select form-control @error('district_id') is-invalid @enderror">
+                                    
+                                    <option value="">--------Select District-------</option>
+
+                                    @foreach($districts as $key => $district)
+                                        <option value="{{ $district->id }}"
+                                            @if($user->district->id == $district->id)
+                                                {{ 'selected' }} 
+                                            @endif
+                                            >{{ $district->name }}</option>
+                                    @endforeach
+                                    
+                                </select>
+
+                                @error('district_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
                             <label for="location" class="col-md-4 col-form-label text-md-left">{{ __('Location') }}</label>
 
                             <div class="col-md-6">
-                                <select name="location" id="location" class="custom-select form-control @error('location') is-invalid @enderror">
-                                    <option value="{{ $user->location }}">{{ $user->location }}</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Mymensigh">Mymensigh</option>
-                                </select>
+                                <input id="location" type="text" placeholder="Street Address" class="edit-profile form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location }}" autocomplete="location" autofocus>
 
                                 @error('location')
                                     <span class="invalid-feedback" role="alert">
@@ -88,7 +157,7 @@
                             <label for="birthdate" class="col-md-4 col-form-label text-md-left">{{ __('Birthdate') }}</label>
 
                             <div class="col-md-6">
-                                <input id="birthdate" type="text" placeholder="yyyy-mm-dd" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ $user->birthdate }}" autocomplete="birthdate" autofocus>
+                                <input id="birthdate" type="text" placeholder="yyyy-mm-dd" class="edit-profile form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ $user->birthdate }}" autocomplete="birthdate" autofocus>
 
                                 @error('birthdate')
                                     <span class="invalid-feedback" role="alert">
@@ -120,7 +189,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="gender" class="col-md-4 col-form-label text-md-left">{{ __('Genger') }}</label>
+                            <label for="gender" class="col-md-4 col-form-label text-md-left">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
                                 <input type="radio" id="male" class="@error('gender') is-invalid @enderror" name="gender" value="male"
@@ -143,7 +212,7 @@
                         </div>
 
                         
-                        <div class="form-group row mb-0">
+                        <div class="form-group row pt-2">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Submit') }}
@@ -160,6 +229,29 @@
 
 @section('footer-script')
 
+<script type="text/javascript">
+$(document).ready(function (e) {
+   
+    $.ajaxSetup({
+        headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  
+    $('#profile_picture').change(function(){
+           
+    let reader = new FileReader();
 
+    reader.onload = (e) => { 
+
+        $('#image_preview_container').attr('src', e.target.result); 
+    }
+
+    reader.readAsDataURL(this.files[0]); 
+  
+    });
+
+});
+</script>
 	
 @endsection

@@ -106,7 +106,8 @@ body {
     }
 }
 .container-x{
-    max-width: 1400px
+    max-width: 1400px;
+
 }
 .pt-4, .py-4 {
     padding-top: 0 !important;
@@ -173,13 +174,13 @@ body {
 }
 .menu-button-current {
     color: white;
-    border-right: 5px solid green !important;
+    border-right: 5px solid #f1d1d2 !important;
     background-color: maroon !important;
 }
 .menu-button:hover {
     color: black;
     background-color: #f1d1d2!important;
-    border-right: 5px solid blue !important;
+    border-right: 5px solid maroon !important;
     {{-- border-left: 5px solid blue !important; --}}
 }
 {{-- .menu-button:active {
@@ -197,26 +198,7 @@ body {
 .body-margin{
     margin-left:180px;
     margin-top: 52px;
-}
 
-.trap-container {
-  position: relative;
-  /*Change this to test responsive*/
-  width: 100%;
-  /*change this to test responsive*/
-  height: 100%;
-}
-.trap-container svg {
-  position: absolute;
-}
-.trap-content {
-  display: inline-block;
-  position: relative;
-  top: 10%;
-  height: 80%;
-  width: 100%;
-  bottom: 10%;
-  color: white;
 }
 
 .numbers{
@@ -259,7 +241,7 @@ body {
 
 .faq_list_items .item {
     display: flex;
-    margin-top: 40px;
+    margin-top: 10px;
     width: 100%;
 }
 
@@ -274,5 +256,55 @@ body {
 .item_data {
     font-size: 14px;
     border-bottom: 1px dashed #ddd;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
+}
+
+.edit-profile{
+    border-radius: 0;
+    height: 40px;
+    margin: 5px 0px 5px 0px;
+}
+
+#content{
+    margin-top: 95px;
+    border: 1px solid lightgray;
+    background-color: white;
+    margin-bottom: 40px;
+}
+
+
+// star rating
+div.stars {
+  width: auto;
+  display: inline-block;
+}
+
+input.star { display: none; }
+
+label.star {
+  {{-- float: right; --}}
+    padding: 5px;
+    font-size: 35px;
+    color: #444;
+    transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+  content: '\f005';
+  color: #FD4;
+  transition: all .25s;
+}
+
+input.star-5:checked ~ label.star:before {
+  color: #FE7;
+  text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before { color: #F62; }
+
+label.star:hover { transform: rotate(-15deg) scale(1.3); }
+
+label.star:before {
+  content: '\f006';
+  font-family: FontAwesome;
 }

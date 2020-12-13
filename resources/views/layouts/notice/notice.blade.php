@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container" style="margin-top: 95px; border: solid lightgray 1px; background-color: white;">
+<div id="content" class="container" style="margin-top: 95px; border: solid lightgray 1px; background-color: white;">
     <div class="row justify-content-center p-2 m-1">
         <div class="col-md-12">
     		
@@ -28,7 +28,7 @@
 	                    <th style="width: 270px;" class="text-center">@lang('notice.date')</th>
                         @auth
                             @if(auth()->user()->type == 'admin')
-                                <th style="width: 8%">Action</th>
+                                <th style="width: 8%">@lang('notice.action')</th>
                             @endif
                         @endauth
 	                </tr>

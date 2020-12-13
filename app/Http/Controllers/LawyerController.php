@@ -8,6 +8,11 @@ use App\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Specialty;
+use App\Division;
+use App\District;
+use Chatify\Facades\ChatifyMessenger as Chatify;
+use Illuminate\Support\Str;
 
 class LawyerController extends Controller
 {
@@ -74,7 +79,10 @@ class LawyerController extends Controller
     {
         $user = User::find(auth()->user()->id);
         $courts = Court::all();
-        return view('layouts.user.lawyer-edit',compact('user','courts'));
+        $divisions = Division::all();
+        $districts = District::all();
+        $specialties = Specialty::all();
+        return view('layouts.user.lawyer-edit',compact('user','courts','specialties','divisions','districts'));
     }
 
     /**
@@ -95,25 +103,62 @@ class LawyerController extends Controller
             'birthdate' => ['required', 'date', 'max:100'],
             'type' => ['required'],
             'gender' => ['required'],
-            'specialty' => ['required'],
+            'specialties_id' => ['required'],
         ]);
 
+        // if there is a [file]
+        if ($request->hasFile('profile_picture')) {
+            // allowed extensions
+            $allowed_images = Chatify::getAllowedImages();
+
+            $file = $request->file('profile_picture');
+            // if size less than 50MB
+            // return $file->getSize();
+            if ($file->getSize() < 50000000) {
+                if (in_array($file->getClientOriginalExtension(), $allowed_images)) {
+                    // ----------delete the older one----------
+                    if (auth()->user()->avatar != config('chatify.user_avatar.default')) {
+                        $path = storage_path('app/public/' . config('chatify.user_avatar.folder') . '/' . auth()->user()->avatar);
+                        if (file_exists($path)) {
+                            @unlink($path);
+                        }
+                    }
+                    
+                    // ----------upload----------
+                    $avatar = Str::uuid() . "." . $file->getClientOriginalExtension();
+                    $update = User::where('id', auth()->user()->id)->update(['avatar' => $avatar]);
+                    $file->storeAs("public/" . config('chatify.user_avatar.folder'), $avatar);
+                    $success = $update ? 1 : 0;
+                } else {
+                    $msg = "File extension not allowed!";
+                    return $msg;
+                }
+            } else {
+                $msg = "File is too large!";
+                return $msg;
+            }
+        }
+
+
         if ($validator->fails()) {
+            // return $request;
             return back()->withErrors($validator->errors());
         } else {
-            User::where('id', $id)->update([
+            // return Lawyer::where('id', auth()->user()->lawyer->id)->first();
+            User::where('id', $id)->first()->update([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'contact' => $request['contact'],
                 'location' => $request['location'],
+                'district_id' => $request['district_id'],
                 'birthdate' => $request['birthdate'],
                 'gender' => $request['gender'],
             ]);
-            Lawyer::where('id', auth()->user()->lawyer->id)->update([
+            Lawyer::where('id', auth()->user()->lawyer->id)->first()->update([
                 'type' => $request['type'],
-                'specialty' => $request['specialty'],
+                'specialties_id' => $request['specialties_id'],
                 'profile_bio' => $request['profile_bio'],
-                'court_id' => $request['court_id'],
+                // 'court_id' => $request['court_id'],
             ]);
             return back()->with('status','Lawyer Profile has been updated successfully!');
         }
