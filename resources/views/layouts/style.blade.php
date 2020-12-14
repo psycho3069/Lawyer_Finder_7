@@ -286,13 +286,13 @@ label.star {
     padding: 5px;
     font-size: 35px;
     color: #444;
-    transition: all .2s;
+    transition: all .5s;
 }
 
 input.star:checked ~ label.star:before {
   content: '\f005';
   color: #FD4;
-  transition: all .25s;
+  transition: all .5s;
 }
 
 input.star-5:checked ~ label.star:before {

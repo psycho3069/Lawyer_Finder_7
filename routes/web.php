@@ -46,12 +46,12 @@ Route::resource('/rating', 'RatingController');
 
 Route::get('/register-details', 'WelcomeController@registerDetails')->name('register-details');
 Route::get('/contact-us', 'WelcomeController@contactUs')->name('contact-us');
+Route::post('/get-districts', 'WelcomeController@getDistricts')->name('get-districts');
 
 
 
 Route::get('/faq', 'FaqController@index')->name('faq');
-Route::post('/get-districts', 'WelcomeController@getDistricts')->name('get-districts');
-
+Route::any('/give-rating', 'RatingController@give_rating')->name('give-rating');
 
 
 Route::any('locale/{locale}', function($locale) {

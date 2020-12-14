@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
-    protected $table = 'b4_reviews';
+    protected $table = 'c3_reviews';
     protected $guarded = [];
 }

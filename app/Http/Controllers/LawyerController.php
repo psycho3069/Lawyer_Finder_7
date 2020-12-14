@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Lawyer;
 use App\Court;
+use App\Lawyer;
+use App\Client;
+use App\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -66,7 +68,10 @@ class LawyerController extends Controller
         $active['cases'] = 0;
         $active['search'] = 0;
         $active['requests'] = 0;
-        return view('layouts.user.lawyer.show',compact('lawyer','active'));
+        $client = Client::where('user_id',auth()->user()->id)->first();
+        $ratings = Rating::where('lawyer_id',$lawyer->id);
+
+        return view('layouts.user.lawyer.show',compact('lawyer','active','client','ratings'));
     }
 
     /**

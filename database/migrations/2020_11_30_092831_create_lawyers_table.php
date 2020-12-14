@@ -23,7 +23,7 @@ class CreateLawyersTable extends Migration
             $table->enum('type', ['advocate','judge','magistrate','barrister'])->nullable();
             $table->unsignedBigInteger('specialties_id')->nullable();
             $table->foreign('specialties_id')->references('id')->on('a04_specialties');
-            $table->float('rating',2,2)->default('0.0');
+            $table->bigInteger('ratings')->default('0');
             $table->integer('reviews')->default(0);
             $table->integer('cases')->default(0);
             $table->float('success_rate',3,2)->default('0.0');

@@ -18,4 +18,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Request');
     }
+
+    public function rating()
+    {
+        return $this->hasMany('App\Rating','giver_id');
+    }
 }

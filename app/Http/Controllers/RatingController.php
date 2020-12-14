@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Rating;
+use App\Client;
+use App\Lawyer;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
@@ -28,7 +30,7 @@ class RatingController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -39,7 +41,52 @@ class RatingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        if($request->star != null){
+
+            // if ($request->star == 1) {
+            //     $review = 'very bad';
+            // } else if($request->star == 2){
+            //     $review = 'bad';
+            // } else if($request->star == 3){
+            //     $review = 'normal';
+            // } else if($request->star == 4){
+            //     $review = 'good';
+            // } else if($request->star == 5){
+            //     $review = 'very good';
+            // }
+            
+            
+
+            $client_id = Client::where('user_id', auth()->user()->id)->first()->id;
+            $rating = Rating::where('giver_id',$client_id)
+                    ->where('taker_id', $request->lawyer_id)
+                    ->get()->first();
+
+            if ($rating) {
+                $result = Rating::find($rating->id)->update([
+                    'value'     => $request->star,
+                    'text'      => $request->review,
+                    'updated_at'=> now()
+                ]);
+            } else{
+                $result = Rating::create([
+                    'value'     => $request->star,
+                    'text'      => $request->review,
+                    'giver_id'  => $client_id,
+                    'taker_id'  => $request->lawyer_id,
+                    'created_at'=> now()
+                ]);
+            }
+
+            if ($result) {
+                return back()->with('star','Thanks! You Rated this Lawyer.');
+            } else{
+                return back()->with('error','Something went wrong, please try again!');
+            }
+        } else{
+            return back()->with('empty','Please select any Star to Rate this Lawyer.');
+        }
     }
 
     /**
@@ -85,5 +132,20 @@ class RatingController extends Controller
     public function destroy(Rating $rating)
     {
         //
+    }
+
+    public function give_rating(Request $request)
+    {
+        $active = [];
+        $active['dashboard'] = 1;
+        $active['profile'] = 0;
+        $active['cases'] = 0;
+        $active['search'] = 0;
+        $active['requests'] = 0;
+
+        $lawyer = Lawyer::find($request->lawyer_id);
+        $rating = Rating::find($lawyer->rating->first()->id);
+        $client = Client::find($rating->client->id);
+        return view('layouts.user.rating-create',compact('rating','lawyer','client','active'));
     }
 }
