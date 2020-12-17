@@ -20,7 +20,26 @@ class RatingController extends Controller
      */
     public function index()
     {
-        //
+        $active = [];
+        $active['rating'] = 1;
+        $active['dashboard'] = 0;
+        $active['profile'] = 0;
+        $active['cases'] = 0;
+        $active['search'] = 0;
+        $active['requests'] = 0;
+
+        
+
+        if (auth()->user()->type == 'lawyer') {
+            $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->get()->first()->id;
+            $ratings = Rating::where('taker_id',$lawyer_id)->get();
+        } elseif (auth()->user()->type == 'client') {
+            $client_id = Client::where('user_id',auth()->user()->id)->get()->first()->id;
+            $ratings = Rating::where('giver_id',$client_id)->get();
+        } else{
+            $ratings = Rating::all();
+        }
+        return view('layouts.user.rating.ratings',compact('ratings','active'));
     }
 
     /**
@@ -75,7 +94,8 @@ class RatingController extends Controller
                     'text'      => $request->review,
                     'giver_id'  => $client_id,
                     'taker_id'  => $request->lawyer_id,
-                    'created_at'=> now()
+                    'created_at'=> now(),
+                    'updated_at'=> now()
                 ]);
             }
 
@@ -137,6 +157,7 @@ class RatingController extends Controller
     public function give_rating(Request $request)
     {
         $active = [];
+        $active['rating'] = 0;
         $active['dashboard'] = 1;
         $active['profile'] = 0;
         $active['cases'] = 0;

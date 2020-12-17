@@ -30,9 +30,18 @@ Route::get('/ratings', 'HomeController@ratings')->name('ratings');
 Route::get('/reviews', 'HomeController@reviews')->name('reviews');
 Route::any('/search', 'HomeController@search')->name('search');
 Route::get('/client-request', 'HomeController@requests')->name('client-request');
-Route::get('/lawyer-request-decide', 'HomeController@lawyerRequestDecide')->name('lawyer-request-decide');
-Route::get('/lawyer-request-case', 'HomeController@lawyerRequestCase')->name('lawyer.request-case');
-Route::get('/lawyer-result-decide', 'HomeController@lawyerResultDecide')->name('lawyer-result-decide');
+
+
+Route::get('/lawyer-request-decide', 'LawyerController@lawyerRequestDecide')->name('lawyer-request-decide');
+Route::get('/lawyer-request-case', 'LawyerController@lawyerRequestCase')->name('lawyer.request-case');
+Route::get('/lawyer-result-decide', 'LawyerController@lawyerResultDecide')->name('lawyer-result-decide');
+Route::get('/lawyer-verification/{lawyer}', 'LawyerController@verify')->name('lawyer-verification');
+Route::get('/lawyer-verify/{lawyer}', 'LawyerController@verifyAccount')->name('lawyer-verify');
+Route::put('/lawyer-upload-nid/{lawyer_id}', 'LawyerController@upload_nid')->name('lawyer-upload-nid');
+Route::get('/lawyer-verify-decide', 'LawyerController@lawyerVerifyDecide')->name('lawyer-verify-decide');
+Route::get('/lawyer-verify-recheck/{lawyer}', 'LawyerController@verifyRecheck')->name('lawyer-verify-recheck');
+
+Route::get('/client-block/{client}', 'ClientController@block')->name('client-block');
 
 
 Route::resource('/lawyer', 'LawyerController');

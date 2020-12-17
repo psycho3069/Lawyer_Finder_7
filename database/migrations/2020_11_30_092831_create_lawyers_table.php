@@ -26,6 +26,9 @@ class CreateLawyersTable extends Migration
             $table->bigInteger('ratings')->default('0');
             $table->integer('reviews')->default(0);
             $table->integer('cases')->default(0);
+            $table->integer('admin_approval')->default(0);
+            $table->string('nid_front',191)->default('nid_front.png');
+            $table->string('nid_back',191)->default('nid_back.png');
             $table->float('success_rate',3,2)->default('0.0');
             $table->timestamps();
         });

@@ -2,12 +2,12 @@
     background-color: #f8fafc!important;">
     <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.summary')</a>
     <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.profile')</a>
-    <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.lawyers')</a>
-    <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.clients')</a>
+    <a class="w3-bar-item w3-button tablink btn" href="{{ route('lawyer.index') }}">@lang('menu.lawyers')</a>
+    <a class="w3-bar-item w3-button tablink btn" href="{{ route('client.index') }}">@lang('menu.clients')</a>
     <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.cases')</a>
     <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.courts')</a>
-    <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.ratings')</a>
-    <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.reviews')</a>
+    <a class="w3-bar-item w3-button tablink btn" href="{{ route('rating.index') }}">@lang('menu.ratings')</a>
+    {{-- <a class="w3-bar-item w3-button tablink btn" href="#">@lang('menu.reviews')</a> --}}
     <a class="w3-bar-item w3-button tablink btn" href="{{ route('feedback.index') }}">@lang('menu.feedbacks')</a>
     <a class="w3-bar-item w3-button tablink btn" href="{{ route('notice.index') }}">@lang('menu.notices')</a>
 </div>

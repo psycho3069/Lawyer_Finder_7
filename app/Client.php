@@ -23,4 +23,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Rating','giver_id');
     }
+
+    public function casefile()
+    {
+        return $this->hasMany('App\Casefile');
+    }
 }

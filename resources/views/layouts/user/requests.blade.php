@@ -9,7 +9,34 @@
 	        <div id="content" class="container p-0" style="margin-top: 56px;">
 	            <div class="row justify-content-center clearfix">
 	                <div class="col-md-12 m-0 p-0">
-	                    <div class="card m-0 p-0">
+	                    <div class="card m-0 p-0 text-lg-center">
+
+	                    	@if(auth()->user()->type == 'lawyer')
+	                            @if(auth()->user()->lawyer->admin_approval == 0)  
+	                                <div class="alert-warning text-danger">
+	                                	<a href="{{ route('lawyer-verify',auth()->user()->lawyer) }}">{{ 'Please VERIFY your account and COMPLETE profile!!' }} 
+	                                		<button class="btn btn-outline-info">Verify Account</button>
+	                                	</a>
+	                                	OR 
+	                                	<a href="{{ route('lawyer.edit',auth()->user()->id) }}"> 
+	                                		<button class="btn btn-outline-primary">Update Profile</button>
+	                                	</a>
+	                                </div>
+	                            @elseif(auth()->user()->lawyer->admin_approval == 1)
+	                            	<div class="alert-info text-dark">
+	                                	<a href="{{ route('lawyer-verify',auth()->user()->lawyer) }}">{{ 'Your account approval is pending, please check again later and make sure your profile is complete and all the informations are real!!' }} 
+	                                		<button class="btn btn-outline-info">Upload NID Again?</button>
+	                                	</a>
+	                                </div>
+	                            @elseif(auth()->user()->lawyer->admin_approval == 3)
+			                        <div class="alert-danger text-dark">
+			                            <a href="{{ route('lawyer-verify-recheck',auth()->user()->lawyer) }}">{{ 'Your account approval is DECLINED, please check AGAIN and make sure your profile is complete and all the informations are real, then Request a Re-check!!' }} 
+			                                <button class="btn btn-outline-info">Re-Check</button>
+			                            </a>
+			                        </div>
+			                    @endif
+	                        @endif
+
 	                        <div style="background-color: #f1d1d2;" class="text-lg-center card-header">{{ __('Client Requests') }}</div>
 
 		                    @if(Session::has('approve'))
@@ -58,11 +85,15 @@
 													   <i class="fa fa-check"></i>Won
 													</a>
 
-													<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-result-decide',['result' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
+													<a type="button" id="declined" class="btn btn-warning response" href="{{ route('lawyer-result-decide',['result' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
 													   <i class="fa fa-times"></i>Lost
 													</a>
 			                                	@elseif($request->state == 'closed')
-			                                		<button style="cursor: no-drop;" class="btn btn-warning" disabled>Closed</button>
+				                                	@if($request->casefile->result == 'won')
+				                                		<button style="cursor: no-drop;" class="btn btn-success" disabled>Case Closed ({{ $request->casefile->result }})</button>
+				                                	@elseif($request->casefile->result == 'lost')
+			                                			<button style="cursor: no-drop;" class="btn btn-danger" disabled>Case Closed ({{ $request->casefile->result }})</button>
+				                                	@endif
 			                                	@endif
 			                                </div>
 		                                </div>

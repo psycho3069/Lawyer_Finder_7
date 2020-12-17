@@ -284,13 +284,13 @@ input.star { display: none; }
 label.star {
   {{-- float: right; --}}
     padding: 5px;
-    font-size: 35px;
+    font-size: 30px;
     color: #444;
     transition: all .5s;
 }
 
 input.star:checked ~ label.star:before {
-  content: '\f005';
+  content: '\2B50';
   color: #FD4;
   transition: all .5s;
 }
@@ -307,4 +307,24 @@ label.star:hover { transform: rotate(-15deg) scale(1.3); }
 label.star:before {
   content: '\f006';
   font-family: FontAwesome;
+}
+
+.clip-star {
+    background: gold;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+}
+
+.table th{
+    element.style {
+    width: 20ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    line-height: inherit;
+    height: 50px;
+}
 }

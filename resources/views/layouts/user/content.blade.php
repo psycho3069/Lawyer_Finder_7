@@ -1,17 +1,6 @@
 <div class="container-x" style="margin-top: 55px;">
 
-    {{-- @if(auth()->user()->client)
-        @if(count($user_cases) == 0)  
-            <div style="color: red">{{ 'Please add a Case to Send Request to Lawyers!!' }}</div>
-        @endif
-    @elseif(auth()->user()->lawyer)
-        @if(auth()->user()->lawyer->profile_bio == NULL 
-            || auth()->user()->lawyer->court_id == NULL
-            || auth()->user()->lawyer->type == NULL
-            || auth()->user()->lawyer->specialty == NULL)  
-            <div style="color: red">{{ 'Please Complete your Profile to get Requests from clients!!' }}</div>
-        @endif
-    @endif --}}
+    
 
     @include('layouts.user.menu')
 
@@ -20,6 +9,7 @@
             <div class="row justify-content-center m-0 p-0 clearfix">
                 <div class="col-md-12 m-0 p-0">
                     <div class="card m-0 p-0">
+                        
                         @if(Session::has('success'))
                             <div id="success-status" style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
                                 {{ Session::get('success') }}

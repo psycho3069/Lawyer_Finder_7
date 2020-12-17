@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->integer('cases')->default(0);
             $table->float('rating',2,2)->default('0.0');
             $table->integer('reviews')->default(0);
+            $table->tinyInteger('blocked')->default(0);
             $table->timestamps();
         });
     }

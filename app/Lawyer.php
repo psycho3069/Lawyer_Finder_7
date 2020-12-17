@@ -33,4 +33,9 @@ class Lawyer extends Model
     {
         return $this->hasMany('App\Rating','taker_id');
     }
+
+    public function casefile()
+    {
+        return $this->hasMany('App\Casefile');
+    }
 }

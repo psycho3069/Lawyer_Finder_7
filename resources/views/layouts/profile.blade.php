@@ -14,6 +14,30 @@
         <div class="container p-0 justify-content-center row" style="margin-top: 56px;">
 
             @if(auth()->user()->type == 'lawyer')
+            
+                    @if(auth()->user()->lawyer->admin_approval == 0)  
+                        <div class="alert-warning text-danger">
+                            <a href="{{ route('lawyer-verify',auth()->user()->lawyer) }}">{{ 'Please VERIFY your account and COMPLETE profile!!' }} 
+                                <button class="btn btn-outline-info">Verify Account</button>
+                            </a>
+                            OR 
+                            <a href="{{ route('lawyer.edit',auth()->user()->id) }}"> 
+                                <button class="btn btn-outline-primary">Update Profile</button>
+                            </a>
+                        </div>
+                    @elseif(auth()->user()->lawyer->admin_approval == 1)
+                        <div class="alert-info text-dark">
+                            <a href="{{ route('lawyer-verify',auth()->user()->lawyer) }}">{{ 'Your account approval is pending, please check again later and make sure your profile is complete and all the informations are real!!' }} 
+                                <button class="btn btn-outline-info">Upload NID Again?</button>
+                            </a>
+                        </div>
+                    @elseif(auth()->user()->lawyer->admin_approval == 3)
+                        <div class="alert-danger text-dark">
+                            <a href="{{ route('lawyer-verify-recheck',auth()->user()->lawyer) }}">{{ 'Your account approval is DECLINED, please check AGAIN and make sure your profile is complete and all the informations are real, then Request a Re-check!!' }} 
+                                <button class="btn btn-outline-info">Re-Check</button>
+                            </a>
+                        </div>
+                    @endif
 
                 <div class="user-basic col-md-6 row">
                     <div class="col-md-12">
@@ -73,14 +97,14 @@
                         @lang('profile.cases'): 
                     </div>
                     <div class="col-md-5">
-                        {{ auth()->user()->lawyer->cases }}
+                        {{ count(auth()->user()->lawyer->casefile) }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star fa-lg text-warning"  style="height: 20px; width: 20px;"></i>&nbsp
                         @lang('profile.rating'): 
                     </div>
                     <div class="col-md-5">
-                        {{ auth()->user()->lawyer->rating }}
+                        {{ auth()->user()->lawyer->rating->avg('value') }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star-half-alt fa-lg text-danger"  style="height: 20px; width: 20px;"></i>&nbsp
@@ -166,24 +190,12 @@
                     <div class="col-md-5">
                         {{ auth()->user()->created_at }}
                     </div>
-                    <div class="col-md-12">
-                        <span>
-                            <h3 class="text-capitalize" style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">@lang('profile.title_u')</h3>
-                        </span>
-                    </div>
                     <div class="col-md-5">
                         <i class="fas fa-file-invoice fa-lg text-primary"  style="height: 20px; width: 20px;"></i>&nbsp
                         @lang('profile.cases'): 
                     </div>
                     <div class="col-md-5">
-                        {{ auth()->user()->client->cases }}
-                    </div>
-                    <div class="col-md-5">
-                        <i class="fas fa-star fa-lg text-warning"  style="height: 20px; width: 20px;"></i>&nbsp
-                        @lang('profile.rating'): 
-                    </div>
-                    <div class="col-md-5">
-                        {{ auth()->user()->client->rating }}
+                        {{ count(auth()->user()->client->casefile) }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-star-half-alt fa-lg text-danger"  style="height: 20px; width: 20px;"></i>&nbsp
@@ -192,6 +204,7 @@
                     <div class="col-md-5">
                         {{-- {{ auth()->user()->client->rating }} --}}
                     </div>
+
                     <div class="col-md-5">
                         <i class="fas fa-comment-alt fa-lg text-success"  style="height: 20px; width: 20px;"></i>&nbsp
                         @lang('profile.review'): 

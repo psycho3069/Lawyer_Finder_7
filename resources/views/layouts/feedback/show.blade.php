@@ -2,7 +2,13 @@
 
 @section('content')
     
-<div class="container" style="margin-top: 95px; border: solid lightgray 1px; background-color: white;">
+@auth
+    @if(auth()->user()->type == 'admin')
+        @include('layouts.admin.menu')
+    @endif
+@endauth
+
+<div id="content" class="container @auth @if(auth()->user()->type == 'admin')  body-margin @endif @endauth" style="margin-top: 55px; border: solid lightgray 1px; background-color: white;">
     <h2>@lang('feedback.details')</h2>
     <hr>
     <div class="row justify-content-center p-2 m-1">

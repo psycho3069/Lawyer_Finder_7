@@ -18,4 +18,14 @@ class CaseFile extends Model
     {
         return $this->belongsTo('App\Court');
     }
+
+    public function lawyer()
+    {
+        return $this->belongsTo('App\Lawyer');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo('App\Client');
+    }
 }

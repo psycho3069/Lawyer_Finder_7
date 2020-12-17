@@ -27,7 +27,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::all();
+        return view('layouts.admin.clients',compact('clients'));
     }
 
     /**
@@ -74,7 +75,7 @@ class ClientController extends Controller
         $specialties = Specialty::all();
         $divisions = Division::all();
         $districts = District::all();
-        return view('layouts.user.client-edit',compact('user','specialties','divisions','districts'));
+        return view('layouts.user.client.client-edit',compact('user','specialties','divisions','districts'));
     }
 
     /**
@@ -155,5 +156,15 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         //
+    }
+
+    public function block(Client $client){
+
+        $result1 = Client::find($client->id)->update([
+            'blocked'   => 1,
+            'updated_at' => now()
+        ]);
+
+        return back()->with('status','Client has been BLOCKED successfully!');
     }
 }

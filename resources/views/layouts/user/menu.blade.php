@@ -15,12 +15,12 @@
     <a href="{{ route('cases') }}">
     	<button class="w3-bar-item menu-button tablink @if($active['cases']) {{ 'menu-button-current' }} @endif">@lang('menu.cases')</button>
     </a>
-    <a href="{{ route('ratings') }}">
-    	<button class="w3-bar-item menu-button tablink">@lang('menu.ratings')</button>
+    <a href="{{ route('rating.index') }}">
+    	<button class="w3-bar-item menu-button tablink @if($active['rating']) {{ 'menu-button-current' }} @endif">@lang('menu.ratings')</button>
     </a>
-    <a href="{{ route('reviews') }}">
+    {{-- <a href="{{ route('reviews') }}">
     	<button class="w3-bar-item menu-button tablink">@lang('menu.reviews')</button>
-    </a>
+    </a> --}}
     <a href="{{ route('lawyer-messenger') }}">
         <button class="w3-bar-item menu-button tablink">@lang('menu.messenger')</button>
     </a>
