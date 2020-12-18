@@ -51,7 +51,13 @@ class CourtController extends Controller
             return back()->withErrors($validator->errors());
         } else {
             Court::insert($request->except('_token'));
-            return back()->with('status','Court has been added successfully!');
+
+            if (\App::isLocale('en')) {
+                return back()->with('status','Court has been added successfully!');
+            } else{
+                return back()->with('status','আদালত সফলভাবে যুক্ত হয়েছে!');
+            }
+            
         }
     }
 

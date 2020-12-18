@@ -16,7 +16,7 @@
                             {{ $lawyer->user->name }}
                         </h1>
                         <h4 style="padding: 10px 5px 10px 5px;">
-                            {{ strtoupper($lawyer->type) }} {{ '('.$lawyer->specialty->name.' Specialist)' }}
+                            {{ strtoupper($lawyer->type) }} {{ '('.$lawyer->specialty->name.' ' }} @lang('lawyer.specialist'){{ ')' }}
                         </h4>
                     </div>
                     <div class="other">
@@ -57,15 +57,15 @@
 
                                 <button style="height: 37px; width: 237px; border-radius: 0px; margin-left: 15px;" name="submit" type="submit" id="submit-button" value="Submit" class="button btn btn-primary"><i class="fas fa-star-half-alt text-warning" style="height: 20px; width: 20px;"></i>&nbsp 
                                     @if($lawyer->rating->where('giver_id',$client->id)->first())
-                                        {{  __('Update Rating') }}
+                                        @lang('lawyer.update')
                                     @else
-                                        {{  __('Rate') }}
+                                        @lang('lawyer.rate')
                                     @endif
                                 </button>
                             </form>
                         </div>
                         <div class="justify-content-center text-center">
-                            <a href="{{ route('give-rating',['lawyer_id' => $lawyer->id]) }}" class="button btn-primary"><i class="fas fa-feather-alt text-success" style="height: 20px; width: 20px;"></i>&nbsp Write a review</a>
+                            <a href="{{ route('give-rating',['lawyer_id' => $lawyer->id]) }}" class="button btn-primary"><i class="fas fa-feather-alt text-success" style="height: 20px; width: 20px;"></i>&nbsp @lang('lawyer.review')</a>
 
                         </div>
 
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div style="margin-top: 20px;" class="row text-center justify-content-center">
-                <h2 class="text-primary" style="border: solid maroon 2px; border-left: 0; border-right: 0;">Profile Bio</h2>
+                <h2 class="text-primary" style="border: solid maroon 2px; border-left: 0; border-right: 0;">@lang('lawyer.bio')</h2>
                 <div class="col-md-12">
                     <p class="text-justify">
                         {{ $lawyer->profile_bio }}
@@ -87,14 +87,14 @@
 
             <div style="margin-top: 20px; margin-bottom: 50px;" class="row">
                 <div class="row text-center justify-content-center float-md-right">
-                    <h2 class="text-primary tex" style="border-radius: 0; border: solid maroon 2px; border-left: 0; border-right: 0;">Ratings & Reviews</h2>
+                    <h2 class="text-primary tex" style="border-radius: 0; border: solid maroon 2px; border-left: 0; border-right: 0;">@lang('lawyer.rating')</h2>
                 </div>
 
                 <div class="col-md-12">
                     @foreach($ratings as $key => $rating)
                         <div class="card" style="border: solid maroon 1px; margin: 5px;">
                             <div class="row card-header pt-2 bg-info">
-                                <div class="col-md-4">
+                                <div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-4">
                                     {{ '#'.++$key }}
                                 </div>
                                 <div class="col-md-4">
@@ -104,7 +104,7 @@
                                     
                                 </div>
                                 <div class="col-md-4">
-                                    {{ 'Given by: '.$rating->client->user->name }}
+                                   @lang('lawyer.given'){{ ': '.$rating->client->user->name }}
                                 </div>
                             </div>
                             @if($rating->text != null)

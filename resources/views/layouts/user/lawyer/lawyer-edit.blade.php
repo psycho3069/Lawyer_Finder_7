@@ -21,7 +21,7 @@
                     </div>
                 @endif
 
-                <div class="card-header text-center"><a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">Back</a>@lang('lawyer-edit.title',['lawyer' => auth()->user()->name.'\'s'])</div>
+                <div class="card-header text-center"><a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">@lang('lawyer.back')</a>@lang('lawyer.title',['lawyer' => auth()->user()->name])</div>
 
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" action="{{ route('lawyer.update',auth()->user()->id) }}">
@@ -34,9 +34,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="profile_picture" class="col-md-4 col-form-label text-md-left">Profile Picture</label>
+                            <label for="profile_picture" class="col-md-4 col-form-label text-md-left">@lang('lawyer.profile')</label>
                             <div class="col-md-6">
-                                <input type="file" id="profile_picture" class="edit-profile form-control" name="profile_picture">
+                                <input title="sefd" accept="image/*" type="file" id="profile_picture" class="edit-profile form-control" name="profile_picture">
 
                                 @error('profile_picture')
                                     <span class="invalid-feedback" role="alert">
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-left">@lang('lawyer.name')</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="edit-profile form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" autocomplete="name" autofocus>
@@ -62,10 +62,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-left">@lang('lawyer.email')</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="edit-profile form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" autocomplete="email" placeholder="example@email.com">
+                                <input id="email" type="email" class="edit-profile form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" autocomplete="email" placeholder="@lang('lawyer.email_hint')">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="contact" class="col-md-4 col-form-label text-md-left">@lang('lawyer-edit.contact')</label>
+                            <label for="contact" class="col-md-4 col-form-label text-md-left">@lang('lawyer.contact')</label>
 
                             <div class="col-md-6">
                                 <input id="contact" type="text" class="edit-profile form-control @error('contact') is-invalid @enderror" name="contact" value="{{ $user->contact }}" autocomplete="contact" autofocus>
@@ -90,7 +90,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="division_id" class="col-md-4 col-form-label text-md-left">{{ __('Division') }}</label>
+                            <label for="division_id" class="col-md-4 col-form-label text-md-left">@lang('lawyer.division')</label>
 
                             <div class="col-md-6">
                                 <select name="division_id" id="division_id" class="edit-profile custom-select form-control @error('division_id') is-invalid @enderror">
@@ -112,7 +112,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="district_id" class="col-md-4 col-form-label text-md-left">{{ __('District') }}</label>
+                            <label for="district_id" class="col-md-4 col-form-label text-md-left">@lang('lawyer.district')</label>
 
                             <div class="col-md-6">
                                 <select name="district_id" id="district_id" class="edit-profile custom-select form-control @error('district_id') is-invalid @enderror">
@@ -134,10 +134,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="location" class="col-md-4 col-form-label text-md-left">{{ __('Location') }}</label>
+                            <label for="location" class="col-md-4 col-form-label text-md-left">@lang('lawyer.location')</label>
 
                             <div class="col-md-6">
-                                <input id="location" type="location" class="edit-profile form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location }}" autocomplete="location" placeholder="Street Address">
+                                <input id="location" type="location" class="edit-profile form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location }}" autocomplete="location" placeholder="@lang('lawyer.location_hint')">
 
                                 @error('location')
                                     <span class="invalid-feedback" role="alert">
@@ -148,10 +148,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="birthdate" class="col-md-4 col-form-label text-md-left">{{ __('Birthdate') }}</label>
+                            <label for="birthdate" class="col-md-4 col-form-label text-md-left">@lang('lawyer.birthdate')</label>
 
                             <div class="col-md-6">
-                                <input id="birthdate" type="text" placeholder="yyyy-mm-dd" class="edit-profile form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ $user->birthdate }}" autocomplete="birthdate" autofocus>
+                                <input id="birthdate" type="text" placeholder="@lang('lawyer.birthdate_hint')" class="edit-profile form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ $user->birthdate }}" autocomplete="birthdate" autofocus>
 
                                 @error('birthdate')
                                     <span class="invalid-feedback" role="alert">
@@ -162,18 +162,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="gender" class="col-md-4 col-form-label text-md-left">{{ __('Gender') }}</label>
+                            <label for="gender" class="col-md-4 col-form-label text-md-left">@lang('lawyer.gender')</label>
 
                             <div class="col-md-6">
                                 <input type="radio" id="male" class="@error('gender') is-invalid @enderror" name="gender" value="male"
                                 @if($user->gender == 'male') echo checked @endif>
-                                <label for="male">Male</label>&nbsp&nbsp&nbsp
+                                <label for="male">@lang('lawyer.male')</label>&nbsp&nbsp&nbsp
                                 <input type="radio" id="female" name="gender" value="female"
                                 @if($user->gender == 'female') echo checked @endif>
-                                <label for="female">Female</label>&nbsp&nbsp&nbsp
+                                <label for="female">@lang('lawyer.female')</label>&nbsp&nbsp&nbsp
                                 <input type="radio" id="other" name="gender" value="other"
                                 @if($user->gender == 'other') echo checked @endif>
-                                <label for="other">Other</label>
+                                <label for="other">@lang('lawyer.other')</label>
 
 
                                 @error('gender')
@@ -207,10 +207,10 @@
                         </div> --}}
 
                         <div class="form-group row">
-                            <label for="profile_bio" class="col-md-4 col-form-label text-md-left">{{ __('Profile Bio') }}</label>
+                            <label for="profile_bio" class="col-md-4 col-form-label text-md-left">@lang('lawyer.bio')</label>
 
                             <div class="col-md-6">
-                                <textarea id="profile_bio" type="profile_bio" class="edit-profile form-control @error('profile_bio') is-invalid @enderror" name="profile_bio" autocomplete="profile_bio" placeholder="please describe the case specificly" autofocus>{{ $user->lawyer->profile_bio }}</textarea>
+                                <textarea id="profile_bio" type="profile_bio" class="edit-profile form-control @error('profile_bio') is-invalid @enderror" name="profile_bio" autocomplete="profile_bio" placeholder="@lang('lawyer.bio_hint')" autofocus>{{ $user->lawyer->profile_bio }}</textarea>
 
                                 @error('profile_bio')
                                     <span class="invalid-feedback" role="alert">
@@ -221,25 +221,25 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="type" class="col-md-4 col-form-label text-md-left">{{ __('Lawyer Type') }}</label>
+                            <label for="type" class="col-md-4 col-form-label text-md-left">@lang('lawyer.type')</label>
 
                             <div class="col-md-6">
 
                                 <input type="radio" id="advocate" class="@error('type') is-invalid @enderror" name="type" value="advocate"
                                 @if($user->lawyer->type == 'advocate') echo checked @endif>
-                                <label for="advocate">Advocate</label>&nbsp&nbsp&nbsp
+                                <label for="advocate">@lang('lawyer.advocate')</label>&nbsp&nbsp&nbsp
 
                                 <input type="radio" id="judge" name="type" value="judge"
                                 @if($user->lawyer->type == 'judge') echo checked @endif>
-                                <label for="judge">Judge</label>&nbsp&nbsp&nbsp
+                                <label for="judge">@lang('lawyer.judge')</label>&nbsp&nbsp&nbsp
 
                                 <input type="radio" id="magistrate" name="type" value="magistrate"
                                 @if($user->lawyer->type == 'magistrate') echo checked @endif>
-                                <label for="magistrate">Magistrate</label>&nbsp&nbsp&nbsp
+                                <label for="magistrate">@lang('lawyer.magistrate')</label>&nbsp&nbsp&nbsp
 
                                 <input type="radio" id="barrister" name="type" value="barrister"
                                 @if($user->lawyer->type == 'barrister') echo checked @endif>
-                                <label for="barrister">Barrister</label>
+                                <label for="barrister">@lang('lawyer.barrister')</label>
 
                                 @error('type')
                                     <span class="invalid-feedback" role="alert">
@@ -250,20 +250,17 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="specialties_id" class="col-md-4 col-form-label text-md-left">{{ __('Specialty') }}</label>
+                            <label for="specialties_id" class="col-md-4 col-form-label text-md-left">@lang('lawyer.specialty')</label>
                             
                             <div class="col-md-6">
+
                                 <select name="specialties_id" id="specialties_id" class="edit-profile custom-select form-control @error('specialties_id') is-invalid @enderror">
-                                  
                                     {{-- <option value="">-----Specialty-----</option> --}}
-                                    
-                                    
                                     @foreach($specialties as $key => $specialty)
 
                                         <option value="{{ $specialty->id }}"
                                             @if($user->lawyer->specialty->id == $specialty->id) echo selected @endif
                                             >{{ $specialty->name }}</option>
-
 
                                     @endforeach
                                 </select>
@@ -278,8 +275,8 @@
                         
                         <div class="form-group row pt-2">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Submit') }}
+                                <button type="submit" class="button btn-primary">
+                                    @lang('lawyer.submit')
                                 </button>
                             </div>
                         </div>

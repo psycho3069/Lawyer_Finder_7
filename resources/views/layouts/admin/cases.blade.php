@@ -38,7 +38,7 @@
 				        <tbody>
 						@foreach($casefiles as $key => $value)
 							<tr>
-								<td>{{ ++$key }}</td>
+								<td lang="@if(App::isLocale('bn')){{ 'bang' }}@endif">{{ ++$key }}</td>
 								<td>{{ $value->case_identity }}</td>
 								<td>{{ $value->description }}</td>
 								<td>{{ $value->type }}</td>

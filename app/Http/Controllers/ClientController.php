@@ -122,11 +122,20 @@ class ClientController extends Controller
                     $file->storeAs("public/" . config('chatify.user_avatar.folder'), $avatar);
                     $success = $update ? 1 : 0;
                 } else {
-                    $msg = "File extension not allowed!";
+                    if (\App::isLocale('en')) {
+                        $msg = "File extension not allowed!";
+                    } else{
+                        $msg = "ফাইল এর ধরন অনুমোদিত না!";
+                    }
                     return back()->withErrors($msg);
                 }
             } else {
-                $msg = "File is too large!";
+                
+                if (\App::isLocale('en')) {
+                    $msg = "Uploaded File is too large!";
+                } else{
+                    $msg = "আপলোড করা ফাইলটি খুব বড়!";
+                }
                 return back()->withErrors($msg);
             }
         }
@@ -143,7 +152,13 @@ class ClientController extends Controller
                 'type' => $request['type'],
                 'gender' => $request['gender'],
             ]);
-            return back()->with('status','Client has been updated successfully!');
+
+            if (\App::isLocale('en')) {
+                return back()->with('status','Client has been updated successfully!');
+            } else{
+                return back()->with('status','মক্কেল সফলভাবে পরিমার্জিত করা হয়েছে!');
+            }
+            
         }
     }
 
@@ -165,6 +180,11 @@ class ClientController extends Controller
             'updated_at' => now()
         ]);
 
-        return back()->with('status','Client has been BLOCKED successfully!');
+        if (\App::isLocale('en')) {
+            return back()->with('status','Client has been BLOCKED successfully!');
+        } else{
+            return back()->with('status','মক্কেল সফলভাবে অবরুদ্ধ করা হয়েছে!');
+        }
+        
     }
 }

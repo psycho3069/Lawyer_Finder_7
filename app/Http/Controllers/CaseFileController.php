@@ -66,7 +66,13 @@ class CaseFileController extends Controller
                 'client_id' => $client_id,
                 'court_id' => $request['court_id'],
             ]);
-            return back()->with('status','Case has been added successfully!');
+
+            if (\App::isLocale('en')) {
+                return back()->with('status','Case has been added successfully!');
+            } else{
+                return back()->with('status','সফলভাবে মামলা যুক্ত হয়েছে!');
+            }
+            
         }
     }
 

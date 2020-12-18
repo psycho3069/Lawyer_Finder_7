@@ -203,7 +203,7 @@
                         <div class="card m-0 p-0">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-3">
                                         {{ '#'.++$key }}
                                     </div>
                                     <div class="col-md-3">

@@ -318,13 +318,16 @@ label.star:before {
 }
 
 .table th{
-    element.style {
-    width: 20ch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: inline-block;
-    line-height: inherit;
-    height: 50px;
+        element.style {
+        width: 20ch;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: inline-block;
+        line-height: inherit;
+        height: 50px;
+    }
 }
-}
+
+
+

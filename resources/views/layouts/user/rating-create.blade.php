@@ -17,7 +17,7 @@
 
 	            <div class="justify-content-center text-center" style="min-height: 100px; margin-top: 40px;">
 
-                    <h2 style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">Give <b>{{ $lawyer->user->name }}</b> Rating and/or Review</h2>
+                    <h2 style="text-decoration: underline; text-decoration-color: maroon; text-decoration-style: double;">@lang('rating.give',['lawyer' => $lawyer->user->name])</h2>
                     <h4 style="padding: 10px 5px 10px 5px;">
                         <div class="stars justify-content-center text-center" style="margin-top: 15px;">
 	                        @if(Session::has('error'))
@@ -48,15 +48,15 @@
 	                            @endfor
 		                        
 		                        <div class="p-3 m-3">
-								    <label for="review" class="float-left">Review:</label>
+								    <label for="review" class="float-left">@lang('rating.review'):</label>
 								    <textarea name="review" class="form-control" id="review" rows="4" autofocus="true"> {{ $rating->text }} </textarea>
 								</div>
 
 	                            <button style="height: 37px; width: 237px; border-radius: 0px; margin-left: 15px;" name="submit" type="submit" id="submit-button" value="Submit" class="button btn btn-primary"><i class="fas fa-star-half-alt text-warning" style="height: 20px; width: 20px;"></i>&nbsp 
 		                            @if($lawyer->rating->where('giver_id',$client->id)->first())
-		                                {{  __('Update Review') }}
+		                                @lang('rating.update_review')
 		                            @else
-		                                {{  __('Submit Review') }}
+		                                @lang('rating.submit_review')
 		                            @endif
 		                        </button>
 	                        </form>

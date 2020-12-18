@@ -100,12 +100,27 @@ class RatingController extends Controller
             }
 
             if ($result) {
-                return back()->with('star','Thanks! You Rated this Lawyer.');
+                if (\App::isLocale('en')) {
+                    return back()->with('star','Thanks! You Rated this Lawyer.');
+                } else{
+                    return back()->with('star','ধন্যবাদ! আপনি এই আইনজীবিকে রেট দিয়েছেন।');
+                }
+                
             } else{
-                return back()->with('error','Something went wrong, please try again!');
+                if (\App::isLocale('en')) {
+                    return back()->with('error','Something went wrong, please try again!');
+                } else{
+                    return back()->with('error','কিছু ভুল হয়েছে আবার চেষ্টা করুন!');
+                }
+                
             }
         } else{
-            return back()->with('empty','Please select any Star to Rate this Lawyer.');
+            if (\App::isLocale('en')) {
+                return back()->with('empty','Please select any Star to Rate this Lawyer.');
+            } else{
+                return back()->with('empty','এই উকিলকে রেট দেওয়ার জন্য দয়া করে যে কোনও তারকা নির্বাচন করুন।');
+            }
+            
         }
     }
 

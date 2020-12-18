@@ -54,7 +54,13 @@ class NoticeController extends Controller
                 'title_bn'      => $request['title_bn'],
                 'details_bn'    => $request['details_bn'],
             ]);
-            return back()->with('status','New Notice has been added successfully!');
+
+            if (\App::isLocale('en')) {
+                return back()->with('status','New Notice has been added successfully!');
+            } else{
+                return back()->with('status','নতুন বিজ্ঞপ্তি সফলভাবে যুক্ত করা হয়েছে!');
+            }
+            
         } 
         
     }
@@ -107,7 +113,13 @@ class NoticeController extends Controller
                 'title_bn'      => $request['title_bn'],
                 'details_bn'    => $request['details_bn'],
             ]);
-            return back()->with('status','Notice has been updated successfully!');
+
+            if (\App::isLocale('en')) {
+                return back()->with('status','Notice has been updated successfully!');
+            } else{
+                return back()->with('status','বিজ্ঞপ্তি সফলভাবে পরিমার্জিত করা হয়েছে!');
+            }
+            
         } 
     }
 

@@ -23,7 +23,7 @@
 				        <tbody>
 				          @foreach($courts as $key => $value)
 				            <tr>
-								<td>{{ ++$key }}</td>
+								<td lang="@if(App::isLocale('bn')){{ 'bang' }}@endif">{{ ++$key }}</td>
 								<td>{{ $value->name }}</td>
 								<td>{{ $value->location }}</td>
 								<td>{{ $value->type }}</td>

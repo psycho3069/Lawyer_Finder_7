@@ -21,7 +21,7 @@
                     </div>
                 @endif
 
-                <div class="card-header text-center"><a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">Back</a>@lang('client-edit.title')</div>
+                <div class="card-header text-center"><a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">@lang('client.back')</a>@lang('client.title',['client' => $user->name])</div>
 
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" action="{{ route('client.update',auth()->user()->id) }}">
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="profile_picture" class="col-md-4 col-form-label text-md-left">Profile Picture</label>
+                            <label for="profile_picture" class="col-md-4 col-form-label text-md-left">@lang('client.profile')</label>
                             <div class="col-md-6">
                                 <input type="file" id="profile_picture" class="edit-profile form-control" name="profile_picture">
 
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-left">@lang('client.name')</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="edit-profile form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" autocomplete="name" autofocus>
@@ -62,10 +62,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-left">@lang('client.email')</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="edit-profile form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" autocomplete="email" placeholder="example@email.com">
+                                <input id="email" type="email" class="edit-profile form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" autocomplete="email" placeholder="@lang('client.email_hint')">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -90,11 +90,11 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="division_id" class="col-md-4 col-form-label text-md-left">{{ __('Division') }}</label>
+                            <label for="division_id" class="col-md-4 col-form-label text-md-left">@lang('client.contact')</label>
 
                             <div class="col-md-6">
                                 <select name="division_id" id="division_id" class="edit-profile custom-select form-control @error('division_id') is-invalid @enderror">
-                                    <option value="">--------Select Division-------</option>
+                                    {{-- <option value="">--------Select Division-------</option> --}}
 
                                     @foreach($divisions as $key => $division)
                                         <option value="{{ $division->id }}"
@@ -114,12 +114,12 @@
 
 
                         <div class="form-group row">
-                            <label for="district_id" class="col-md-4 col-form-label text-md-left">{{ __('District') }}</label>
+                            <label for="district_id" class="col-md-4 col-form-label text-md-left">@lang('client.division')</label>
 
                             <div class="col-md-6">
                                 <select name="district_id" id="district_id" class="edit-profile custom-select form-control @error('district_id') is-invalid @enderror">
                                     
-                                    <option value="">--------Select District-------</option>
+                                    {{-- <option value="">--------Select District-------</option> --}}
 
                                     @foreach($districts as $key => $district)
                                         <option value="{{ $district->id }}"
@@ -140,10 +140,10 @@
                         </div>
                         
                         <div class="form-group row">
-                            <label for="location" class="col-md-4 col-form-label text-md-left">{{ __('Location') }}</label>
+                            <label for="location" class="col-md-4 col-form-label text-md-left">@lang('client.district')</label>
 
                             <div class="col-md-6">
-                                <input id="location" type="text" placeholder="Street Address" class="edit-profile form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location }}" autocomplete="location" autofocus>
+                                <input id="location" type="text" placeholder="@lang('client.location')" class="edit-profile form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location }}" autocomplete="location" autofocus>
 
                                 @error('location')
                                     <span class="invalid-feedback" role="alert">
@@ -154,10 +154,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="birthdate" class="col-md-4 col-form-label text-md-left">{{ __('Birthdate') }}</label>
+                            <label for="birthdate" class="col-md-4 col-form-label text-md-left">@lang('client.location_hint')</label>
 
                             <div class="col-md-6">
-                                <input id="birthdate" type="text" placeholder="yyyy-mm-dd" class="edit-profile form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ $user->birthdate }}" autocomplete="birthdate" autofocus>
+                                <input id="birthdate" type="text" placeholder="@lang('client.birthdate')" class="edit-profile form-control @error('birthdate') is-invalid @enderror" name="birthdate" value="{{ $user->birthdate }}" autocomplete="birthdate" autofocus>
 
                                 @error('birthdate')
                                     <span class="invalid-feedback" role="alert">
@@ -168,39 +168,19 @@
                         </div>
 
 
-
                         <div class="form-group row">
-                            <label for="type" class="col-md-4 col-form-label text-md-left">{{ __('User Type') }}</label>
-
-                            <div class="col-md-6">
-                                <input type="radio" id="lawyer" class="@error('type') is-invalid @enderror" name="type" value="lawyer"
-                                @if($user->type == 'lawyer') echo checked @endif>
-                                <label for="lawyer">Lawyer</label>&nbsp&nbsp&nbsp
-                                <input type="radio" id="client" name="type" value="client"
-                                @if($user->type == 'client') echo checked @endif>
-                                <label for="client">Client</label>
-
-                                @error('type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="gender" class="col-md-4 col-form-label text-md-left">{{ __('Gender') }}</label>
+                            <label for="gender" class="col-md-4 col-form-label text-md-left">@lang('client.gender')</label>
 
                             <div class="col-md-6">
                                 <input type="radio" id="male" class="@error('gender') is-invalid @enderror" name="gender" value="male"
                                 @if($user->gender == 'male') echo checked @endif>
-                                <label for="male">Male</label>&nbsp&nbsp&nbsp
+                                <label for="male">@lang('client.male')</label>&nbsp&nbsp&nbsp
                                 <input type="radio" id="female" name="gender" value="female"
                                 @if($user->gender == 'female') echo checked @endif>
-                                <label for="female">Female</label>&nbsp&nbsp&nbsp
+                                <label for="female">@lang('client.female')</label>&nbsp&nbsp&nbsp
                                 <input type="radio" id="other" name="gender" value="other"
                                 @if($user->gender == 'other') echo checked @endif>
-                                <label for="other">Other</label>
+                                <label for="other">@lang('client.other')</label>
 
 
                                 @error('gender')
@@ -214,8 +194,8 @@
                         
                         <div class="form-group row pt-2">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Submit') }}
+                                <button type="submit" class="button btn-primary">
+                                    @lang('client.submit')
                                 </button>
                             </div>
                         </div>

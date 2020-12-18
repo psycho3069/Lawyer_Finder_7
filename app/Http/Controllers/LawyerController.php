@@ -7,6 +7,7 @@ use App\Court;
 use App\Lawyer;
 use App\Client;
 use App\Rating;
+use App\CaseFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -141,11 +142,19 @@ class LawyerController extends Controller
                     $file->storeAs("public/" . config('chatify.user_avatar.folder'), $avatar);
                     $success = $update ? 1 : 0;
                 } else {
-                    $msg = "File extension not allowed!";
+                    if (\App::isLocale('en')) {
+                        $msg = "File extension not allowed!";
+                    } else{
+                        $msg = "ফাইল এর ধরন অনুমোদিত না!";
+                    }
                     return back()->withErrors($msg);
                 }
             } else {
-                $msg = "File is too large!";
+                if (\App::isLocale('en')) {
+                    $msg = "Uploaded File is too large!";
+                } else{
+                    $msg = "আপলোড করা ফাইলটি খুব বড়!";
+                }
                 return back()->withErrors($msg);
             }
         }
@@ -171,7 +180,13 @@ class LawyerController extends Controller
                 'profile_bio' => $request['profile_bio'],
                 // 'court_id' => $request['court_id'],
             ]);
-            return back()->with('status','Lawyer Profile has been updated successfully!');
+
+            if (\App::isLocale('en')) {
+                return back()->with('status','Lawyer Profile has been updated successfully!');
+            } else{
+                return back()->with('status','আইনজীবী প্রোফাইল সফলভাবে পরিমার্জিত হয়েছে!');
+            }
+            
         }
     }
 
@@ -226,26 +241,48 @@ class LawyerController extends Controller
                     'lawyer_id'     => $lawyer_id,
                 ]);
 
-                // $client_case = $query->get()[0]->update([
-                //     'lawyer_id' => $request->lawyer_id,
-                //     'result' => 'pending',
-                //     'updated_at' => now()
-                // ]);
+                if (\App::isLocale('en')) {
+                    $request->session()->flash('success', 'Request submitted successfully');
+                } else{
+                    $request->session()->flash('success', 'অনুরোধ সফলভাবে জমা দেওয়া হয়েছে');
+                }
 
-                $request->session()->flash('success', 'Request submitted successfully');
                 return back();
+
             } else if ($client_cases < 1) {
-                $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have at least one \'waiting\' case. Please create/open a Case first!');
+                if (\App::isLocale('en')) {
+                    $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have at least one \'waiting\' case. Please create/open a Case first!');
+                } else{
+                    $request->session()->flash('failed', 'দুঃখিত, অনুরোধ জমা দেওয়া যাবে না! আপনার অবশ্যই কমপক্ষে একটি \'অপেক্ষমাণ(waiting)\' মামলা থাকা উচিত। দয়া করে প্রথমে একটি মামলা খুলুন!');
+                }
+
                 return back();
+
             } else if ($client_cases > 1) {
-                $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have one and only one \'waiting\' case');
+                if (\App::isLocale('en')) {
+                    $request->session()->flash('failed', 'Sorry, Request can\'t be submitted! You must have one and only one \'waiting\' case');
+                } else{
+                    $request->session()->flash('failed', 'দুঃখিত, অনুরোধ জমা দেওয়া যাবে না! আপনার অবশ্যই কমপক্ষে একটি এবং একমাত্র একটি \'অপেক্ষমাণ(waiting)\' মামলা থাকা উচিত।');
+                }
+                
                 return back();
             }
         } else if($count_waiting == 1 && $count_rejected == 0) {
-            $request->session()->flash('failed', 'Sorry, You already requested this Lawyer! Wait for the response!');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('failed', 'Sorry, You already requested this Lawyer! Wait for the response!');
+            } else{
+                $request->session()->flash('failed', 'দুঃখিত, আপনি ইতিমধ্যে এই আইনজীবিকে অনুরোধ করেছেন! অপেক্ষায় থাকুন!');
+            }
+            
             return back();
+
         } else if($count_waiting == 0 && $count_rejected == 1) {
-            $request->session()->flash('failed', 'Sorry, You already requested this Lawyer! The Lawyer rejected your case!');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('failed', 'Sorry, You already requested this Lawyer! The Lawyer rejected your case!');
+            } else{
+                $request->session()->flash('failed', 'দুঃখিত, আপনি ইতিমধ্যে এই আইনজীবিকে অনুরোধ করেছেন! আইনজীবী আপনার মামলা গ্রহণ করেননি!');
+            }
+            
             return back();
         }
     }
@@ -271,7 +308,12 @@ class LawyerController extends Controller
                                         ->where('state','pending')
                                         ->delete();
 
-            $request->session()->flash('approve', 'Request approved successfully');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('approve', 'Request approved successfully');
+            } else{
+                $request->session()->flash('approve', 'অনুরোধ সফলভাবে অনুমোদিত হয়েছে');
+            }
+
         } else if(!$request->approve){
 
             $result = \App\Request::find($req->id)->update([
@@ -279,7 +321,12 @@ class LawyerController extends Controller
                 'updated_at' => now()
             ]);
 
-            $request->session()->flash('decline', 'Request declined successfully');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('decline', 'Request declined successfully');
+            } else{
+                $request->session()->flash('decline', 'অনুরোধ সাফল্যের সাথে প্রত্যাখ্যান হয়েছে');
+            }
+            
         }
 
         return back();
@@ -301,7 +348,12 @@ class LawyerController extends Controller
                 'updated_at' => now()
             ]);
 
-            $request->session()->flash('won', 'Case result set as WON');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('won', 'Case result set as WON');
+            } else{
+                $request->session()->flash('won', 'মামলা ফলাফল WON হিসাবে সেট করা হয়েছে');
+            }
+
         } else if(!$request->result){
 
             $result1 = CaseFile::find($req->casefile_id)->update([
@@ -313,8 +365,12 @@ class LawyerController extends Controller
                 'state' => 'closed',
                 'updated_at' => now()
             ]);
-
-            $request->session()->flash('lost', 'Case result set as LOST');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('lost', 'Case result set as LOST');
+            } else{
+                $request->session()->flash('lost', 'মামলা ফলাফল LOST হিসাবে সেট করা হয়েছে');
+            }
+            
         }
 
         return back();
@@ -332,13 +388,10 @@ class LawyerController extends Controller
 
         return view('layouts.user.lawyer.verify',compact('lawyer','active'));
         
-        // return view('layouts.user.lawyer-verify',compact('user','courts','specialties','divisions','districts'));
     }
 
     public function upload_nid(Request $request, $id)
     {
-        // return $request->hasFile('nid_front');
-        
 
         // if there is a [file]
         if ($request->hasFile('nid_front') && $request->hasFile('nid_back')) {
@@ -365,11 +418,19 @@ class LawyerController extends Controller
                     $file1->storeAs("public/nid/" , $nid_front);
                     $success = $update ? 1 : 0;
                 } else {
-                    $msg = "Front Image File extension not allowed!";
+                    if (\App::isLocale('en')) {
+                        $msg = "Front Image File extension not allowed!";
+                    } else{
+                        $msg = "সামনের চিত্রটির ধরন অনুমোদিত না!";
+                    }
                     return back()->withErrors($msg);
                 }
             } else {
-                $msg = "Front Image is too large! Maximum 50MB is allowed!";
+                if (\App::isLocale('en')) {
+                    $msg = "Front Image is too large! Maximum 50MB is allowed!";
+                } else{
+                    $msg = "সামনের চিত্রটি খুব বড়! সর্বোচ্চ 50MB অনুমোদিত!";
+                }
                 return back()->withErrors($msg);
             }
 
@@ -390,21 +451,46 @@ class LawyerController extends Controller
                     $file2->storeAs("public/nid/" , $nid_back);
                     $success = $update ? 1 : 0;
                 } else {
-                    $msg = "Back Image File extension not allowed!";
+                    if (\App::isLocale('en')) {
+                        $msg = "Back Image File extension not allowed!";
+                    } else{
+                        $msg = "পিছনের চিত্রটির ধরন অনুমোদিত না!";
+                    }
+                    
                     return back()->withErrors($msg);
                 }
             } else {
-                $msg = "Back Image is too large! Maximum 50MB is allowed!";
+                if (\App::isLocale('en')) {
+                    $msg = "Back Image is too large! Maximum 50MB is allowed!";
+                } else{
+                    $msg = "পিছনের চিত্রটি খুব বড়! সর্বোচ্চ 50MB অনুমোদিত!";
+                }
+                
                 return back()->withErrors($msg);
             }
         } else{
             // return $request;
             if ($request->hasFile('nid_back')) {
-                $msg = "Please Upload the Front view of your NID Card!";
+                if (\App::isLocale('en')) {
+                    $msg = "Please Upload the Front view of your NID Card!";
+                } else{
+                    $msg = "আপনার এনআইডি কার্ডের সামনের দৃশ্য আপলোড করুন!";
+                }
+                
             } else if($request->hasFile('nid_front')){
-                $msg = "Please Upload the Back view of your NID Card!";
+                if (\App::isLocale('en')) {
+                    $msg = "Please Upload the Back view of your NID Card!";
+                } else{
+                    $msg = "আপনার এনআইডি কার্ডের পিছনের দৃশ্যটি আপলোড করুন!";
+                }
+                
             } else{
-                $msg = "Please Upload the Front and Back views of your NID Card!";
+                if (\App::isLocale('en')) {
+                    $msg = "Please Upload the Front and Back views of your NID Card!";
+                } else{
+                    $msg = "আপনার এনআইডি কার্ডের সামনের এবং পিছনের দৃশ্যগুলি আপলোড করুন!";
+                }
+                
             }
             
             return back()->withErrors($msg);
@@ -414,7 +500,11 @@ class LawyerController extends Controller
             'admin_approval' => 1,
         ]);
 
-        return back()->with('status','NID pictures has been uploaded successfully!');
+        if (\App::isLocale('en')) {
+            return back()->with('status','NID pictures has been uploaded successfully!');
+        } else{
+            return back()->with('status','এনআইডি ছবি সফলভাবে আপলোড করা হয়েছে!');
+        }
         
     }
 
@@ -435,15 +525,25 @@ class LawyerController extends Controller
                 'updated_at' => now()
             ]);
 
-            $request->session()->flash('approve', 'Lawyer account was approved successfully');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('approve', 'Lawyer account has been approved successfully');
+            } else{
+                $request->session()->flash('approve', 'আইনজীবীর অ্যাকাউন্ট সফলভাবে অনুমোদিত হয়েছে');
+            }
+
+            
         } else if ($request->approve == 3) {
 
             $result1 = Lawyer::find($request->lawyer_id)->update([
                 'admin_approval' => 3,
                 'updated_at' => now()
             ]);
-
-            $request->session()->flash('decline', 'Lawyer account was declined successfully');
+            if (\App::isLocale('en')) {
+                $request->session()->flash('decline', 'Lawyer account has been declined successfully');
+            } else{
+                $request->session()->flash('decline', 'আইনজীবীর অ্যাকাউন্ট সাফল্যের সাথে প্রত্যাখ্যান করা হয়েছে');
+            }
+            
             
         }
 
