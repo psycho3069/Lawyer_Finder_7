@@ -10,8 +10,8 @@
             </td>
             {{-- center side --}}
             <td>
-                <p data-id="{{ 'user_'.Auth::user()->id }}">Saved Messages <span>You</span></p>
-                <span>Save messages secretly</span>
+                <p data-id="{{ 'user_'.Auth::user()->id }}">@lang('vendor/layouts.saved') <span>You</span></p>
+                <span>@lang('vendor/layouts.secretly')</span>
             </td>
         </tr>
     </table>
@@ -50,7 +50,7 @@
                 : $lastMessage->body
             }}
             @else
-            <span class="fas fa-file"></span> Attachment
+            <span class="fas fa-file"></span> @lang('vendor/layouts.attachment')
             @endif
         </span>
         {{-- New messages counter --}}

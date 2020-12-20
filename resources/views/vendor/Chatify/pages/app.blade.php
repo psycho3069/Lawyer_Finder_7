@@ -1,11 +1,11 @@
 @include('Chatify::layouts.headLinks')
-<div class="messenger">
+<div class="messenger" lang="bang">
     {{-- ----------------------Users/Groups lists side---------------------- --}}
     <div class="messenger-listView">
         {{-- Header and search bar --}}
         <div class="m-header">
             <nav>
-                <a href="#"><i class="fas fa-inbox"></i> <span class="messenger-headTitle">MESSAGES</span> </a>
+                <a href="#"><i class="fas fa-inbox"></i> <span class="messenger-headTitle">@lang('vendor/app.message')</span> </a>
                 {{-- header buttons --}}
                 <nav class="m-header-right">
                     <a href="#"><i class="fas fa-cog settings-btn"></i></a>
@@ -13,13 +13,19 @@
                 </nav>
             </nav>
             {{-- Search input --}}
-            <input type="text" class="messenger-search" placeholder="Search" />
+            <input type="text" class="messenger-search" placeholder="@lang('vendor/app.search')" />
             {{-- Tabs --}}
             <div class="messenger-listView-tabs">
                 <a href="#" @if($route == 'user') class="active-tab" @endif data-view="users">
-                    <span class="far fa-user"></span>@lang('vendor/app.people')</a>
-                <a href="#" @if($route == 'group') class="active-tab" @endif data-view="groups">
-                    <span class="fas fa-users"></span> Groups</a>
+                    <span class="far fa-user"></span>
+                    @if(auth()->user()->type == 'lawyer')
+                        @lang('vendor/app.client')
+                    @elseif(auth()->user()->type == 'client')
+                        @lang('vendor/app.lawyer')
+                    @endif
+                </a>
+                {{-- <a href="#" @if($route == 'group') class="active-tab" @endif data-view="groups">
+                    <span class="fas fa-users"></span> Groups</a> --}}
             </div>
         </div>
         {{-- tabs and lists --}}
@@ -29,7 +35,7 @@
            <div class="@if($route == 'user') show @endif messenger-tab app-scroll" data-view="users">
 
                {{-- Favorites --}}
-               <p class="messenger-title">Favorites</p>
+               <p class="messenger-title">@lang('vendor/app.favorites')</p>
                 <div class="messenger-favorites app-scroll-thin"></div>
 
                {{-- Saved Messages --}}
@@ -41,17 +47,17 @@
            </div>
 
            {{-- ---------------- [ Group Tab ] ---------------- --}}
-           <div class="@if($route == 'group') show @endif messenger-tab app-scroll" data-view="groups">
+           {{-- <div class="@if($route == 'group') show @endif messenger-tab app-scroll" data-view="groups"> --}}
                 {{-- items --}}
-                <p style="text-align: center;color:grey;">Soon will be available</p>
-             </div>
+                {{-- <p style="text-align: center;color:grey;">Soon will be available</p> --}}
+             {{-- </div> --}}
 
              {{-- ---------------- [ Search Tab ] ---------------- --}}
            <div class="messenger-tab app-scroll" data-view="search">
                 {{-- items --}}
-                <p class="messenger-title">Search</p>
+                <p class="messenger-title">@lang('vendor/app.search')</p>
                 <div class="search-records">
-                    <p class="message-hint"><span>Type to search..</span></p>
+                    <p class="message-hint"><span>@lang('vendor/app.type')</span></p>
                 </div>
              </div>
         </div>
@@ -74,19 +80,25 @@
                     <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
                     <a href="{{ route('home') }}"><i class="fas fa-home"></i></a>
                     <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>
+                    @if(App::isLocale('en'))
+                        <a class="" href="{{ route('locale','bn') }}" style="line-height: 1.1em;">{{ __('বাংলা') }}</a>
+                    @else
+                        <a class="" href="{{ route('locale','en') }}" style="line-height: 1.1em;">{{ __('English') }}</a>
+                    @endif
+                    
                 </nav>
             </nav>
         </div>
         {{-- Internet connection --}}
         <div class="internet-connection">
-            <span class="ic-connected">Connected</span>
-            <span class="ic-connecting">Connecting...</span>
-            <span class="ic-noInternet">No internet access</span>
+            <span class="ic-connected">@lang('vendor/app.connected')</span>
+            <span class="ic-connecting">@lang('vendor/app.connecting')</span>
+            <span class="ic-noInternet">@lang('vendor/app.noconnect')</span>
         </div>
         {{-- Messaging area --}}
         <div class="m-body app-scroll">
             <div class="messages">
-                <p class="message-hint" style="margin-top: calc(30% - 126.2px);"><span>Please select a chat to start messaging</span></p>
+                <p class="message-hint" style="margin-top: calc(30% - 126.2px);"><span>@lang('vendor/app.please')</span></p>
             </div>
             {{-- Typing indicator --}}
             <div class="typing-indicator">

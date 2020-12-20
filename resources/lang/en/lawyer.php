@@ -35,5 +35,11 @@ return [
 	'barrister' => 'Barrister',
 	'specialty' => 'Specialty',
 	'submit' => 'Submit',
+
+	'verification' => 'Account Verification',
+	'hello_lawyer' => 'Hello :lawyer , Please upload your NID pictures to verify your lawyer account.',
+	'nid_front' => 'NID Front',
+	'nid_back' => 'NID Back',
+	'submit' => 'Submit',
 	
 ];

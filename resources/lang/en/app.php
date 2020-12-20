@@ -11,4 +11,5 @@ return [
     'copyright' => 'Lawyer Finder © 2020',
     'contact' => 'Contact',
     'faq' => 'Frequently Asked Questions',
+    'logout' => 'Logout',
 ];

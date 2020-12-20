@@ -23,7 +23,7 @@ return [
     'hint_birthdate' => 'yyyy-mm-dd নিয়ম দিন',
 
     'lawyer' => 'আইনজীবী',
-    'client' => 'ক্লায়েন্ট',
+    'client' => 'মক্কেল',
     'male' => 'পুরুষ',
     'female' => 'মহিলা',
     'other' => 'অন্যান্য',

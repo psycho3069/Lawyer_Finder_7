@@ -8,10 +8,10 @@
 
     <div class="body-margin">
     	<h1 class="text-md-center">
-            {{ 'Account Verification' }}
+            @lang('lawyer.verification')
         </h1>
         <h4 class="text-md-center">
-        	{{ 'Hello '.$lawyer->user->name.', Please upload your NID pictures to verify your lawyer account.' }}
+        	@lang('lawyer.hello_lawyer',['lawyer' => $lawyer->user->name])
         </h4>
         <hr>
         @if (session('status'))
@@ -44,7 +44,7 @@
 		        	</div>
 
 		        	<div class="form-group col-md-5 row">
-                        <label for="nid_front" class="col-md-4 col-form-label text-md-left">NID Front</label>
+                        <label for="nid_front" class="col-md-4 col-form-label text-md-left">@lang('lawyer.nid_front')</label>
                         <div class="col-md-6">
                             <input type="file" id="nid_front" class="edit-profile form-control @error('nid_front') is-invalid @enderror" name="nid_front">
 
@@ -64,7 +64,7 @@
 		        	</div>
 
 		        	<div class="form-group col-md-5 row">
-                        <label for="nid_back" class="col-md-4 col-form-label text-md-left">NID Back</label>
+                        <label for="nid_back" class="col-md-4 col-form-label text-md-left">@lang('lawyer.nid_back')</label>
                         <div class="col-md-6">
                             <input type="file" id="nid_back" class="edit-profile form-control @error('nid_back') is-invalid @enderror" name="nid_back">
 
@@ -80,7 +80,7 @@
                 <div class="form-group text-lg-center pt-2">
 	                <div class="col-md-8">
 	                    <button type="submit" style="border-radius: 0;" class="button">
-	                        {{ __('Submit') }}
+	                        @lang('lawyer.submit')
 	                    </button>
 	                </div>
 	            </div>
