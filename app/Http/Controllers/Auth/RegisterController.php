@@ -10,9 +10,10 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Client;
 use App\Lawyer;
-use Illuminate\Support\Facades\Auth;
 use App\Division;
 use App\District;
+use App\Education;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -167,8 +168,16 @@ class RegisterController extends Controller
             Lawyer::create([
                 'user_id' => $user->id
             ]);
+
+            Education::create([
+                'user_id' => $user->id
+            ]);
         } else {
             Client::create([
+                'user_id' => $user->id
+            ]);
+
+            Education::create([
                 'user_id' => $user->id
             ]);
         }

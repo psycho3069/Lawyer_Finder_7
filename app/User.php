@@ -36,6 +36,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function district()
+    {
+        return $this->belongsTo('App\District');
+    }
+
     public function client()
     {
         return $this->hasOne('App\Client');
@@ -46,8 +51,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Lawyer');
     }
 
-    public function district()
+    public function education()
     {
-        return $this->belongsTo('App\District');
+        return $this->hasOne('App\Education');
     }
 }

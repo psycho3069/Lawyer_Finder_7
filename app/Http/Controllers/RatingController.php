@@ -180,8 +180,8 @@ class RatingController extends Controller
         $active['requests'] = 0;
 
         $lawyer = Lawyer::find($request->lawyer_id);
-        $rating = Rating::find($lawyer->rating->first()->id);
-        $client = Client::find($rating->client->id);
-        return view('layouts.user.rating-create',compact('rating','lawyer','client','active'));
+        // $rating = Rating::find($lawyer->rating->first()->id);
+        // $client = Client::find($rating->client->id);
+        return view('layouts.user.rating-create',compact('lawyer','active'));
     }
 }

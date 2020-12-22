@@ -40,6 +40,8 @@ Route::get('/lawyer-verify/{lawyer}', 'LawyerController@verifyAccount')->name('l
 Route::put('/lawyer-upload-nid/{lawyer_id}', 'LawyerController@upload_nid')->name('lawyer-upload-nid');
 Route::get('/lawyer-verify-decide', 'LawyerController@lawyerVerifyDecide')->name('lawyer-verify-decide');
 Route::get('/lawyer-verify-recheck/{lawyer}', 'LawyerController@verifyRecheck')->name('lawyer-verify-recheck');
+Route::post('/get-categories', 'LawyerController@getCategories')->name('get-categories');
+
 
 Route::get('/client-block/{client}', 'ClientController@block')->name('client-block');
 

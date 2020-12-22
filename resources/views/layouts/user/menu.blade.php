@@ -21,7 +21,7 @@
     {{-- <a href="{{ route('reviews') }}">
     	<button class="w3-bar-item menu-button tablink">@lang('menu.reviews')</button>
     </a> --}}
-    <a href="{{ route('lawyer-messenger') }}">
+    <a href="{{ route('lawyer-chatbox') }}">
         <button class="w3-bar-item menu-button tablink">@lang('menu.messenger')</button>
     </a>
     

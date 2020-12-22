@@ -10,7 +10,7 @@ class FeedbackController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['store']);
     }
     /**
      * Display a listing of the resource.
@@ -45,12 +45,17 @@ class FeedbackController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'email' => [ 'required', 'email','max:191'],
-            'contact' => ['required'],
+            'contact' => ['nullable','numeric','digits:11'],
             'subject' => ['required'],
             'feedback' => ['required'],
         ]);
 
         if ($validator->fails()) {
+            // $new_array = [];
+            // $ar1 = $validator->errors();
+            // $ar2 = array("a" => "aqsdas", "b" => "asdas");
+            // $new_array = [$ar1,$ar2];
+            // $errors_array = array_merge($ar1, $ar2);
             return back()->withErrors($validator->errors());
         } else {
             Feedback::create([

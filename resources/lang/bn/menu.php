@@ -7,13 +7,13 @@ return [
     'cases' => 'মামলা',
     'ratings' => 'রেটিং',
     'reviews' => 'পর্যালোচনা',
-    'messenger' => 'আইনজীবী মেসেঞ্জার',
+    'messenger' => 'চ্যাটবক্স',
 
     'summary' => 'সারসংক্ষেপ',
     'lawyers' => 'আইনজীবি',
     'clients' => 'মক্কেল',
     'courts' => 'আদালত',
-    'feedbacks' => 'প্রতিক্রিয়া',
+    'feedbacks' => 'মন্তব্য',
     'notices' => 'বিজ্ঞপ্তি',
 
 ];

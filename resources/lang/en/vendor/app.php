@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'name' => 'Chatbox',
 	'message' => 'MESSAGES',
 	'lawyer' => 'Lawyer',
 	'client' => 'Client',

@@ -7,7 +7,7 @@ return [
     'cases' => 'Cases',
     'ratings' => 'Ratings',
     'reviews' => 'Reviews',
-    'messenger' => 'Lawyers Messenger',
+    'messenger' => 'Chatbox',
 
     'summary' => 'Summary',
     'lawyers' => 'Lawyers',

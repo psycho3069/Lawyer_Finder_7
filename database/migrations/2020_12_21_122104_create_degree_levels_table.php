@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFeedbackTable extends Migration
+class CreateDegreeLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateFeedbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('b9_feedbacks', function (Blueprint $table) {
+        Schema::create('a06_degree_levels', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('contact',20)->nullable();
-            $table->string('subject');
-            $table->string('feedback');
+            $table->string('level_name',50);
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateFeedbackTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b9_feedbacks');
+        Schema::dropIfExists('a06_degree_levels');
     }
 }

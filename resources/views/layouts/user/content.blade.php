@@ -225,7 +225,7 @@
 
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('lawyer-messenger') }}" class="btn btn-info">@lang('dash.message')</a>
+                                        <a href="{{ route('lawyer-chatbox') }}" class="btn btn-info">@lang('dash.message')</a>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -28,6 +28,10 @@
 	                            <div id="success-status" style="min-height: 30px; border: solid maroon 1px; border-radius: 5%;" class="alert-success text-md-center">
 	                                {{ Session::get('star') }}
 	                            </div>
+	                        @elseif(Session::has('empty'))
+	                            <div id="success-status" style="min-height: 30px; border: solid maroon 1px; border-radius: 5%;" class="alert-danger text-md-center">
+	                                {{ Session::get('empty') }}
+	                            </div>
 	                        @endif
 
 	                        
@@ -38,8 +42,8 @@
 
 	                            @for ($i = 5; $i > 0; $i--)
 	                                <input class="star star-{{ $i }}" id="star-{{ $i }}" type="radio" value="{{ $i }}" name="star"
-	                                @if($lawyer->rating->where('giver_id',$client->id)->first())
-	                                    @if($lawyer->rating->where('giver_id',$client->id)->first()->value == $i)
+	                                @if($lawyer->rating->where('giver_id',auth()->user()->client->id)->first())
+	                                    @if($lawyer->rating->where('giver_id',auth()->user()->client->id)->first()->value == $i)
 	                                        {{ 'checked' }}
 	                                    @endif
 	                                @endif
@@ -49,11 +53,15 @@
 		                        
 		                        <div class="p-3 m-3">
 								    <label for="review" class="float-left">@lang('rating.review'):</label>
-								    <textarea name="review" class="form-control" id="review" rows="4" autofocus="true"> {{ $rating->text }} </textarea>
+								    <textarea name="review" class="form-control" id="review" rows="4" autofocus="true">
+								    	@if($lawyer->rating->where('giver_id', auth()->user()->client->id)->first() != null)
+								    		{{ $lawyer->rating->where('giver_id', auth()->user()->client->id)->first()->text }}
+								    	@endif
+	                                </textarea>
 								</div>
 
 	                            <button style="height: 37px; width: 237px; border-radius: 0px; margin-left: 15px;" name="submit" type="submit" id="submit-button" value="Submit" class="button btn btn-primary"><i class="fas fa-star-half-alt text-warning" style="height: 20px; width: 20px;"></i>&nbsp 
-		                            @if($lawyer->rating->where('giver_id',$client->id)->first())
+		                            @if($lawyer->rating->where('giver_id',auth()->user()->client->id)->first())
 		                                @lang('rating.update_review')
 		                            @else
 		                                @lang('rating.submit_review')

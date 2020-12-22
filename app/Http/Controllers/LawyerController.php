@@ -8,12 +8,16 @@ use App\Lawyer;
 use App\Client;
 use App\Rating;
 use App\CaseFile;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use App\Specialty;
 use App\Division;
 use App\District;
+use App\DegreeLevel;
+use App\DegreeCategory;
+use App\Education;
+use App\Board;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Illuminate\Support\Str;
 
@@ -93,8 +97,12 @@ class LawyerController extends Controller
         $courts = Court::all();
         $divisions = Division::all();
         $districts = District::all();
+        $degree_levels = DegreeLevel::all();
+        $degree_categories = DegreeCategory::all();
+        $educations = Education::all();
         $specialties = Specialty::all();
-        return view('layouts.user.lawyer.lawyer-edit',compact('user','courts','specialties','divisions','districts'));
+        $boards = Board::all();
+        return view('layouts.user.lawyer.lawyer-edit',compact('user','courts','specialties','divisions','districts','degree_levels','degree_categories','educations','boards'));
     }
 
     /**
@@ -116,6 +124,23 @@ class LawyerController extends Controller
             'type' => ['required'],
             'gender' => ['required'],
             'specialties_id' => ['required'],
+            'member_id' => ['nullable','numeric','digits:4'],
+            
+            'ssc_year' => 'nullable|numeric',
+            'ssc_board' => Rule::requiredIf($request->ssc_year != NULL),
+            'ssc_result' => Rule::requiredIf($request->ssc_year != NULL),
+
+            'hsc_year' => 'nullable|numeric',
+            'hsc_board' => Rule::requiredIf($request->hsc_year != NULL),
+            'hsc_result' => Rule::requiredIf($request->hsc_year != NULL),
+
+            'degree_level' => 'nullable|numeric',
+            'degree_category' => Rule::requiredIf($request->degree_level != NULL),
+            'uni' => Rule::requiredIf($request->degree_level != NULL),
+            'sub' => Rule::requiredIf($request->degree_level != NULL),
+            'degree_year' => Rule::requiredIf($request->degree_level != NULL),
+            'degree_result' => Rule::requiredIf($request->degree_level != NULL),
+            
         ]);
 
         // if there is a [file]
@@ -164,6 +189,7 @@ class LawyerController extends Controller
             // return $request;
             return back()->withErrors($validator->errors());
         } else {
+            // return $request;
             // return Lawyer::where('id', auth()->user()->lawyer->id)->first();
             User::where('id', $id)->first()->update([
                 'name' => $request['name'],
@@ -175,10 +201,24 @@ class LawyerController extends Controller
                 'gender' => $request['gender'],
             ]);
             Lawyer::where('id', auth()->user()->lawyer->id)->first()->update([
+                'member_id' => $request['member_id'],
                 'type' => $request['type'],
                 'specialties_id' => $request['specialties_id'],
                 'profile_bio' => $request['profile_bio'],
-                // 'court_id' => $request['court_id'],
+                'member_id' => $request['member_id'],
+            ]);
+            Education::where('id', auth()->user()->education->id)->first()->update([
+                'ssc_year' => $request->ssc_year,
+                'ssc_board_id' => $request->ssc_board,
+                'ssc_result' => $request->ssc_result,
+                'hsc_year' => $request->hsc_year,
+                'hsc_board_id' => $request->hsc_board,
+                'hsc_result' => $request->hsc_result,
+                'degree_category_id' => $request->degree_category,
+                'uni' => $request->uni,
+                'sub' => $request->sub,
+                'degree_year' => $request->degree_year,
+                'degree_result' => $request->degree_result,
             ]);
 
             if (\App::isLocale('en')) {
@@ -516,7 +556,6 @@ class LawyerController extends Controller
 
     public function lawyerVerifyDecide(Request $request){
         // $request->all();
-        
 
         if ($request->approve == 2) {
 
@@ -531,7 +570,6 @@ class LawyerController extends Controller
                 $request->session()->flash('approve', 'আইনজীবীর অ্যাকাউন্ট সফলভাবে অনুমোদিত হয়েছে');
             }
 
-            
         } else if ($request->approve == 3) {
 
             $result1 = Lawyer::find($request->lawyer_id)->update([
@@ -543,7 +581,6 @@ class LawyerController extends Controller
             } else{
                 $request->session()->flash('decline', 'আইনজীবীর অ্যাকাউন্ট সাফল্যের সাথে প্রত্যাখ্যান করা হয়েছে');
             }
-            
             
         }
 
@@ -558,5 +595,12 @@ class LawyerController extends Controller
         ]);
 
         return back();
+    }
+
+    public function getCategories(Request $request)
+    {
+        // return $request->degree_level;
+        $degree_categories = DegreeCategory::where('degree_level_id',$request->degree_level)->get();
+        return $degree_categories;
     }
 }

@@ -20,9 +20,10 @@ class CreateLawyersTable extends Migration
             $table->foreign('user_id')->references('id')->on('a1_users');
             $table->unsignedBigInteger('court_id')->nullable();
             $table->foreign('court_id')->references('id')->on('b1_courts');
-            $table->enum('type', ['advocate','judge','magistrate','barrister'])->nullable();
+            $table->enum('type', ['advocate','magistrate','barrister'])->nullable();
             $table->unsignedBigInteger('specialties_id')->nullable();
             $table->foreign('specialties_id')->references('id')->on('a04_specialties');
+            $table->smallInteger('member_id')->nullable();
             $table->bigInteger('ratings')->default('0');
             $table->integer('reviews')->default(0);
             $table->integer('cases')->default(0);

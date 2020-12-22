@@ -12,8 +12,8 @@ return [
     |
     */
 
-    'name' => env('CHATIFY_NAME', 'Lawyer Messenger'),
-    'name_bn' => env('CHATIFY_NAME', 'আইনজীবী মেসেঞ্জার'),
+    'name' => env('CHATIFY_NAME', 'Lawyer Chatbox'),
+    'name_bn' => env('CHATIFY_NAME', 'আইনজীবী চ্যাটবক্স'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     | e.g. : app.test/chatify
     */
 
-    'path' => env('CHATIFY_PATH', 'lawyer-messenger'),
+    'path' => env('CHATIFY_PATH', 'lawyer-chatbox'),
 
     /*
     |--------------------------------------------------------------------------
