@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\District;
+use App\User;
+use App\Lawyer;
+use App\Client;
+use App\CaseFile;
 
 class WelcomeController extends Controller
 {
@@ -98,5 +102,14 @@ class WelcomeController extends Controller
     {
         $districts = District::where('division_id',$request->division_id)->get();
         return $districts;
+    }
+
+    public function welcome()
+    {
+        $users = User::all();
+        $lawyers = Lawyer::all();
+        $clients = Client::all();
+        $cases = CaseFile::all();
+        return view('welcome',compact('users','lawyers','clients','cases'));
     }
 }

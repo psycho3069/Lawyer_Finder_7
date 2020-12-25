@@ -16,7 +16,7 @@ class CreateDegreeCategoriesTable extends Migration
         Schema::create('a07_degree_categories', function (Blueprint $table) {
             $table->id();
             $table->string('category_name',50);
-            $table->foreignId('degree_level_id')->constrained('a06_degree_levels')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('degree_level_id')->constrained('a06_degree_levels')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

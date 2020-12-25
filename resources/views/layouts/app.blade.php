@@ -32,11 +32,16 @@
     <!-- animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.uikit.css">
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+    
+    
 
     <style type="text/css">
         @include('layouts.style')
@@ -70,32 +75,32 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ url('/home') }}"><i class="fas fa-home fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.home')</a>
+                            <a class="nav-link text-black" href="{{ url('/home') }}"><i class="fas fa-home fa-sm text-primary"  style="height: 16px; width: 20px;"></i>@lang('app.home')</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ route('register-details') }}"><i class="fas fa-registered fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.how_to_apply')</a>
+                            <a class="nav-link text-black" href="{{ route('register-details') }}"><i class="fas fa-registered fa-sm text-primary"  style="height: 16px; width: 20px;"></i>@lang('app.how_to_apply')</a>
                         </li>
 
                         
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="{{ route('notice.index') }}"><i class="fas fa-flag fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.notice_board')</a>
+                            <a class="nav-link text-black" href="{{ route('notice.index') }}"><i class="fas fa-flag fa-sm text-primary"  style="height: 16px; width: 20px;"></i>@lang('app.notice_board')</a>
                         </li>
 
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link text-black" href="{{ route('login') }}"><i class="fas fa-user-lock fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.login')</a>
+                                <a class="nav-link text-black" href="{{ route('login') }}"><i class="fas fa-user-lock fa-sm text-primary"  style="height: 16px; width: 20px;"></i>@lang('app.login')</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link text-black" href="{{ route('register') }}"><i class="fas fa-user-plus fa-sm text-primary"  style="height: 20px; width: 20px;"></i>@lang('app.register')</a>
+                                    <a class="nav-link text-black" href="{{ route('register') }}"><i class="fas fa-user-plus fa-sm text-primary"  style="height: 16px; width: 20px;"></i>@lang('app.register')</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a style="background-color: #f1d1d2;" id="navbarDropdown" class="nav-link dropdown-toggle text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-user-shield fa-sm text-primary"  style="height: 20px; width: 20px;"></i>{{ Auth::user()->name }}
+                                <a style="background-color: lightgreen;" id="navbarDropdown" class="nav-link dropdown-toggle text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-user-shield fa-sm text-primary"  style="height: 16px; width: 20px;"></i>{{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

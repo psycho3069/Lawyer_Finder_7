@@ -85,9 +85,9 @@
                 </div>
             </div>
 
-            <div style="margin-top: 20px; margin-bottom: 50px;" class="row">
-                <div class="row text-center justify-content-center float-md-right">
-                    <h2 class="text-primary tex" style="border-radius: 0; border: solid maroon 2px; border-left: 0; border-right: 0;">@lang('lawyer.rating')</h2>
+            <div style="margin-top: 20px; margin-bottom: 50px;" class="row text-center justify-content-center">
+                <div class="row">
+                    <h2 class="text-primary" style="border-radius: 0; border: solid maroon 2px; border-left: 0; border-right: 0;">@lang('lawyer.rating')</h2>
                 </div>
 
                 <div class="col-md-12">

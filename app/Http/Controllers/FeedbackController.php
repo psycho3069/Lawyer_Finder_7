@@ -48,6 +48,8 @@ class FeedbackController extends Controller
             'contact' => ['nullable','numeric','digits:11'],
             'subject' => ['required'],
             'feedback' => ['required'],
+            'star' => ['required','numeric','digits:1'],
+            
         ]);
 
         if ($validator->fails()) {
@@ -63,12 +65,17 @@ class FeedbackController extends Controller
                 'email' => $request['email'],
                 'contact' => $request['contact'],
                 'subject' => $request['subject'],
-                'feedback' => $request['feedback']
+                'feedback' => $request['feedback'],
+                'rating' => $request['star'],
+                
             ]);
+            
             if (\App::isLocale('en')) {
-                return back()->with('status','Feedback submitted successfully!');
+                $request->session()->flash('status','Feedback submitted successfully!');
+                return back();
             } else{
-                return back()->with('status','মন্তব্য সফলভাবে জমা দেওয়া হয়েছে!');
+                $request->session()->flash('status','মন্তব্য সফলভাবে জমা দেওয়া হয়েছে!');
+                return back();
             }
         }
 

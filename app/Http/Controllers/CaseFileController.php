@@ -48,7 +48,7 @@ class CaseFileController extends Controller
         // return $request->all();
         $validator = Validator::make($request->all(), [
             'case_identity' => ['required', 'string', 'max:100'],
-            'description' => [ 'max:191'],
+            'description' => ['required'],
             'type' => ['required'],
             'client_type' => ['required'],
         ]);
@@ -58,21 +58,38 @@ class CaseFileController extends Controller
         } else {
             $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
 
-            CaseFile::create([
-                'case_identity' => $request['case_identity'],
-                'description' => $request['description'],
-                'type' => $request['type'],
-                'client_type' => $request['client_type'],
-                'client_id' => $client_id,
-                'court_id' => $request['court_id'],
-            ]);
+            $waiting_cases = CaseFile::where('client_id', $client_id)
+                    ->where('result', 'waiting')
+                    ->get()
+                    ->count();
 
-            if (\App::isLocale('en')) {
-                return back()->with('status','Case has been added successfully!');
+
+            if ($waiting_cases < 1) {
+                CaseFile::create([
+                    'case_identity'     => $request['case_identity'],
+                    'description'       => $request['description'],
+                    'type'              => $request['type'],
+                    'client_type'       => $request['client_type'],
+                    'client_id'         => $client_id,
+                    'court_id'          => $request['court_id'],
+                ]);
+
+                if (\App::isLocale('en')) {
+                    $request->session()->flash('status','Case has been added successfully!');
+                    return back();
+                } else{
+                    $request->session()->flash('status','সফলভাবে মামলা যুক্ত হয়েছে!');
+                    return back();
+                }
             } else{
-                return back()->with('status','সফলভাবে মামলা যুক্ত হয়েছে!');
+                if (\App::isLocale('en')) {
+                    $request->session()->flash('error','Sorry, You already have a waiting case!');
+                    return back();
+                } else{
+                    $request->session()->flash('error','দুঃখিত, আপনার ইতিমধ্যে একটি অপেক্ষার কেস রয়েছে!');
+                    return back();
+                }
             }
-            
         }
     }
 

@@ -25,9 +25,9 @@
                         <a href="{{ route('lawyer-verify-decide',['approve' => 2, 'lawyer_id' => $lawyer->id ]) }}" class="btn button">Approve</a>
                         <a href="{{ route('lawyer-verify-decide',['approve' => 3, 'lawyer_id' => $lawyer->id ]) }}" class="btn btn-outline-primary border-radius-0">Decline</a>
                     @elseif($lawyer->admin_approval == 2)
-                        <button style="cursor: no-drop;" class="btn btn-success" disabled>Approved</button>
+                        <button style="cursor: no-drop;" class="btn btn-success" readonly>Approved</button>
                     @elseif($lawyer->admin_approval == 3)
-                        <button style="cursor: no-drop;" class="btn btn-danger" disabled>Declined</button>
+                        <button style="cursor: no-drop;" class="btn btn-danger" readonly>Declined</button>
                     @endif
                         
                     <hr>

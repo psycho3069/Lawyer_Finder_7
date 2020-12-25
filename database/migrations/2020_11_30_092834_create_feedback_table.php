@@ -19,6 +19,7 @@ class CreateFeedbackTable extends Migration
             $table->string('email');
             $table->string('contact',20)->nullable();
             $table->string('subject');
+            $table->tinyInteger('rating');
             $table->string('feedback');
             $table->timestamps();
         });

@@ -84,13 +84,6 @@
                                                             @endif
                                                         @endif
                                             >Advocate</option>
-                                            <option value="judge"
-                                                        @if($data != null)
-                                                            @if($data['type'] == 'judge')
-                                                                {{ 'selected' }}
-                                                            @endif
-                                                        @endif
-                                            >Judge</option>
                                             <option value="magistrate"
                                                         @if($data != null)
                                                             @if($data['type'] == 'magistrate')
@@ -128,18 +121,6 @@
                                                     @endif
                                                     >{{ $specialty->name }}</option>
                                             @endforeach
-                                            {{-- <option value="defendant"
-                                                        @if($data != null)
-                                                            @if($data['specialty'] == 'defendant')
-                                                                {{ 'selected' }}
-                                                            @endif
-                                                        @endif>Defence</option>
-                                            <option value="prosecutor"
-                                                        @if($data != null)
-                                                            @if($data['specialty'] == 'prosecutor')
-                                                                {{ 'selected' }}
-                                                            @endif
-                                                        @endif>Prosecution</option> --}}
                                         </select>
 
                                         @error('specialty')
@@ -199,7 +180,7 @@
 
                     </div>
                     
-                    @foreach($users as $key => $user)
+                    @foreach($lawyers as $key => $lawyer)
                         <div class="card m-0 p-0">
                             <div class="card-body">
                                 <div class="row">
@@ -207,20 +188,24 @@
                                         {{ '#'.++$key }}
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('lawyer.show',$user->id) }}" class="btn btn-secondary">@lang('dash.profile')</a>
+                                        <a data-toggle="tooltip" title="See Lawyer profile" href="{{ route('lawyer.show',$lawyer->id) }}" class="btn btn-secondary">@lang('dash.profile')</a>
                                     </div>
-                                    {{-- {{ $requests->where('lawyer_id',$user->id)->first()->state }} --}}
+                                    
                                     <div class="col-md-3">
-                                        @if($requests->where('lawyer_id',$user->id)->where('state','!=','closed')->first())
-                                            @if($requests->where('lawyer_id',$user->id)->first()->state == 'pending')
-                                                <button style="cursor: no-drop;" class="btn btn-info" disabled>@lang('dash.requested')</button>
-                                            @elseif($requests->where('lawyer_id',$user->id)->first()->state == 'rejected')
-                                                <button style="cursor: no-drop;" class="btn btn-danger" disabled>@lang('dash.rejected')</button>
+                                        @if($requests->where('lawyer_id',$lawyer->id)
+                                                     ->where('state','==','pending')
+                                                     ->first())
+                                            @if($requests->where('lawyer_id',$lawyer->id)
+                                                         ->first()->state == 'pending')
+                                                <button style="cursor: no-drop;" class="btn btn-info" readonly>@lang('dash.requested')</button>
+                                            @elseif($requests->where('lawyer_id',$lawyer->id)
+                                                             ->first()->state == 'rejected')
+                                                <button style="cursor: no-drop;" class="btn btn-danger" readonly>@lang('dash.rejected')</button>
                                             @else
-                                                <button style="cursor: no-drop;" class="btn btn-success" disabled>@lang('dash.accepted')</button>
+                                                <button style="cursor: no-drop;" class="btn btn-success" readonly>@lang('dash.accepted')</button>
                                             @endif
                                         @else
-                                            <a href="{{ route('lawyer.request-case',['lawyer_id' => $user->id]) }}" class="btn btn-outline-success">@lang('dash.request')</a>
+                                            <a href="{{ route('lawyer.request-case',['lawyer_id' => $lawyer->id]) }}" class="btn btn-outline-success">@lang('dash.request')</a>
                                         @endif
 
                                     </div>
@@ -230,38 +215,38 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        {{ $user->name }}
+                                        Name: {{ $lawyer->user->name }}
                                     </div>
                                     <div class="col-md-3">
                                         @foreach($districts as $key => $district)
-                                            @if($district->id == $user->district_id)
-                                                {{ $district->name }}
+                                            @if($district->id == $lawyer->user->district_id)
+                                                District: {{ $district->name }}
                                             @endif
                                         @endforeach
                                     </div>
-                                    <div class="col-md-3">
-                                        {{ $user->type }}
-                                    </div>
-                                    <div class="col-md-3">
-                                        {{ $user->specialty }}
+                                    <div class="col-md-6">
+                                        Specialty: {{ $lawyer->specialty->name }}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        {{ $user->rating }}
+                                        Average Rating: {{ $lawyer->rating->avg('value') }}
                                     </div>
                                     <div class="col-md-3">
-                                        {{ $user->success_rate }}
+                                        Success Rate: {{ $lawyer->success_rate }}
                                     </div>
                                     <div class="col-md-3">
+                                        Type: {{ $lawyer->type }}
+                                    </div>
+                                    {{-- <div class="col-md-3">
                                         @foreach($courts as $key => $court)
-                                            @if($court->id == $user->court_id)
+                                            @if($court->id == $lawyer->court_id)
                                                 {{ $court->name }}
                                             @endif
                                         @endforeach
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-3">
-                                        {{ $user->cases }}
+                                        {{ $lawyer->cases }}
                                     </div>
                                 </div>
                             </div>

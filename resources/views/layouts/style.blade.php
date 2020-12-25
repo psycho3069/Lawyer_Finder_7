@@ -174,13 +174,13 @@ body {
 }
 .menu-button-current {
     color: white;
-    border-right: 5px solid #f1d1d2 !important;
+    border-right: 3px solid cyan !important;
     background-color: maroon !important;
 }
 .menu-button:hover {
     color: black;
-    background-color: #f1d1d2!important;
-    border-right: 5px solid maroon !important;
+    background-color: #f1d1d2 !important;
+    border-right: 3px solid maroon !important;
     {{-- border-left: 5px solid blue !important; --}}
 }
 {{-- .menu-button:active {
@@ -329,5 +329,15 @@ label.star:before {
     }
 }
 
+.navbar .navbar-nav > li > a:hover, .navbar-default .navbar-nav .nav-link > li > a:focus {
+    background-color: #f1d1d2;
+    border-bottom: solid maroon 3px;
+}
+
+.counter-value{
+    font-size: 40px;
+    font-family: monospace;
+    padding: 10px 0px;
+}
 
 

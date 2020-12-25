@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Client;
+use App\Lawyer;
+use App\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -60,7 +62,21 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $active = [];
+        $active['rating'] = 0;
+        $active['dashboard'] = 0;
+        $active['profile'] = 0;
+        $active['cases'] = 0;
+        $active['search'] = 0;
+        $active['requests'] = 1;
+        $ratings = Rating::where('giver_id',$client->id)->get();
+
+        if (auth()->user()->type == 'lawyer') {
+            $lawyer = Lawyer::where('user_id',auth()->user()->id)->first();
+            return view('layouts.user.client.show',compact('client','active','lawyer','ratings'));
+        } elseif(auth()->user()->type == 'admin'){
+            return view('layouts.user.client.show',compact('client','active','ratings'));
+        }
     }
 
     /**
@@ -154,9 +170,11 @@ class ClientController extends Controller
             ]);
 
             if (\App::isLocale('en')) {
-                return back()->with('status','Client has been updated successfully!');
+                $request->session()->flash('status','Client has been updated successfully!');
+                return back();
             } else{
-                return back()->with('status','মক্কেল সফলভাবে পরিমার্জিত করা হয়েছে!');
+                $request->session()->flash('status','মক্কেল সফলভাবে পরিমার্জিত করা হয়েছে!');
+                return back();
             }
             
         }
@@ -173,17 +191,17 @@ class ClientController extends Controller
         //
     }
 
-    public function block(Client $client){
+    public function block(Request $request, Client $client){
 
-        $result1 = Client::find($client->id)->update([
-            'blocked'   => 1,
-            'updated_at' => now()
-        ]);
+        $user_id = $client->user->id;
+        $result1 = User::find($user_id)->delete();
 
         if (\App::isLocale('en')) {
-            return back()->with('status','Client has been BLOCKED successfully!');
+            $request->session()->flash('status','Client has been Deleted successfully!');
+            return back();
         } else{
-            return back()->with('status','মক্কেল সফলভাবে অবরুদ্ধ করা হয়েছে!');
+            $request->session()->flash('status','মক্কেল সফলভাবে মোছা হয়েছে!');
+            return back();
         }
         
     }

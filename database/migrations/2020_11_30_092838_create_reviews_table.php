@@ -16,8 +16,8 @@ class CreateReviewsTable extends Migration
         Schema::create('c3_reviews', function (Blueprint $table) {
             $table->id();
             $table->longtext('text');
-            $table->foreignId('taker_id')->constrained('b6_lawyers');
-            $table->foreignId('giver_id')->constrained('b7_clients');
+            $table->foreignId('taker_id')->constrained('b6_lawyers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('giver_id')->constrained('b7_clients')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

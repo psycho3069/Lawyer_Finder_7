@@ -17,12 +17,12 @@ class CreateLawyersTable extends Migration
             $table->id();
             $table->longtext('profile_bio')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('a1_users');
+            $table->foreign('user_id')->references('id')->on('a1_users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('court_id')->nullable();
-            $table->foreign('court_id')->references('id')->on('b1_courts');
+            $table->foreign('court_id')->references('id')->on('b1_courts')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('type', ['advocate','magistrate','barrister'])->nullable();
             $table->unsignedBigInteger('specialties_id')->nullable();
-            $table->foreign('specialties_id')->references('id')->on('a04_specialties');
+            $table->foreign('specialties_id')->references('id')->on('a04_specialties')->onUpdate('cascade')->onDelete('cascade');
             $table->smallInteger('member_id')->nullable();
             $table->bigInteger('ratings')->default('0');
             $table->integer('reviews')->default(0);

@@ -28,8 +28,6 @@ class RatingController extends Controller
         $active['search'] = 0;
         $active['requests'] = 0;
 
-        
-
         if (auth()->user()->type == 'lawyer') {
             $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->get()->first()->id;
             $ratings = Rating::where('taker_id',$lawyer_id)->get();
@@ -63,20 +61,6 @@ class RatingController extends Controller
         // return $request;
         if($request->star != null){
 
-            // if ($request->star == 1) {
-            //     $review = 'very bad';
-            // } else if($request->star == 2){
-            //     $review = 'bad';
-            // } else if($request->star == 3){
-            //     $review = 'normal';
-            // } else if($request->star == 4){
-            //     $review = 'good';
-            // } else if($request->star == 5){
-            //     $review = 'very good';
-            // }
-            
-            
-
             $client_id = Client::where('user_id', auth()->user()->id)->first()->id;
             $rating = Rating::where('giver_id',$client_id)
                     ->where('taker_id', $request->lawyer_id)
@@ -101,27 +85,29 @@ class RatingController extends Controller
 
             if ($result) {
                 if (\App::isLocale('en')) {
-                    return back()->with('star','Thanks! You Rated this Lawyer.');
+                    $request->session()->flash('star','Thanks! You Rated this Lawyer.');
                 } else{
-                    return back()->with('star','ধন্যবাদ! আপনি এই আইনজীবিকে রেট দিয়েছেন।');
+                    $request->session()->flash('star','ধন্যবাদ! আপনি এই আইনজীবিকে রেট দিয়েছেন।');
                 }
                 
             } else{
                 if (\App::isLocale('en')) {
-                    return back()->with('error','Something went wrong, please try again!');
+                    $request->session()->flash('error','Something went wrong, please try again!');
                 } else{
-                    return back()->with('error','কিছু ভুল হয়েছে আবার চেষ্টা করুন!');
+                    $request->session()->flash('error','কিছু ভুল হয়েছে আবার চেষ্টা করুন!');
                 }
                 
             }
         } else{
             if (\App::isLocale('en')) {
-                return back()->with('empty','Please select any Star to Rate this Lawyer.');
+                $request->session()->flash('empty','Please select any Star to Rate this Lawyer.');
             } else{
-                return back()->with('empty','এই উকিলকে রেট দেওয়ার জন্য দয়া করে যে কোনও তারকা নির্বাচন করুন।');
+                $request->session()->flash('empty','এই উকিলকে রেট দেওয়ার জন্য দয়া করে যে কোনও তারকা নির্বাচন করুন।');
             }
             
         }
+
+        return back();
     }
 
     /**

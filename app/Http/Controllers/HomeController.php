@@ -58,8 +58,21 @@ class HomeController extends Controller
                             ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
                             ->get();
             $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
-            
+
+            if (auth()->user()->type == 'client'){
+                return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
+            } elseif(auth()->user()->type == 'lawyer'){
+                $active['requests'] = 1;
+                $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->first()->id;
+                $requests = \App\Request::where('lawyer_id',$lawyer_id)
+                                        ->where(function ($query) {
+                                               $query->where('state', '!=' ,'accepted')
+                                                     ->orWhere('state', '!=' ,'rejected');
+                                           })
+                                        ->get();
+                return view('layouts.user.requests',compact('requests','courts','active'));
+            }
+
         } elseif(auth()->user()->type == 'lawyer'){
             $active['requests'] = 1;
             $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->first()->id;
@@ -130,11 +143,9 @@ class HomeController extends Controller
         $requests = \App\Request::all();
 
         if(auth()->user()->type == 'client'){
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->get();
+            $lawyers = Lawyer::get();
             $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
-            return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
+            return view('dash', compact('user_cases','lawyers','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
         } elseif(auth()->user()->type == 'lawyer'){
             $user_cases = CaseFile::where('lawyer_id', auth()->user()->id)->get();
             return view('dash', compact('user_cases','users','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));
@@ -239,15 +250,23 @@ class HomeController extends Controller
         if (auth()->user()->type == 'lawyer') {
             $lawyer_id = Lawyer::where('user_id',auth()->user()->id)->first()->id;
             $requests = \App\Request::where('lawyer_id',$lawyer_id)
+                                        ->where(function ($query) {
+                                               $query->where('state', '!=' ,'accepted')
+                                                     ->orWhere('state', '!=' ,'rejected');
+                                           })
                                         ->get();
         } elseif(auth()->user()->type == 'client') {
             $client_id = Client::where('user_id',auth()->user()->id)->first()->id;
-            $requests = \App\Request::where('client_id',$client_id)->get();
+            $requests = \App\Request::where('client_id',$client_id)
+                                        ->where(function ($query) {
+                                               $query->where('state', '!=' ,'accepted')
+                                                     ->orWhere('state', '!=' ,'rejected');
+                                           })
+                                        ->get();
         }
+        
         $courts = Court::get();
         return view('layouts.user.requests',compact('requests','courts','active'));
     }
-
-    
 
 }

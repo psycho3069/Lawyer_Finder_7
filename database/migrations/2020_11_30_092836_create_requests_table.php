@@ -17,11 +17,11 @@ class CreateRequestsTable extends Migration
             $table->id();
             $table->enum('state', ['pending','accepted','rejected','closed'])->default('pending');
             $table->unsignedBigInteger('lawyer_id');
-            $table->foreign('lawyer_id')->references('id')->on('b6_lawyers')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('lawyer_id')->references('id')->on('b6_lawyers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('b7_clients')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('client_id')->references('id')->on('b7_clients')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('casefile_id');
-            $table->foreign('casefile_id')->references('id')->on('b8_casefiles')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('casefile_id')->references('id')->on('b8_casefiles')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

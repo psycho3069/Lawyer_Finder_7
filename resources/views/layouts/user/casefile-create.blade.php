@@ -9,6 +9,10 @@
 	                <div id="success-status" class="alert alert-success" role="alert">
 	                    {{ session('status') }}
 	                </div>
+                @elseif(session('error'))
+                    <div id="success-status" class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
 	            @endif
 
                 <div class="card-header text-center"><a href="{{ route('cases') }}" type="button" class="btn float-left btn-primary button">@lang('cases.back')</a><h3>@lang('cases.new')</h3></div>

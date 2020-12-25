@@ -16,15 +16,15 @@ class CreateCaseFilesTable extends Migration
         Schema::create('b8_casefiles', function (Blueprint $table) {
             $table->id();
             $table->string('case_identity', 50);
-            $table->longText('description')->nullable();
+            $table->longText('description');
             $table->enum('type', ['civil','family','criminal']);
             $table->enum('client_type', ['prosecutor','defendant']);
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('b7_clients')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('client_id')->references('id')->on('b7_clients')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('lawyer_id')->nullable();
-            $table->foreign('lawyer_id')->references('id')->on('b6_lawyers')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('lawyer_id')->references('id')->on('b6_lawyers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('court_id')->nullable();
-            $table->foreign('court_id')->references('id')->on('b1_courts')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('court_id')->references('id')->on('b1_courts')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('result', ['waiting','running','won','lost'])->default('waiting');
             $table->timestamps();
         });

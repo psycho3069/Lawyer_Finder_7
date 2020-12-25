@@ -56,9 +56,11 @@ class NoticeController extends Controller
             ]);
 
             if (\App::isLocale('en')) {
-                return back()->with('status','New Notice has been added successfully!');
+                $request->session()->flash('status','New Notice has been added successfully!');
+                return back();
             } else{
-                return back()->with('status','নতুন বিজ্ঞপ্তি সফলভাবে যুক্ত করা হয়েছে!');
+                $request->session()->flash('status','নতুন বিজ্ঞপ্তি সফলভাবে যুক্ত করা হয়েছে!');
+                return back();
             }
             
         } 
@@ -115,9 +117,11 @@ class NoticeController extends Controller
             ]);
 
             if (\App::isLocale('en')) {
-                return back()->with('status','Notice has been updated successfully!');
+                $request->session()->flash('status','Notice has been updated successfully!');
+                return back();
             } else{
-                return back()->with('status','বিজ্ঞপ্তি সফলভাবে পরিমার্জিত করা হয়েছে!');
+                $request->session()->flash('status','বিজ্ঞপ্তি সফলভাবে পরিমার্জিত করা হয়েছে!');
+                return back();
             }
             
         } 

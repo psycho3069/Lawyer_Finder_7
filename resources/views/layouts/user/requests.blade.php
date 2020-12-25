@@ -82,24 +82,6 @@
 													<a type="button" id="declined" class="btn btn-danger response" href="{{ route('lawyer-request-decide',['approve' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
 													   <i class="fa fa-times"></i>@lang('requests.decline')
 													</a>
-			                                	@elseif($request->state == 'rejected')
-			                                		<button style="cursor: no-drop;" class="btn btn-danger" disabled>@lang('requests.declined')</button>
-			                                	@elseif($request->state == 'accepted')
-			                                		<button style="cursor: no-drop;" class="btn btn-primary rounded-0" disabled>@lang('requests.accepted')</button>
-
-			                                		<a type="button" id="approved" class="btn btn-success response" href="{{ route('lawyer-result-decide',['result' => 1, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
-													   <i class="fa fa-check"></i>@lang('requests.won')
-													</a>
-
-													<a type="button" id="declined" class="btn btn-warning response" href="{{ route('lawyer-result-decide',['result' => 0, 'req_id'=> $request->id,'casefile_id' => $request->casefile_id, 'client_id' => $request->client_id ]) }}">
-													   <i class="fa fa-times"></i>@lang('requests.lost')
-													</a>
-			                                	@elseif($request->state == 'closed')
-				                                	@if($request->casefile->result == 'won')
-				                                		<button style="cursor: no-drop;" class="btn btn-success" disabled> @lang('requests.closed') ({{ $request->casefile->result }})</button>
-				                                	@elseif($request->casefile->result == 'lost')
-			                                			<button style="cursor: no-drop;" class="btn btn-danger" disabled> @lang('requests.closed') ({{ $request->casefile->result }})</button>
-				                                	@endif
 			                                	@endif
 			                                </div>
 		                                </div>
@@ -114,7 +96,8 @@
 		                                    	@lang('requests.client')
 		                                    </div>
 		                                    <div class="col-md-3">
-		                                    	{{ $request->client->user->name }}
+                                        		<a data-toggle="tooltip" title="click to see profile" href="{{ route('client.show',$request->client_id) }}" class="btn btn-outline-primary">{{ $request->client->user->name }}</a>
+		                                    	
 		                                    </div>
 		                                </div>
 		                                <div class="row pt-3">

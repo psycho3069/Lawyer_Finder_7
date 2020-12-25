@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', 'WelcomeController@welcome')->name('welcome');
 
 
 Auth::routes();

@@ -42,19 +42,19 @@
 
 			@foreach($user_cases as $key => $case)
 				<div class="card m-2">
-					<div class="card-header" style="background-color: #f1d1d2;">
+					<div class="card-header" style="background-color: cyan;">
 						<div class="col-md-4 float-left">{{ $case->case_identity }}</div>
 						<div class="col-md-2 float-left"></div>
 						<div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-2 float-left">@lang('cases.case'){{ ' '.++$key }} </div>
 						<div class="col-md-4 float-right btn 
 						@if($case->result == 'waiting')
-							btn-info disabled
+							btn-info readonly
 						@elseif($case->result == 'running')
-							btn-primary disabled
+							btn-primary readonly
 						@elseif($case->result == 'won')
-							btn-success disabled
+							btn-success readonly
 						@elseif($case->result == 'lost')
-							btn-danger disabled
+							btn-danger readonly
 						@else
 							btn-danger
 						@endif" >@lang('cases.status'): {{ $case->result }}</div>

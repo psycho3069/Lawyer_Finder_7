@@ -117,7 +117,7 @@ class LawyerController extends Controller
         // return $request;
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:100', Rule::unique('a1_users')->ignore($id)],
+            'email' => ['required', 'string', 'email', 'max:191', Rule::unique('a1_users')->ignore($id)],
             'contact' => ['required', 'numeric', 'min:1000000000'],
             'location' => ['required', 'string', 'max:100'],
             'birthdate' => ['required', 'date', 'max:100'],
@@ -339,14 +339,11 @@ class LawyerController extends Controller
                 'updated_at' => now()
             ]);
 
-            $result2 = \App\Request::find($req->id)->update([
-                'state' => 'accepted',
-                'updated_at' => now()
-            ]);
+            $result2 = \App\Request::find($req->id)->delete();
 
-            $result3 = \App\Request::where('casefile_id',$req->casefile_id)
-                                        ->where('state','pending')
-                                        ->delete();
+            // $result3 = \App\Request::where('casefile_id',$req->casefile_id)
+            //                             ->where('state','accepted')
+            //                             ->delete();
 
             if (\App::isLocale('en')) {
                 $request->session()->flash('approve', 'Request approved successfully');
@@ -356,10 +353,12 @@ class LawyerController extends Controller
 
         } else if(!$request->approve){
 
-            $result = \App\Request::find($req->id)->update([
+            $result1 = \App\Request::find($req->id)->update([
                 'state' => 'rejected',
                 'updated_at' => now()
             ]);
+
+            $result2 = \App\Request::find($req->id)->delete();
 
             if (\App::isLocale('en')) {
                 $request->session()->flash('decline', 'Request declined successfully');
@@ -541,9 +540,11 @@ class LawyerController extends Controller
         ]);
 
         if (\App::isLocale('en')) {
-            return back()->with('status','NID pictures has been uploaded successfully!');
+            $request->session()->flash('status','NID pictures has been uploaded successfully!');
+            return back();
         } else{
-            return back()->with('status','এনআইডি ছবি সফলভাবে আপলোড করা হয়েছে!');
+            $request->session()->flash('status','এনআইডি ছবি সফলভাবে আপলোড করা হয়েছে!');
+            return back();
         }
         
     }

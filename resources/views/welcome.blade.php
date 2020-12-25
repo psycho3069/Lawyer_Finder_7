@@ -76,55 +76,117 @@
     </div>
 
 
-    <div class="container">
-        <div class="section-header text-center">
-            <h3 class="section-title">Categories</h3>
-            <div class="section-desc">ICT Division provides grants in following four categories</div>
+    <div class="container pb-5">
+        <div class="section-header text-center pb-4">
+            <h3 class="section-title">@lang('welcome.court_title')</h3>
+            <div class="section-desc">@lang('welcome.court_sub')</div>
         </div>
 
         <div class="row">
             <div class="col-md-4 text-right">
                 <div class="category_type">
-                    <img height="60" src="" alt="">
+                    @if(App::isLocale('en'))
+                        <img height="60" src="{{url('/img/supreme-court-english.png')}}" alt="">
+                    @else
+                        <img height="60" src="{{url('/img/supreme-court-bangla.png')}}" alt="">
+                    @endif
+                    
                     <div class="category_type_body">
-                        <h5>Innovation Fund</h5>
-                        <div class="cat_excerpt">Innovation project that can contribute in the ICT sector for country’s socio-economic development,public service or create new innovation services can avail the funds.</div>
+                        <h5>@lang('welcome.supreme')</h5>
+                        <div class="cat_excerpt text-justify">@lang('welcome.supreme_details')</div>
                     </div>
                 </div>
 
                 <div class="category_type mt50">
-                    <img height="60" src="" alt="">
+                    <img height="60" src="{{url('/img/output-onlinepngtools.png')}}" alt="">
                     <div class="category_type_body">
-                        <h5>Fellowship/Scholarship</h5>
-                        <div class="cat_excerpt">Personal/Educational/Institutio organizations project that able to contribute by using ICT in country’s education, health, agriculture, economy, development of women can avail special grants.For Masters, M Phil, Doctoral and Postdoctoral degree and for highly Research content educational purpose, one can avail Fellowship grants.</div>
+                        <h5>@lang('welcome.high')</h5>
+                        <div class="cat_excerpt text-justify">@lang('welcome.high_details')</div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4 justify-content-center text-md-center">
                 <div data-appear="true" data-animation="zoomIn" class="innov_bulb">
-                    <img src="" alt="Innovation">
+                    <figure>
+                        <img style="width: 100%; height: auto;" class="img-fluid img img-responsive vertical-center" src="{{url('/img/supreme-court.jpg')}}" alt="Supreme Court">
+                        <figcaption>@lang('welcome.judge')</figcaption>
+                    </figure>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="category_type">
-                    <img height="60" src="" alt="">
                     <div class="category_type_body">
-                        <h5>Special Grants</h5>
-                        <div class="cat_excerpt">Personal/Educational/Institutio organizations project that able to contribute by using ICT in country’s education, health, agriculture, economy, development of women can avail special grants.</div>
+                        <img height="60" src="{{url('/img/criminal.png')}}" alt="">
+                        <h5>@lang('welcome.judge_details')</h5>
+                        <div class="cat_excerpt text-justify">@lang('welcome.session')</div>
                     </div>
                 </div>
 
 
                 <div class="category_type mt50">
-                    <img height="60" src="" alt="">
+                    <img height="60" src="{{url('/img/law.png')}}" alt="">
                     <div class="category_type_body">
-                        <h5>High Profile ICT  Scholarship</h5>
-                        <div class="cat_excerpt">For high academic achievement in all stages of academic life and to continue the gratitude, one may avail High Profile Scholarship</div>
+                        <h5>@lang('welcome.session_details')</h5>
+                        <div class="cat_excerpt text-justify">@lang('welcome.fig_caption')</div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="container pt-5 pb-5 justify-content-center text-md-center" style="background-color: #f1d1d2;">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div data-appear="true" data-animation="zoomIn" class="counter_item">
+                    <div class="counter-image">
+                        <img src="http://ims.ictd.gov.bd/assets/images/counter/users.svg" height="50" alt="Users">
+                    </div>
+                    <div class="counter-info">
+                        <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $users->count() }}</div>
+                        <h5>@lang('welcome.users')</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="counter_item">
+                    <div data-appear="true" data-animation="zoomIn" class="counter-image">
+                        <img src="http://ims.ictd.gov.bd/assets/images/counter/brain.svg" height="50" alt="Users">
+                    </div>
+                    <div class="counter-info">
+                        <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $lawyers->count() }}</div>
+                        <h5>@lang('welcome.lawyers')</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="counter_item">
+                    <div data-appear="true" data-animation="zoomIn" class="counter-image">
+                        <img src="http://ims.ictd.gov.bd/assets/images/counter/speed.svg" height="50" alt="Users">
+                    </div>
+                    <div class="counter-info">
+                        <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $clients->count() }}</div>
+                        <h5>@lang('welcome.clients')</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div data-appear="true" data-animation="zoomIn" class="counter_item">
+                    <div class="counter-image">
+                        <img src="http://ims.ictd.gov.bd/assets/images/counter/victory.svg" height="50" alt="Users">
+                    </div>
+                    <div class="counter-info">
+                        <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $cases->count() }}</div>
+                        <h5>@lang('welcome.cases')</h5>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 

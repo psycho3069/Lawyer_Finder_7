@@ -27,21 +27,27 @@
         	<hr>
 
         	<div class="row details">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     {{ $feedback->name }}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     {{ $feedback->email }}
                 </div>
-                <div class="col-md-4">
-                    {{ $feedback->contact }}
+                <div class="col-md-3">
+                    @lang('feedback.contact'): {{ $feedback->contact }}
+                </div>
+                <div class="col-md-3">
+                    @lang('feedback.rating'): {{ $feedback->rating }}
                 </div>
         	</div>
 
             <hr>
 
-            <div class="row">
-                {{ $feedback->feedback }}
+            <div class="row pb-3">
+                <div class="col-md-10">
+                    {{ $feedback->feedback }}
+                </div>
+                
             </div>
         </div>
     </div>

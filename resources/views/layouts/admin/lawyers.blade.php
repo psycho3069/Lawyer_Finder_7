@@ -15,7 +15,7 @@
 
             <div class="col-md-12">
                 <div class="row">
-                <h1>@lang('lawyer.title')</h1>
+                <h1>@lang('lawyer.all')</h1>
             </div>
             <hr>
 
@@ -39,7 +39,7 @@
                         <th>@lang('lawyer.success')</th>
                         @auth
                             @if(auth()->user()->type == 'admin')
-                                <th>Action</th>
+                                <th>@lang('lawyer.action')</th>
                             @endif
                         @endauth
                     </tr>
@@ -68,9 +68,9 @@
                                 @if($lawyer->admin_approval == 1)
                                     <a class="btn btn-primary btn-sm" href="{{ route('lawyer-verification',$lawyer) }}">Verify</a>
                                 @elseif($lawyer->admin_approval == 2)
-                                    <button style="cursor: no-drop;" class="btn btn-success" disabled>Verified</button>
+                                    <button style="cursor: no-drop;" class="btn btn-success" readonly>Verified</button>
                                 @elseif($lawyer->admin_approval == 3)
-                                    <button style="cursor: no-drop;" class="btn btn-warning" disabled>Declined</button>
+                                    <button style="cursor: no-drop;" class="btn btn-warning" readonly>Declined</button>
                                 @endif
                             </td>
                         </tr>

@@ -1,8 +1,8 @@
 <div class="messenger-sendCard">
     <form id="message-form" method="POST" action="{{ route('send.message') }}" enctype="multipart/form-data">
         @csrf
-        <label><span class="fas fa-paperclip"></span><input disabled='disabled' type="file" class="upload-attachment" name="file" accept="image/*, .txt, .rar, .zip" /></label>
+        <label><span class="fas fa-paperclip"></span><input readonly='readonly' type="file" class="upload-attachment" name="file" accept="image/*, .txt, .rar, .zip" /></label>
         <textarea readonly='readonly' name="message" class="m-send app-scroll" placeholder="@lang('vendor/layouts.type')"></textarea>
-        <button disabled='disabled'><span class="fas fa-paper-plane"></span></button>
+        <button readonly='readonly'><span class="fas fa-paper-plane"></span></button>
     </form>
 </div>

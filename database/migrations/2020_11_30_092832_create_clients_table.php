@@ -15,7 +15,7 @@ class CreateClientsTable extends Migration
     {
         Schema::create('b7_clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('a1_users');
+            $table->foreignId('user_id')->constrained('a1_users')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cases')->default(0);
             $table->float('rating',2,2)->default('0.0');
             $table->integer('reviews')->default(0);

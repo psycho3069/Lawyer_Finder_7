@@ -111,14 +111,14 @@
                         @lang('profile.all'): 
                     </div>
                     <div class="col-md-5">
-                        {{-- {{ auth()->user()->lawyer->rating }} --}}
+                        {{ count(auth()->user()->lawyer->rating) }}
                     </div>
                     <div class="col-md-5">
                         <i class="fas fa-comment-alt fa-lg text-success"  style="height: 20px; width: 20px;"></i>&nbsp
                         @lang('profile.review'): 
                     </div>
                     <div class="col-md-5">
-                        {{-- {{ auth()->user()->lawyer->review }} --}}
+                        {{ count(auth()->user()->lawyer->rating->where('text','!=',null)) }}
                     </div>
                 </div>
 
@@ -138,6 +138,37 @@
                     </div>
                 </div>
                 {{-- ---------User Image---------END------ --}}
+
+                <div class="row">
+                    <div class="col-md-12 p-0 m-0">
+                        
+                        <div class="">
+                            @for ($i = 5; $i > 0; $i--)
+                                <input disabled class="star star-{{ $i }}" id="star-{{ $i }}" type="radio" value="{{ $i }}" name="star"
+                                @if(round(auth()->user()->lawyer->rating->avg('value')) == $i)
+                                    {{ 'checked' }}
+                                @endif
+                                />
+                                <label class="star star-{{ $i }}" for="star-{{ $i }}"></label>
+                            @endfor
+                            <p>{{ auth()->user()->lawyer->rating->avg('value') }} average based on {{ count(auth()->user()->lawyer->rating) }} ratings.</p>
+                            <hr style="border:3px solid #f1f1f1">
+
+                            {{-- <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{ auth()->user()->lawyer->rating->avg('value')*10 }}%">
+                                  {{ auth()->user()->lawyer->rating->avg('value') }}
+                                  {{ auth()->user()->lawyer->rating->avg('value') }}
+                                  {{ auth()->user()->lawyer->rating->avg('value') }}
+                                  {{ auth()->user()->lawyer->rating->avg('value') }}
+                                  {{ auth()->user()->lawyer->rating->avg('value') }}
+                                  
+                                </div>
+                            </div> --}}
+                            {{-- TODO:: add progress bar to each bar from here https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp --}}
+                            
+                        </div>
+                    </div>
+                </div>
 
                 
             @elseif(auth()->user()->type == 'client')
@@ -218,14 +249,7 @@
                 <div class="row col-md-6 justify-content-center text-md-center">
                     <div class="col-md-12 justify-content-center text-md-center row" style="padding-top: 15px;">
                         <img src="{{ URL::asset('/storage/'.config('chatify.user_avatar.folder').'/'.Auth::user()->avatar) }}" style="width:250px; height:250px; border-radius:50%;">
-                        {{-- <h2>{{ $user->name }}'s Profile</h2>
-                        <form enctype="multipart/form-data" action="/profile" method="POST">
-                            <label>Update Profile Image</label>
-                            <input type="file" name="avatar">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="pull-right btn btn-sm btn-primary">
-                        </form> --}}
-
+                        
                         <div class="col-md-12 text-md-center" style="color: maroon;"><h3>{{ auth()->user()->name }}</h3></div>
                         
                         <div class="col-md-12 text-md-center">
@@ -249,95 +273,3 @@
 @section('footer-script')
 
 @endsection
-
-
-    {{-- 
-        
-        <div class="col-md-4 user-info">
-            <div class="">
-                <span class="heading">User Rating</span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <p>4.1 average based on 254 reviews.</p>
-                <hr style="border:3px solid #f1f1f1">
- --}}
-
-                {{-- TODO:: add progress bar to each bar from here https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp --}}
-       {{--          <div class="row">
-                  <div class="side">
-                    <div>5 star</div>
-                  </div>
-                  <div class="middle">
-                    <div class="bar-container">
-                      <div class="bar-5"></div>
-                    </div>
-                  </div>
-                  <div class="side right">
-                    <div>150</div>
-                  </div>
-                  <div class="side">
-                    <div>4 star</div>
-                  </div>
-                  <div class="middle">
-                    <div class="bar-container">
-                      <div class="bar-4"></div>
-                    </div>
-                  </div>
-                  <div class="side right">
-                    <div>63</div>
-                  </div>
-                  <div class="side">
-                    <div>3 star</div>
-                  </div>
-                  <div class="middle">
-                    <div class="bar-container">
-                      <div class="bar-3"></div>
-                    </div>
-                  </div>
-                  <div class="side right">
-                    <div>15</div>
-                  </div>
-                  <div class="side">
-                    <div>2 star</div>
-                  </div>
-                  <div class="middle">
-                    <div class="bar-container">
-                      <div class="bar-2"></div>
-                    </div>
-                  </div>
-                  <div class="side right">
-                    <div>6</div>
-                  </div>
-                  <div class="side">
-                    <div>1 star</div>
-                  </div>
-                  <div class="middle">
-                    <div class="bar-container">
-                      <div class="bar-1"></div>
-                    </div>
-                  </div>
-                  <div class="side right">
-                    <div>20</div>
-                  </div>
-                </div>
-            </div>
-        </div> --}}
-
-
-{{-- <div class="row">
-    <div class="col-md-3">{{ Str::upper(auth()->user()->type) }}{{ __(' Dashboard') }}</div>
-    <div class="col-md-9">{{ 'Summary' }}</div>
-</div> --}}
-    {{-- <div class="card">
-        <div class="card-header">{{ Str::upper(auth()->user()->type) }}{{ __(' Dashboard') }}</div>
-        <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-        </div>
-    </div> --}}

@@ -30,4 +30,20 @@ return [
     'question' => 'Have any question?',
     'answer' => 'If you have any question regarding Lawyer Finder, you can check the <a href=":faq" style="color: blue">Frequently Asked Questions</a> page or use the <a href=":contact" style="color: blue">Feedback</a> option to send us a message directly',
 
+    'court_title' => 'Courts of Bangladesh',
+    'court_sub' => 'There are basically four major level of courts in Bangladesh.',
+    'supreme' => 'Supreme Court',
+    'supreme_details' => 'The Supreme Court of Bangladesh is divided into two parts: the Appellate Division and the High Court Division.',
+    'high' => 'High Court',
+    'high_details' => 'The High Court Division popularly identified as \'High Court\' is one of the two wings of the Supreme Court of Bangladesh, the other wing being the Appellate Division.',
+    'judge' => 'District Judge Court',
+    'judge_details' => 'Judge Court is a tribunal, often a governmental institution, with the authority to adjudicate legal disputes between parties.',
+    'session' => 'Session Judge Court',
+    'session_details' => 'A Sessions Court or even known as the Court of Sessions Judge is a court of law which exists in several Commonwealth countries.',
+    'fig_caption' => 'Front view of Supreme Court',
+    'users' => 'Registered Users',
+    'lawyers' => 'Total Lawyers',
+    'clients' => 'Total Clients',
+    'cases' => 'Submitted Cases',
+    
 ];

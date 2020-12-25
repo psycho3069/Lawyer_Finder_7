@@ -15,7 +15,7 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('b5_admins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('a1_users');
+            $table->foreignId('user_id')->constrained('a1_users')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('type', ['superadmin','admin','moderator','editor','viewer']);
             $table->timestamps();
         });

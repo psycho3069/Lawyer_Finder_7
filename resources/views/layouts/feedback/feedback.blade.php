@@ -25,7 +25,8 @@
                         <th>@lang('feedback.name')</th>
                         <th>@lang('feedback.email')</th>
                         <th>@lang('feedback.contact')</th>
-	                    <th style="width: 270px;" class="text-center">@lang('feedback.date')</th>
+	                    <th>@lang('feedback.rating')</th>
+                        <th style="width: 270px;" class="text-center">@lang('feedback.date')</th>
                         @auth
                             @if(auth()->user()->type == 'admin')
                                 <th style="width: 25%">@lang('feedback.action')</th>
@@ -43,7 +44,8 @@
                             <td class="text-center">{{ $feedback->name }}</td>
                             <td class="text-center">{{ $feedback->email }}</td>
                             <td class="text-center">{{ $feedback->contact }}</td>
-	                        <td class="text-center">{{ $feedback->created_at }}</td>
+	                        <td class="text-center">{{ $feedback->rating }}</td>
+                            <td class="text-center">{{ $feedback->created_at }}</td>
                             @auth
                                 @if(auth()->user()->type == 'admin')
                                     <td>

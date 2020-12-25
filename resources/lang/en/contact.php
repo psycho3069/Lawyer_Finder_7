@@ -1,7 +1,8 @@
 <?php
 
 return [
-	'title' => 'Contact <span style="color: maroon;">Lawyer Finder</span> Admins',
+	'title' => 'Contact <span style="color: maroon; text-decoration: bold;">Lawyer Finder</span> Admins',
+	'rate' => 'Rate Us',
 	'name' => 'Your Name',
 	'email_adress' => 'Your Email Address',
 	'phone_number' => 'Your Contact/Phone',

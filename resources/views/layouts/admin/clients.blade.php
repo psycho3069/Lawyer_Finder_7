@@ -9,11 +9,17 @@
     <div class="body-margin">
         <div class="container p-0 justify-content-center row" style="margin-top: 56px;">
 
+
             <div class="col-md-12">
                 <div class="row">
-                <h1>@lang('client.title')</h1>
+                <h1>@lang('client.all')</h1>
             </div>
             <hr>
+            @if (session('status'))
+                <div id="success-status" class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <table class="table p-0 m-0 text-sm-center table-bordered table-striped table-info table-responsive" style="font-size: 12px;">
 
@@ -29,7 +35,7 @@
                         <th>@lang('client.case')</th>
                         @auth
                             @if(auth()->user()->type == 'admin')
-                                <th>Action</th>
+                                <th>@lang('client.action')</th>
                             @endif
                         @endauth
                     </tr>
@@ -48,7 +54,7 @@
                             <td class="text-center">{{ $client->user->birthdate }}</td>
                             <td class="text-center">{{ $client->cases }}</td>
                             <td style="min-width: 140px;">
-                                <a class="btn btn-primary btn-sm" href="{{ route('client-block',$client) }}">Block</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('client-block',$client) }}">@lang('client.delete')</a>
                             </td>
                         </tr>
                         
