@@ -328,7 +328,7 @@ class LawyerController extends Controller
     }
 
     public function lawyerRequestDecide(Request $request){
-        $request->all();
+        // return $request->all();
         $req = \App\Request::find($request->req_id);
 
         if ($request->approve) {
@@ -339,7 +339,9 @@ class LawyerController extends Controller
                 'updated_at' => now()
             ]);
 
-            $result2 = \App\Request::find($req->id)->delete();
+            $result2 = \App\Request::where('casefile_id',$request->casefile_id)
+                                            ->where('client_id',$request->client_id)
+                                            ->delete();
 
             // $result3 = \App\Request::where('casefile_id',$req->casefile_id)
             //                             ->where('state','accepted')
