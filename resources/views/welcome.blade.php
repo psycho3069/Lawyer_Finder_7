@@ -25,6 +25,8 @@
     {{-- <div style="min-height: 150px; background-image: linear-gradient(to bottom, #d03737, #ffffff);">
         
     </div> --}}
+
+
     {{-- ----------------   PROCEDURE   ---------------- --}}
     <div class="row text-black justify-content-center text-left p-5 m-4 faq_list_items" style="min-height: 500px; background-color: white;">
         <div class="col-md-6 pt-5 mt-5" style="border: solid maroon 1px;">
@@ -110,7 +112,7 @@
                 <div data-appear="true" data-animation="zoomIn" class="innov_bulb">
                     <figure>
                         <img style="width: 100%; height: auto;" class="img-fluid img img-responsive vertical-center" src="{{url('/img/supreme-court.jpg')}}" alt="Supreme Court">
-                        <figcaption>@lang('welcome.judge')</figcaption>
+                        <figcaption>@lang('welcome.fig_caption')</figcaption>
                     </figure>
                 </div>
             </div>
@@ -119,8 +121,8 @@
                 <div class="category_type">
                     <div class="category_type_body">
                         <img height="60" src="{{url('/img/criminal.png')}}" alt="">
-                        <h5>@lang('welcome.judge_details')</h5>
-                        <div class="cat_excerpt text-justify">@lang('welcome.session')</div>
+                        <h5>@lang('welcome.judge')</h5>
+                        <div class="cat_excerpt text-justify">@lang('welcome.judge_details')</div>
                     </div>
                 </div>
 
@@ -128,8 +130,8 @@
                 <div class="category_type mt50">
                     <img height="60" src="{{url('/img/law.png')}}" alt="">
                     <div class="category_type_body">
-                        <h5>@lang('welcome.session_details')</h5>
-                        <div class="cat_excerpt text-justify">@lang('welcome.fig_caption')</div>
+                        <h5>@lang('welcome.session')</h5>
+                        <div class="cat_excerpt text-justify">@lang('welcome.session_details')</div>
                     </div>
                 </div>
             </div>

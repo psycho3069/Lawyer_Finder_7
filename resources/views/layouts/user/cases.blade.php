@@ -33,38 +33,85 @@
                     </div>
                 @endif
             @endif
+
+			@if(Session::has('won'))
+                <div style="min-height: 30px;" class="alert-success alert-dismissible text-md-center">
+                    {{ Session::get('won') }}
+                </div>
+            @elseif(Session::has('lost'))
+                <div style="min-height: 30px;" class="alert-danger alert-dismissible text-md-center">
+                    {{ Session::get('lost') }}
+                </div>
+            @endif
             
 			@if(auth()->user()->type == 'client')
                 <div class="col-md-12 justify-content-center text-md-center">
 					<a href="{{ route('casefile.create') }}" type="button" class="button btn-primary m-2 p-2" style=""><span>@lang('cases.add')</span></a>
 				</div>
-			@endif
+			
+				@foreach($user_cases as $key => $case)
+					<div class="card m-2">
+						<div class="card-header" style="background-color: cyan;">
+							<div class="col-md-4 float-left">{{ $case->case_identity }}</div>
+							<div class="col-md-2 float-left"></div>
+							<div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-2 float-left">@lang('cases.case'){{ ' '.++$key }} </div>
+							<div class="col-md-4 float-right btn 
+								@if($case->result == 'waiting')
+									btn-info readonly
+								@elseif($case->result == 'running')
+									btn-primary readonly
+								@elseif($case->result == 'won')
+									btn-success readonly
+								@elseif($case->result == 'lost')
+									btn-danger readonly
+								@else
+									btn-danger
+								@endif" >@lang('cases.status'): {{ $case->result }}
+							</div>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">{{ $case->type }}</h5>
+							<p class="card-text">{{ $case->description }}</p>
+						</div>
+					</div>
+				@endforeach
+			@elseif(auth()->user()->type == 'lawyer')
+				@foreach($user_cases as $key => $case)
+					<div class="card m-2">
+						<div class="card-header" style="background-color: cyan;">
+							<div class="col-md-4 float-left">{{ $case->case_identity }}</div>
+							<div class="col-md-2 float-left"></div>
+							<div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-2 float-left">@lang('cases.case'){{ ' '.++$key }} </div>
+							<div class="col-md-4 float-right btn 
+								@if($case->result == 'waiting')
+									btn-info readonly
+								@elseif($case->result == 'running')
+									btn-primary readonly
+								@elseif($case->result == 'won')
+									btn-success readonly
+								@elseif($case->result == 'lost')
+									btn-danger readonly
+								@else
+									btn-danger
+								@endif" >@lang('cases.status'): {{ $case->result }}
+						        @if($case->result == 'running')
+                                	<a type="button" id="won" class="btn btn-success response" href="{{ route('lawyer-result-decide',['result' => 1, 'case_id'=> $case->id, 'client_id' => $case->client_id ]) }}">
+									   <i class="fa fa-check"></i>@lang('requests.won')
+									</a>
 
-			@foreach($user_cases as $key => $case)
-				<div class="card m-2">
-					<div class="card-header" style="background-color: cyan;">
-						<div class="col-md-4 float-left">{{ $case->case_identity }}</div>
-						<div class="col-md-2 float-left"></div>
-						<div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-2 float-left">@lang('cases.case'){{ ' '.++$key }} </div>
-						<div class="col-md-4 float-right btn 
-						@if($case->result == 'waiting')
-							btn-info readonly
-						@elseif($case->result == 'running')
-							btn-primary readonly
-						@elseif($case->result == 'won')
-							btn-success readonly
-						@elseif($case->result == 'lost')
-							btn-danger readonly
-						@else
-							btn-danger
-						@endif" >@lang('cases.status'): {{ $case->result }}</div>
+									<a type="button" id="lost" class="btn btn-danger response" href="{{ route('lawyer-result-decide',['result' => 0, 'case_id'=> $case->id, 'client_id' => $case->client_id ]) }}">
+									   <i class="fa fa-times"></i>@lang('requests.lost')
+									</a>
+                            	@endif
+							</div>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">{{ $case->type }}</h5>
+							<p class="card-text">{{ $case->description }}</p>
+						</div>
 					</div>
-					<div class="card-body">
-						<h5 class="card-title">{{ $case->type }}</h5>
-						<p class="card-text">{{ $case->description }}</p>
-					</div>
-				</div>
-			@endforeach
+				@endforeach
+			@endif
 		</div>
 	</div>
 

@@ -16,7 +16,10 @@
                             {{ $lawyer->user->name }}
                         </h1>
                         <h4 style="padding: 10px 5px 10px 5px;">
-                            {{ strtoupper($lawyer->type) }} {{ '('.$lawyer->specialty->name.' ' }} @lang('lawyer.specialist'){{ ')' }}
+                            @if($lawyer->specialty)
+                                {{ strtoupper($lawyer->type) }} {{ '('.$lawyer->specialty->name.' ' }} @lang('lawyer.specialist'){{ ')' }}
+                            @endif
+                            
                         </h4>
                     </div>
                     <div class="other">

@@ -54,9 +54,9 @@ class HomeController extends Controller
             $specialties = Specialty::all();
             $requests = \App\Request::all();
 
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->get();
+            // $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
+            //                 ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
+            //                 ->get();
             $user_cases = CaseFile::where('client_id', auth()->user()->id)->get();
 
             if (auth()->user()->type == 'client'){
@@ -173,6 +173,7 @@ class HomeController extends Controller
         // $rating = $request->rating;
         // $success_rate = $request->success_rate;
         
+        $users = User::all();
         $divisions = Division::all();
         $districts = District::all();
         $specialties = Specialty::all();
@@ -185,54 +186,46 @@ class HomeController extends Controller
         // return $data;
 
         if ($district == null && $type == null && $specialty == null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->get();
+            $lawyers = Lawyer::all();
         } elseif ($district != null && $type == null && $specialty == null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('a1_users.district_id', $district)
-                            ->get();
-        } elseif ($district == null && $type != null && $specialty == null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('b6_lawyers.type', $type)
-                            ->get();
+            $lawyers = Lawyer::with(['user'])
+                                       ->whereHas('user', function($q) use($district) {
+                                       $q->where('district_id', '=', $district);
+                                    })->get();
         } elseif ($district == null && $type == null && $specialty != null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('specialties_id', $specialty)
-                            ->get();
+            $lawyers = Lawyer::where('specialties_id', '=', $specialty)->get();
+        } elseif ($district == null && $type != null && $specialty == null) {
+            $lawyers = Lawyer::where('type', '=', $type)->get();
         } elseif ($district != null && $type != null && $specialty == null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('a1_users.district_id', $district)
-                            ->where('b6_lawyers.type', $type)
-                            ->get();
+            $lawyers = Lawyer::with(['user'])
+                                       ->whereHas('user', function($q) use($district) {
+                                       $q->where('district_id', '=', $district);
+                                    })  
+                                    ->where('type', '=', $type)
+                                    ->get();
         } elseif ($district == null && $type != null && $specialty != null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('b6_lawyers.type', $type)
-                            ->where('specialties_id', $specialty)
-                            ->get();
+            $lawyers = Lawyer::where('specialties_id', '=', $specialty)
+                                    ->where('type', '=', $type)
+                                    ->get();
         } elseif ($district != null && $type == null && $specialty != null) {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('a1_users.district_id', $district)
-                            ->where('specialties_id', $specialty)
-                            ->get();
+            $lawyers = Lawyer::with(['user'])
+                                       ->whereHas('user', function($q) use($district) {
+                                       $q->where('district_id', '=', $district);
+                                    })
+                                    ->where('specialties_id', '=', $specialty)
+                                    ->get();
         } else {
-            $users = User::join('b6_lawyers', 'a1_users.id', '=', 'b6_lawyers.user_id')
-                            ->select('b6_lawyers.*', 'a1_users.type as user_type', 'a1_users.district_id as district_id', 'a1_users.name as name')
-                            ->where('a1_users.district_id', $district)
-                            ->where('b6_lawyers.type', $type)
-                            ->where('specialties_id', $specialty)
-                            ->get();
+            $lawyers = Lawyer::with(['user'])
+                                       ->whereHas('user', function($q) use($district) {
+                                       $q->where('district_id', '=', $district);
+                                    })
+                                    ->where('type', '=', $type)
+                                    ->where('specialties_id', '=', $specialty)
+                                    ->get();
         } 
 
         $user_cases = [];
         $courts = Court::get();
-        $lawyers = Lawyer::get();
         // return $users;
 
         return view('dash', compact('users','user_cases','courts','lawyers','active','feedback','divisions','districts','data','requests','specialties'));

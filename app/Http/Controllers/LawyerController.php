@@ -373,17 +373,12 @@ class LawyerController extends Controller
 
     public function lawyerResultDecide(Request $request){
         // return $request->all();
-        $req = \App\Request::find($request->req_id);
+        $case = CaseFile::find($request->case_id);
 
         if ($request->result) {
 
-            $result1 = CaseFile::find($req->casefile_id)->update([
+            $result1 = $case->update([
                 'result' => 'won',
-                'updated_at' => now()
-            ]);
-
-            $result2 = \App\Request::find($req->id)->update([
-                'state' => 'closed',
                 'updated_at' => now()
             ]);
 
@@ -395,15 +390,11 @@ class LawyerController extends Controller
 
         } else if(!$request->result){
 
-            $result1 = CaseFile::find($req->casefile_id)->update([
+            $result1 = $case->update([
                 'result' => 'lost',
                 'updated_at' => now()
             ]);
 
-            $result2 = \App\Request::find($req->id)->update([
-                'state' => 'closed',
-                'updated_at' => now()
-            ]);
             if (\App::isLocale('en')) {
                 $request->session()->flash('lost', 'Case result set as LOST');
             } else{

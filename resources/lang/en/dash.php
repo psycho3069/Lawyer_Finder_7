@@ -17,5 +17,5 @@ return [
     'rejected' => 'Rejected',
     'accepted' => 'Accepted',
     'request' => 'Request',
-    'message' => 'Message',
+    'message' => 'Chat',
 ];

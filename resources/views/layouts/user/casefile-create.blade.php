@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="client_type" class="col-md-4 col-form-label text-md-right">@lang('cases.type')</label>
+                            <label for="client_type" class="col-md-4 col-form-label text-md-right">@lang('cases.client_type')</label>
 
                             <div class="radio-pad col-md-6">
 

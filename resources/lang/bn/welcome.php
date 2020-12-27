@@ -33,7 +33,7 @@ return [
     'court_title' => 'বাংলাদেশের আদালত',
     'court_sub' => 'বাংলাদেশে মূলত চারটি প্রধান স্তরের আদালত রয়েছে।',
     'supreme' => 'সর্বোচ্চ আদালত',
-    'supreme_details' => 'The Supreme Court of Bangladesh is divided into two parts: the Appellate Division and the High Court Division.',
+    'supreme_details' => 'বাংলাদেশের সর্বোচ্চ আদালত দুটি ভাগে বিভক্ত: আপিল বিভাগ এবং হাইকোর্ট বিভাগ।',
     'high' => 'উচ্চ আদালত',
     'high_details' => 'হাইকোর্ট বিভাগে জনপ্রিয় হিসাবে পরিচিত হাইকোর্ট বিভাগ বাংলাদেশের সুপ্রিম কোর্টের দুটি শাখার মধ্যে একটি, অন্য শাখার আপিল বিভাগ।',
     'judge' => 'জেলা জজ আদালত',

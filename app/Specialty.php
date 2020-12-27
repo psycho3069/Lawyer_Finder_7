@@ -11,6 +11,6 @@ class Specialty extends Model
 
     public function lawyer()
     {
-        return $this->hasMany('App\Lawyer','specialties_id');
+        return $this->hasOne('App\Lawyer','specialties_id');
     }
 }

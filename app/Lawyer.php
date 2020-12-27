@@ -26,7 +26,7 @@ class Lawyer extends Model
 
     public function specialty()
     {
-        return $this->belongsTo('App\Specialty','id');
+        return $this->belongsTo('App\Specialty','specialties_id');
     }
 
     public function rating()

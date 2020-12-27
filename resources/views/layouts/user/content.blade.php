@@ -184,69 +184,101 @@
                         <div class="card m-0 p-0">
                             <div class="card-body">
                                 <div class="row">
-                                    <div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-3">
-                                        {{ '#'.++$key }}
+                                    <div class="col-md-1">
+                                        <img src="{{ URL::asset('/storage/'.config('chatify.user_avatar.folder').'/'.$lawyer->user->avatar) }}" style="width:75px; height:75px; border-radius:10%;">
                                     </div>
-                                    <div class="col-md-3">
-                                        <a data-toggle="tooltip" title="See Lawyer profile" href="{{ route('lawyer.show',$lawyer->id) }}" class="btn btn-secondary">@lang('dash.profile')</a>
-                                    </div>
-                                    
-                                    <div class="col-md-3">
-                                        @if($requests->where('lawyer_id',$lawyer->id)
-                                                     ->where('state','==','pending')
-                                                     ->first())
-                                            @if($requests->where('lawyer_id',$lawyer->id)
-                                                         ->first()->state == 'pending')
-                                                <button style="cursor: no-drop;" class="btn btn-info" readonly>@lang('dash.requested')</button>
-                                            @elseif($requests->where('lawyer_id',$lawyer->id)
-                                                             ->first()->state == 'rejected')
-                                                <button style="cursor: no-drop;" class="btn btn-danger" readonly>@lang('dash.rejected')</button>
-                                            @else
-                                                <button style="cursor: no-drop;" class="btn btn-success" readonly>@lang('dash.accepted')</button>
-                                            @endif
-                                        @else
-                                            <a href="{{ route('lawyer.request-case',['lawyer_id' => $lawyer->id]) }}" class="btn btn-outline-success">@lang('dash.request')</a>
-                                        @endif
+                                    <div class="col-md-11" style="font-family: -webkit-pictograph; ">
+                                        <div class="row" style="padding: 5px 0px;">
+                                            <div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-3">
+                                                {{ '#'.++$key }}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a data-toggle="tooltip" title="See Lawyer profile" href="{{ route('lawyer.show',$lawyer->id) }}" class="btn btn-outline-primary" style="line-height: 1.1em;">@lang('dash.profile')</a>
+                                            </div>
+                                            
+                                            <div class="col-md-3">
+                                                @if($requests->where('lawyer_id',$lawyer->id)
+                                                             ->where('state','==','pending')
+                                                             ->first())
+                                                    @if($requests->where('lawyer_id',$lawyer->id)
+                                                                 ->first()->state == 'pending')
+                                                        <button style="cursor: no-drop;" class="btn btn-info" readonly style="line-height: 1.1em;">@lang('dash.requested')</button>
+                                                    @elseif($requests->where('lawyer_id',$lawyer->id)
+                                                                     ->first()->state == 'rejected')
+                                                        <button style="cursor: no-drop;" class="btn btn-danger" readonly style="line-height: 1.1em;">@lang('dash.rejected')</button>
+                                                    @else
+                                                        <button style="cursor: no-drop;" class="btn btn-success" readonly style="line-height: 1.1em;">@lang('dash.accepted')</button>
+                                                    @endif
+                                                @else
+                                                    <a href="{{ route('lawyer.request-case',['lawyer_id' => $lawyer->id]) }}" class="btn btn-outline-success" style="line-height: 1.1em;">@lang('dash.request')</a>
+                                                @endif
 
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="{{ route('lawyer-chatbox') }}" class="btn btn-info">@lang('dash.message')</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        Name: {{ $lawyer->user->name }}
-                                    </div>
-                                    <div class="col-md-3">
-                                        @foreach($districts as $key => $district)
-                                            @if($district->id == $lawyer->user->district_id)
-                                                District: {{ $district->name }}
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="col-md-6">
-                                        Specialty: {{ $lawyer->specialty->name }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        Average Rating: {{ $lawyer->rating->avg('value') }}
-                                    </div>
-                                    <div class="col-md-3">
-                                        Success Rate: {{ $lawyer->success_rate }}
-                                    </div>
-                                    <div class="col-md-3">
-                                        Type: {{ $lawyer->type }}
-                                    </div>
-                                    {{-- <div class="col-md-3">
-                                        @foreach($courts as $key => $court)
-                                            @if($court->id == $lawyer->court_id)
-                                                {{ $court->name }}
-                                            @endif
-                                        @endforeach
-                                    </div> --}}
-                                    <div class="col-md-3">
-                                        {{ $lawyer->cases }}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="{{ route('lawyer-chatbox') }}" class="btn btn-outline-info" style="line-height: 1.1em;">@lang('dash.message')</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                Name: <span class="float-right">{{ $lawyer->user->name }}</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                ID Number: <span class="float-right">{{ $lawyer->member_id }}</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                @foreach($districts as $key => $district)
+                                                    @if($district->id == $lawyer->user->district_id)
+                                                        District: <span class="float-right">{{ $district->name }}</span>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-3">
+                                                Specialty:  @if($lawyer->specialty)
+                                                                <span class="float-right" style="padding: 2px; background-color: cyan; border-radius: 5%;">{{ $lawyer->specialty->name }}</span>
+                                                            @endif
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                Rating:
+                                                <div style="padding-top: 2px; float: right;">
+                                                    @for($i = 0; $i < round($lawyer->rating->avg('value')); $i++)
+                                                        <div class="clip-star-dash"></div>
+                                                    @endfor
+                                                </div> 
+                                                
+                                            </div>
+                                            <div class="col-md-1">
+                                                Success:
+                                            </div>
+                                            <div class="col-md-2 pt-1">
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="
+                                                    @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
+                                                    {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}
+
+                                                @endif
+                                                    " aria-valuemin="0" aria-valuemax="100" style="width: @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
+                                                    {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}{{ '%' }}
+
+                                                @endif ; color: black;">
+                                                      @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
+                                                    {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}{{ ' %' }}
+
+                                                @endif
+                                                    </div>
+                                                </div>
+                                                 
+                                            </div>
+                                            <div class="col-md-3">
+                                                Lawyer Type: <span class="float-right">{{ $lawyer->type }}</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                
+                                                Total Cases: <span class="float-right">{{ $lawyer->cases }}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
