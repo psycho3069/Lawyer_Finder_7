@@ -79,9 +79,11 @@
 				@foreach($user_cases as $key => $case)
 					<div class="card m-2">
 						<div class="card-header" style="background-color: cyan;">
-							<div class="col-md-4 float-left">{{ $case->case_identity }}</div>
-							<div class="col-md-2 float-left"></div>
+							<div class="col-md-2 float-left">{{ $case->case_identity }}</div>
 							<div lang="@if(App::isLocale('bn')){{ 'bang' }}@endif" class="col-md-2 float-left">@lang('cases.case'){{ ' '.++$key }} </div>
+							<div class="col-md-2 float-left">
+								<a data-toggle="tooltip" title="click to see profile" href="{{ route('client.show',$case->client_id) }}" class="btn btn-primary">{{ $case->client->user->name }}</a>
+							</div>
 							<div class="col-md-4 float-right btn 
 								@if($case->result == 'waiting')
 									btn-info readonly

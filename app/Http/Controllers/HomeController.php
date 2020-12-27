@@ -42,13 +42,15 @@ class HomeController extends Controller
         $active['search'] = 0;
         $active['requests'] = 0;
         
+        $users = User::all();
+        $lawyers = Lawyer::all();
+        $clients = Client::all();
         if(auth()->user()->type == 'client'){
             $feedback = '';
             $active['dashboard'] = 1;
-            $users = [];
             $data = [];
             $courts = Court::all();
-            $lawyers = Lawyer::all();
+            
             $divisions = Division::all();
             $districts = District::all();
             $specialties = Specialty::all();
@@ -82,7 +84,7 @@ class HomeController extends Controller
         } else {
             $casefiles = CaseFile::all();
             $courts = Court::all();
-            return view('home', compact('casefiles','courts','active'));
+            return view('home', compact('casefiles','courts','active','users','clients','lawyers'));
         }
     }
 
@@ -133,7 +135,7 @@ class HomeController extends Controller
         $active['search'] = 0;
         $active['requests'] = 0;
 
-        $users = [];
+        $users = User::all();
         $data = [];
         $courts = Court::all();
         $lawyers = Lawyer::all();

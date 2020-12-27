@@ -220,20 +220,20 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                Name: <span class="float-right">{{ $lawyer->user->name }}</span>
+                                                @lang('dash.name'): <span class="float-right">{{ $lawyer->user->name }}</span>
                                             </div>
                                             <div class="col-md-3">
-                                                ID Number: <span class="float-right">{{ $lawyer->member_id }}</span>
+                                                @lang('dash.id'): <span class="float-right">{{ $lawyer->member_id }}</span>
                                             </div>
                                             <div class="col-md-3">
                                                 @foreach($districts as $key => $district)
                                                     @if($district->id == $lawyer->user->district_id)
-                                                        District: <span class="float-right">{{ $district->name }}</span>
+                                                        @lang('dash.district'): <span class="float-right">{{ $district->name }}</span>
                                                     @endif
                                                 @endforeach
                                             </div>
                                             <div class="col-md-3">
-                                                Specialty:  @if($lawyer->specialty)
+                                                @lang('dash.specialty'):  @if($lawyer->specialty)
                                                                 <span class="float-right" style="padding: 2px; background-color: cyan; border-radius: 5%;">{{ $lawyer->specialty->name }}</span>
                                                             @endif
                                                 
@@ -241,7 +241,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                Rating:
+                                                @lang('dash.rating'):
                                                 <div style="padding-top: 2px; float: right;">
                                                     @for($i = 0; $i < round($lawyer->rating->avg('value')); $i++)
                                                         <div class="clip-star-dash"></div>
@@ -250,7 +250,7 @@
                                                 
                                             </div>
                                             <div class="col-md-1">
-                                                Success:
+                                                @lang('dash.success')
                                             </div>
                                             <div class="col-md-2 pt-1">
                                                 <div class="progress">
@@ -272,11 +272,11 @@
                                                  
                                             </div>
                                             <div class="col-md-3">
-                                                Lawyer Type: <span class="float-right">{{ $lawyer->type }}</span>
+                                                @lang('dash.l_type'): <span class="float-right">{{ $lawyer->type }}</span>
                                             </div>
                                             <div class="col-md-3">
                                                 
-                                                Total Cases: <span class="float-right">{{ $lawyer->cases }}</span>
+                                                @lang('dash.cases'): <span class="float-right">{{ $lawyer->casefile->count() }}</span>
                                             </div>
                                         </div>
                                     </div>

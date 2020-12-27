@@ -6,8 +6,8 @@
 
     @include('layouts.admin.menu')
 
-    <div class="body-margin">
-        <div class="container p-0 justify-content-center row" style="margin-top: 56px;">
+    <div class="body-margin pb-5">
+        <div class="container p-0 pb-5 justify-content-center row" style="margin-top: 56px;">
 
 
             <div class="col-md-12">

@@ -10,10 +10,10 @@
         @include('layouts.user.menu')
     @endif
 
-    <div class="body-margin">
-        <div class="container p-0 justify-content-center row" style="margin-top: 56px;">
+    <div class="body-margin pb-5">
+        <div class="container p-0 pb-5 justify-content-center row" style="margin-top: 56px;">
 
-            <div class="col-md-12">
+            <div class="col-md-12 pb-5">
                 <div class="row">
                 <h1>@lang('lawyer.all')</h1>
             </div>
@@ -58,7 +58,11 @@
                             <td class="text-center">{{ $lawyer->user->birthdate }}</td>
                             <td class="text-break" style="width: 20ch; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: inline-block;">{{ $lawyer->profile_bio }}</td>
                             <td class="text-center">{{ $lawyer->type }}</td>
-                            <td class="text-center">{{ $lawyer->specialty->name }}</td>
+                            <td class="text-center">
+                                @if($lawyer->specialty)
+                                    {{ $lawyer->specialty->name }}
+                                @endif
+                            </td>
                             <td class="text-center">{{ $lawyer->ratings }}</td>
                             <td class="text-center">{{ $lawyer->reviews }}</td>
                             <td class="text-center">{{ $lawyer->cases }}</td>

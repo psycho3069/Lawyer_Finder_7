@@ -18,4 +18,14 @@ return [
     'accepted' => 'Accepted',
     'request' => 'Request',
     'message' => 'Chat',
+
+    'name' => 'Name',
+    'id' => 'ID Number',
+    'district' => 'District',
+    'specialty' => 'Specialty',
+    'rating' => 'Rating',
+    'success' => 'Success',
+    'l_type' => 'Lawyer Type',
+    'cases' => 'Total Cases',
+    
 ];
