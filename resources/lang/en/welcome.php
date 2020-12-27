@@ -2,8 +2,8 @@
 
 return [
 
-    'title' => 'Lawyer Finder',
-    'lawyer_finder_moto' => 'Lawyer Finder is an innovative and convenient web application where clients can easily find their desired lawyers and communicate with them easily.',
+    'title' => 'Case Management System (Lawyer Finder)',
+    'lawyer_finder_moto' => 'Case Management System (Lawyer Finder) is an innovative and convenient web application where clients can easily find their desired lawyers and communicate with them easily.',
     'lawyer_finder_submoto' => 'Another innovative drive for Digital Bangladesh',
     'register' => 'Register',
 
@@ -45,5 +45,10 @@ return [
     'lawyers' => 'Total Lawyers',
     'clients' => 'Total Clients',
     'cases' => 'Submitted Cases',
+    
+    'ratings' => 'Ratings',
+    'feedbacks' => 'Feedbacks',
+    'requests' => 'Lawyer Approvals',
+    'notices' => 'Notices',
     
 ];

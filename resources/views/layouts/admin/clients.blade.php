@@ -54,7 +54,8 @@
                             <td class="text-center">{{ $client->user->birthdate }}</td>
                             <td class="text-center">{{ $client->cases }}</td>
                             <td style="min-width: 140px;">
-                                <a class="btn btn-primary btn-sm" href="{{ route('client-block',$client) }}">@lang('client.delete')</a>
+                                <a class="btn btn-danger btn-sm" href="{{ route('client-block',$client) }}">@lang('client.delete')</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('client.show',$client) }}">@lang('client.view')</a>
                             </td>
                         </tr>
                         

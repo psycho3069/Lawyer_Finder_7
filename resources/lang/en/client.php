@@ -23,5 +23,6 @@ return [
 	'female' => 'Female',
 	'other' => 'Other',
 	'submit' => 'Submit',
+	'view' => 'View',
 	
 ];

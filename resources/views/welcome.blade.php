@@ -31,9 +31,9 @@
     <div class="row text-black justify-content-center text-left p-5 m-4 faq_list_items" style="min-height: 500px; background-color: white;">
         <div class="col-md-6 pt-5 mt-5" style="border: solid maroon 1px;">
             @if(App::isLocale('en'))
-                <img src="{{url('/storage/logo/procedure_eng.jpg')}}" alt="" class="img-fluid">
+                <img src="{{url('/img/ss_english.jpg')}}" alt="" class="img-fluid">
             @else
-                <img src="{{url('/storage/logo/procedure.jpg')}}" alt="" class="img-fluid">
+                <img src="{{url('/img/ss_bangla.jpg')}}" alt="" class="img-fluid">
             @endif
         </div>
         <div class="col-md-6"><h1 class="text-center" style="padding: 10px 0px 0px 0px;">@lang('welcome.how_register')</h1>
@@ -143,7 +143,7 @@
             <div class="col-md-3 col-sm-6">
                 <div data-appear="true" data-animation="zoomIn" class="counter_item">
                     <div class="counter-image">
-                        <img src="http://ims.ictd.gov.bd/assets/images/counter/users.svg" height="50" alt="Users">
+                        <img src="{{ url('svg/users.svg') }}" height="50" alt="Users">
                     </div>
                     <div class="counter-info">
                         <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $users->count() }}</div>
@@ -155,7 +155,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="counter_item">
                     <div data-appear="true" data-animation="zoomIn" class="counter-image">
-                        <img src="http://ims.ictd.gov.bd/assets/images/counter/brain.svg" height="50" alt="Users">
+                        <img src="{{ url('svg/brain.svg') }}" height="50" alt="Users">
                     </div>
                     <div class="counter-info">
                         <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $lawyers->count() }}</div>
@@ -167,7 +167,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="counter_item">
                     <div data-appear="true" data-animation="zoomIn" class="counter-image">
-                        <img src="http://ims.ictd.gov.bd/assets/images/counter/speed.svg" height="50" alt="Users">
+                        <img src="{{ url('svg/speed.svg') }}" height="50" alt="Users">
                     </div>
                     <div class="counter-info">
                         <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $clients->count() }}</div>
@@ -179,7 +179,7 @@
             <div class="col-md-3 col-sm-6">
                 <div data-appear="true" data-animation="zoomIn" class="counter_item">
                     <div class="counter-image">
-                        <img src="http://ims.ictd.gov.bd/assets/images/counter/victory.svg" height="50" alt="Users">
+                        <img src="{{ url('svg/victory.svg') }}" height="50" alt="Users">
                     </div>
                     <div class="counter-info">
                         <div class="counter-value" @if(!App::isLocale('en')) lang="bang" @endif>{{ $cases->count() }}</div>

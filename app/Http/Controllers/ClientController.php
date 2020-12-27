@@ -110,7 +110,6 @@ class ClientController extends Controller
             'contact' => ['required', 'numeric', 'min:1000000000'],
             'location' => ['required', 'string', 'max:100'],
             'birthdate' => ['required', 'date', 'max:100'],
-            'type' => ['required'],
             'gender' => ['required'],
         ]);
 
@@ -165,7 +164,6 @@ class ClientController extends Controller
                 'contact' => $request['contact'],
                 'location' => $request['location'],
                 'birthdate' => $request['birthdate'],
-                'type' => $request['type'],
                 'gender' => $request['gender'],
             ]);
 

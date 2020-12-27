@@ -21,7 +21,12 @@
                     </div>
                 @endif
 
-                <div class="card-header text-center"><a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">@lang('client.back')</a>@lang('client.title',['client' => $user->name])</div>
+                <div class="card-header text-center">
+                    <a href="{{ route('profile') }}" type="button" class="btn float-left btn-primary button">@lang('client.back')</a>
+                    <h3>
+                        @lang('client.title',['client' => $user->name])
+                    </h3>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" action="{{ route('client.update',auth()->user()->id) }}">

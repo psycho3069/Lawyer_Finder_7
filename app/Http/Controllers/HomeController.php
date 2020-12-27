@@ -12,6 +12,9 @@ use App\User;
 use App\Division;
 use App\District;
 use App\Specialty;
+use App\Rating;
+use App\Feedback;
+use App\Notice;
 use Exception;
 use Illuminate\Support\Facades\Session;
 
@@ -45,6 +48,10 @@ class HomeController extends Controller
         $users = User::all();
         $lawyers = Lawyer::all();
         $clients = Client::all();
+        $ratings = Rating::all();
+        $feedbacks = Feedback::all();
+        $notices = Notice::all();
+
         if(auth()->user()->type == 'client'){
             $feedback = '';
             $active['dashboard'] = 1;
@@ -84,7 +91,7 @@ class HomeController extends Controller
         } else {
             $casefiles = CaseFile::all();
             $courts = Court::all();
-            return view('home', compact('casefiles','courts','active','users','clients','lawyers'));
+            return view('home', compact('casefiles','courts','active','users','clients','lawyers','ratings','feedbacks','notices'));
         }
     }
 

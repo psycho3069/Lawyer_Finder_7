@@ -25,8 +25,25 @@
                     <div class="other">
                         <h5><i class="fas fa-at fa-sm text-primary" style="height: 20px; width: 20px;"></i>&nbsp{{ $lawyer->user->email }}</h5>
                         <h5><i class="fas fa-phone-square-alt fa-sm text-primary" style="height: 20px; width: 20px;"></i>&nbsp{{ $lawyer->user->contact }}</h5>
-                        <h5><i class="fas fa-star fa-sm text-primary" style="height: 20px; width: 20px;"></i>&nbsp{{ $lawyer->ratings }}</h5>
-                        <h5><i class="fas fa-percent fa-sm text-primary" style="height: 20px; width: 20px;"></i>&nbsp{{ $lawyer->success_rate }}</h5>
+                        <h5><i class="fas fa-star fa-sm text-primary" style="height: 20px; width: 20px;"></i>&nbspAverage Rating {{ $lawyer->rating->avg('value') }}</h5>
+                        <h5>Success Rate
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="
+                                @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
+                                {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}
+
+                                @endif
+                                " aria-valuemin="0" aria-valuemax="100" style="width: @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
+                                {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}{{ '%' }}
+
+                                @endif ; color: black;">
+                                  @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
+                                {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}{{ ' %' }}
+
+                                @endif
+                                </div>
+                            </div>
+                        </h5>
                     </div>
 
                     @if(auth()->user()->type == 'client')

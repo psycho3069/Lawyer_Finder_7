@@ -258,15 +258,15 @@
                                                     @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
                                                     {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}
 
-                                                @endif
+                                                    @endif
                                                     " aria-valuemin="0" aria-valuemax="100" style="width: @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
                                                     {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}{{ '%' }}
 
-                                                @endif ; color: black;">
+                                                    @endif ; color: black;">
                                                       @if($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count() != 0)
                                                     {{ ($lawyer->casefile->where('result','won')->count()/($lawyer->casefile->where('result','won')->count()+$lawyer->casefile->where('result','lost')->count()))*100 }}{{ ' %' }}
 
-                                                @endif
+                                                    @endif
                                                     </div>
                                                 </div>
                                                  
