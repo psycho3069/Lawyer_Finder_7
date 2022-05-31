@@ -15,7 +15,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "3.2",
-        "munafio/chatify": "^1.0"
+        "munafio/chatify": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

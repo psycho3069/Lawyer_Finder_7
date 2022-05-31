@@ -8,7 +8,7 @@
             <button class="w3-bar-item menu-button tablink @if($active['dashboard']) {{ 'menu-button-current' }} @endif">@lang('menu.find')</button>
         </a>
     @endif
-    
+
     <a href="{{ route('profile') }}">
     	<button class="w3-bar-item menu-button tablink @if($active['profile']) {{ 'menu-button-current' }} @endif">@lang('menu.profile')</button>
     </a>
@@ -24,5 +24,5 @@
     <a href="{{ route('lawyer-chatbox') }}">
         <button class="w3-bar-item menu-button tablink">@lang('menu.messenger')</button>
     </a>
-    
+
 </div>

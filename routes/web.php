@@ -58,7 +58,6 @@ Route::get('/contact-us', 'WelcomeController@contactUs')->name('contact-us');
 Route::post('/get-districts', 'WelcomeController@getDistricts')->name('get-districts');
 
 
-
 Route::get('/faq', 'FaqController@index')->name('faq');
 Route::any('/give-rating', 'RatingController@give_rating')->name('give-rating');
 
@@ -67,3 +66,8 @@ Route::any('locale/{locale}', function($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 })->name('locale');
+
+
+Route::get('lawyer-chatify', function (){
+    return redirect('/chatify');
+})->name('lawyer-chatbox');

@@ -44,7 +44,7 @@ class HomeController extends Controller
         $active['cases'] = 0;
         $active['search'] = 0;
         $active['requests'] = 0;
-        
+
         $users = User::all();
         $lawyers = Lawyer::all();
         $clients = Client::all();
@@ -57,7 +57,7 @@ class HomeController extends Controller
             $active['dashboard'] = 1;
             $data = [];
             $courts = Court::all();
-            
+
             $divisions = Division::all();
             $districts = District::all();
             $specialties = Specialty::all();
@@ -181,7 +181,7 @@ class HomeController extends Controller
         $specialty = $request->specialty;
         // $rating = $request->rating;
         // $success_rate = $request->success_rate;
-        
+
         $users = User::all();
         $divisions = Division::all();
         $districts = District::all();
@@ -209,7 +209,7 @@ class HomeController extends Controller
             $lawyers = Lawyer::with(['user'])
                                        ->whereHas('user', function($q) use($district) {
                                        $q->where('district_id', '=', $district);
-                                    })  
+                                    })
                                     ->where('type', '=', $type)
                                     ->get();
         } elseif ($district == null && $type != null && $specialty != null) {
@@ -231,7 +231,7 @@ class HomeController extends Controller
                                     ->where('type', '=', $type)
                                     ->where('specialties_id', '=', $specialty)
                                     ->get();
-        } 
+        }
 
         $user_cases = [];
         $courts = Court::get();
@@ -266,7 +266,7 @@ class HomeController extends Controller
                                            })
                                         ->get();
         }
-        
+
         $courts = Court::get();
         return view('layouts.user.requests',compact('requests','courts','active'));
     }

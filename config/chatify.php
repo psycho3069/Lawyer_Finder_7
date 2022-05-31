@@ -1,54 +1,41 @@
 <?php
 
 return [
-
     /*
-    |--------------------------------------------------------------------------
-    | Messenger app name
-    |--------------------------------------------------------------------------
-    |
-    | This value is the name of the app which is used in the views or elsewhere
-    | in this app.
-    |
+    |-------------------------------------
+    | Messenger display name
+    |-------------------------------------
     */
-
-    'name' => env('CHATIFY_NAME', 'Lawyer Chatbox'),
-    'name_bn' => env('CHATIFY_NAME', 'আইনজীবী চ্যাটবক্স'),
+    'name' => env('CHATIFY_NAME', 'Chatify Messenger'),
 
     /*
-    |--------------------------------------------------------------------------
-    | Package path
-    |--------------------------------------------------------------------------
-    |
-    | This value is the path of the package or in other meaning, it is the prefix
-    | of all the registered routes in this package.
-    |
-    | e.g. : app.test/chatify
+    |-------------------------------------
+    | The disk on which to store added
+    | files and derived images by default.
+    |-------------------------------------
     */
-
-    'path' => env('CHATIFY_PATH', 'lawyer-chatbox'),
+    'storage_disk_name' => env('CHATIFY_STORAGE_DISK', 'public'),
 
     /*
-    |--------------------------------------------------------------------------
-    | Package's web routes middleware
-    |--------------------------------------------------------------------------
-    |
-    | This value is the middleware of all routes registered in this package
-    | which is by default : auth
-    |
+    |-------------------------------------
+    | Routes configurations
+    |-------------------------------------
     */
-
-    'middleware' => env('CHATIFY_MIDDLEWARE', 'auth'),
+    'routes' => [
+        'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chatify'),
+        'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web','auth']),
+        'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'App\Http\Controllers\vendor\Chatify'),
+    ],
+    'api_routes' => [
+        'prefix' => env('CHATIFY_API_ROUTES_PREFIX', 'chatify/api'),
+        'middleware' => env('CHATIFY_API_ROUTES_MIDDLEWARE', ['api']),
+        'namespace' => env('CHATIFY_API_ROUTES_NAMESPACE', 'App\Http\Controllers\vendor\Chatify\Api'),
+    ],
 
     /*
-    |--------------------------------------------------------------------------
+    |-------------------------------------
     | Pusher API credentials
-    |--------------------------------------------------------------------------
-    |
-    | This array includes all the credentials that required to use pusher API
-    | with Chatty package, which is used to broadcast events over websockets to
-    | create a real-time features.
-    |
+    |-------------------------------------
     */
     'pusher' => [
         'key' => env('PUSHER_APP_KEY'),
@@ -61,16 +48,9 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
+    |-------------------------------------
     | User Avatar
-    |--------------------------------------------------------------------------
-    |
-    | This is the user's avatar setting that includes :
-    | [folder]  which is the default folder name to upload and get
-    |           user's avatar from.
-    | [default] which is the default avatar file name for users stored
-    |           in database.
-    |
+    |-------------------------------------
     */
     'user_avatar' => [
         'folder' => 'users-avatar',
@@ -78,35 +58,47 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Attachments By Default
-    |--------------------------------------------------------------------------
+    |-------------------------------------
+    | Gravatar
     |
-    | This array contains the important default values that used in this package.
-    |
-    | The first value in this array is the default folder name in the storage
-    | which is all the attachments will be stored in.
-    | This is also going to be used in attachments urls in the views.
-    |
+    | imageset property options:
+    | [ 404 | mp | identicon (default) | monsterid | wavatar ]
+    |-------------------------------------
+    */
+    'gravatar' => [
+        'enabled' => false,
+        'image_size' => 200,
+        'imageset' => 'identicon'
+    ],
+
+    /*
+    |-------------------------------------
+    | Attachments
+    |-------------------------------------
     */
     'attachments' => [
         'folder' => 'attachments',
-        // Below is the route name to download attachments.
-        'route' => 'attachments.download',
+        'download_route_name' => 'attachments.download',
+        'allowed_images' => (array) ['png','jpg','jpeg','gif'],
+        'allowed_files' => (array) ['zip','rar','txt'],
+        'max_upload_size' => env('CHATIFY_MAX_FILE_SIZE', 150), // MB
     ],
 
-
     /*
-    |--------------------------------------------------------------------------
-    | Route's controllers namespace
-    |--------------------------------------------------------------------------
-    |
-    | You may need to change the namespace of the route's controllers of
-    | this package after publishing the 'controllers' asset, from the
-    | default one to your App's controllers namespace.
-    |
-    | By default: Chatify\Http\Controllers
-    |
+    |-------------------------------------
+    | Messenger's colors
+    |-------------------------------------
     */
-    'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'Chatify\Http\Controllers'),
+    'colors' => (array) [
+        '#2180f3',
+        '#2196F3',
+        '#00BCD4',
+        '#3F51B5',
+        '#673AB7',
+        '#4CAF50',
+        '#FFC107',
+        '#FF9800',
+        '#ff2522',
+        '#9C27B0',
+    ],
 ];

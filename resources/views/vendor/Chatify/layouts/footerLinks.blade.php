@@ -1,7 +1,8 @@
-<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-<script>
+<script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
+<script >
   // Enable pusher logging - don't include this in production
   Pusher.logToConsole = true;
+
   var pusher = new Pusher("{{ config('chatify.pusher.key') }}", {
     encrypted: true,
     cluster: "{{ config('chatify.pusher.options.cluster') }}",
@@ -12,9 +13,11 @@
         }
     }
   });
+
+    // Bellow are all the methods/variables that using php to assign globally.
+    const allowedImages = {!! json_encode(config('chatify.attachments.allowed_images')) !!} || [];
+    const allowedFiles = {!! json_encode(config('chatify.attachments.allowed_files')) !!} || [];
+    const getAllowedExtensions = [...allowedImages, ...allowedFiles];
+    const getMaxUploadSize = {{ Chatify::getMaxUploadSize() }};
 </script>
 <script src="{{ asset('js/chatify/code.js') }}"></script>
-<script>
-  // Messenger global variable - 0 by default
-  messenger = "{{ @$id }}";
-</script>
